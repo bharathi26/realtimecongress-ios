@@ -30,14 +30,12 @@
 @implementation CommitteeHearingsViewController
 
 @synthesize parsedHearingData;
-@synthesize items;
 @synthesize jsonData;
 @synthesize jsonKitDecoder;
 @synthesize chamberControl;
-@synthesize hearingEnumerator;
-@synthesize allHearings;
 @synthesize loadingIndicator;
 @synthesize opQueue;
+@synthesize hearingDays;
 @synthesize committeeHearingsCell;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -56,6 +54,7 @@
     [chamberControl release];
     [opQueue release];
     [parsedHearingData release];
+    [hearingDays release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,6 +64,7 @@
     
     // Release any cached data, images, etc that aren't in use.
     [parsedHearingData release];
+    [hearingDays release];
 }
 
 #pragma mark - View lifecycle
@@ -100,6 +100,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     //Refresh data
     [self refresh];
 }
@@ -130,17 +131,37 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    
+    //Clear hearing days
+    hearingDays = nil;
+    
+    // Goes through all the committee hearing objects and adds unique strings containing legislative days
+    if (parsedHearingData != NULL) {
+        hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
+        for (NSDictionary *hearing in parsedHearingData) {
+            if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
+                [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
+            }
+        }
+        return [hearingDays count];
+    }
+    else{
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
+    // Determines the number of hearings on a given day by filtering the parsed hearing data array by each legislative day
+    NSArray *numOfHearingsOnDay;
     if (parsedHearingData != NULL) {
-        return [parsedHearingData count];
+        NSPredicate *hearingsPerDay = [NSPredicate predicateWithFormat:@"legislative_day like %@", 
+                                       [hearingDays objectAtIndex:section]];
+        numOfHearingsOnDay = [parsedHearingData filteredArrayUsingPredicate:hearingsPerDay];
+        return [numOfHearingsOnDay count];
     }
-    else{
-        return 20;
+    else {
+        return 1;
     }
 }
 
@@ -196,6 +217,16 @@
 
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // Sets the title of each section to the legislative day
+    if (parsedHearingData != NULL) {
+        return [hearingDays objectAtIndex:section];
+    }
+    else {
+        return [NSString stringWithString:@" "];
+    }
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -231,6 +262,9 @@
     //Set the navigation bar title to that of the selected chamber
     self.title = [NSString stringWithFormat:@"%@ Hearings", [chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex]];
     
+    //Disable scrolling while data is loading
+    self.tableView.scrollEnabled = NO;
+    
     //Animate the activity indicator when loading data
     [self.loadingIndicator startAnimating];
     
@@ -244,14 +278,13 @@
 - (void) parseData
 {
     jsonKitDecoder = [JSONDecoder decoder];
-    items = [jsonKitDecoder objectWithData:jsonData];
+    NSDictionary *items = [jsonKitDecoder objectWithData:jsonData];
     NSArray *data = [items objectForKey:@"committee_hearings"];
 
-    //Sort data by legislative day
+    //Sort data by legislative day then split in to sections
     NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"legislative_day" ascending:YES];
     NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, nil];
     parsedHearingData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
-    
 }
 
 - (void) retrieveData
@@ -278,9 +311,12 @@
     if ([keyPath isEqual:@"isFinished"]) {
         //Reload the table once data retrieval is complete
         [self.tableView reloadData];
-            
+        
         //Hide the activity indicator once loading is complete
         [loadingIndicator stopAnimating];
+        
+        //Re-enable scrolling once loading is complete and the loading indicator disappears
+        self.tableView.scrollEnabled = YES;
     }
 }
 

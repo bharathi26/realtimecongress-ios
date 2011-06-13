@@ -15,25 +15,21 @@
 @interface CommitteeHearingsViewController : UITableViewController {
     NSArray *parsedHearingData;
     NSData *jsonData;
-    NSDictionary *items;
     JSONDecoder *jsonKitDecoder;
     IBOutlet UISegmentedControl *chamberControl;
-    NSEnumerator *hearingEnumerator;
-    NSMutableArray *allHearings;
     UIActivityIndicatorView *loadingIndicator;
     NSOperationQueue *opQueue;
     UITableViewCell *committeeHearingsCell;
+    NSMutableArray *hearingDays;
 }
 
 @property(nonatomic,retain) NSArray *parsedHearingData;
-@property(nonatomic,retain) NSDictionary *items;
 @property(nonatomic,retain) NSData *jsonData;
 @property(nonatomic,retain) JSONDecoder *jsonKitDecoder;
 @property(nonatomic,retain) IBOutlet UISegmentedControl *chamberControl;
-@property(nonatomic,retain) NSEnumerator *hearingEnumerator;
-@property(nonatomic,retain) NSMutableArray *allHearings;
 @property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic,retain) NSOperationQueue *opQueue;
+@property(nonatomic,retain) NSMutableArray *hearingDays;
 @property (nonatomic, assign) IBOutlet UITableViewCell *committeeHearingsCell;
 
 - (void) refresh;
