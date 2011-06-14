@@ -144,18 +144,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Determines the number of hearings on a given day by filtering the parsed hearing data array by each legislative day
-    /*NSArray *numOfHearingsOnDay;
-    if (parsedHearingData != NULL) {
-        NSPredicate *hearingsPerDay = [NSPredicate predicateWithFormat:@"legislative_day like %@", 
-                                       [hearingDays objectAtIndex:section]];
-        numOfHearingsOnDay = [parsedHearingData filteredArrayUsingPredicate:hearingsPerDay];
-        NSLog(@"%d", [numOfHearingsOnDay count]);
-        return [numOfHearingsOnDay count];
-    }
-    else {
-        return 1;
-    }*/
     NSArray *sectionArray = [sectionDataArray objectAtIndex:section];
     return [sectionArray count];
 }
@@ -279,6 +267,9 @@
     //Animate the activity indicator when loading data
     [self.loadingIndicator startAnimating];
     
+    // Hide back button while loading
+    self.navigationItem.hidesBackButton = YES;
+    
     //Asynchronously retrieve data
     NSInvocationOperation* dataRetrievalOp = [[[NSInvocationOperation alloc] initWithTarget:self
                                                                                    selector:@selector(retrieveData) object:nil] autorelease];
@@ -375,6 +366,9 @@
         
         //Re-enable scrolling once loading is complete and the loading indicator disappears
         self.hearingsTableView.scrollEnabled = YES;
+        
+        // Reveal back button when loading is complete
+        self.navigationItem.hidesBackButton = NO;
     }
 }
 

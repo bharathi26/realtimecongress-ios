@@ -1,5 +1,6 @@
 #import "WhipNoticeViewController.h"
 #import "SunlightLabsRequest.h"
+#import "WhipNoticesWebViewController.h"
 #import "JSONKit.h"
 
 @implementation WhipNoticeViewController
@@ -46,9 +47,6 @@
     //Set up refresh button
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
-    
-    //Make cells unselectable
-    self.tableView.allowsSelection = NO;
     
     //Initialize the operation queue
     opQueue = [[NSOperationQueue alloc] init];
@@ -154,13 +152,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+     WhipNoticesWebViewController *webViewController = [[WhipNoticesWebViewController alloc] initWithNibName:@"WhipNoticesWebViewController" bundle:nil];
+    webViewController.urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[parsedWhipNoticeData objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+     [self.navigationController pushViewController:webViewController animated:YES];
+     [WhipNoticesWebViewController release];
 }
 
 #pragma mark - UI Actions
@@ -172,6 +167,9 @@
     
     //Animate the activity indicator when loading data
     [self.loadingIndicator startAnimating];
+    
+    // Hide back button while loading
+    self.navigationItem.hidesBackButton = YES;
     
     //Asynchronously retrieve data
     NSInvocationOperation* dataRetrievalOp = [[[NSInvocationOperation alloc] initWithTarget:self
@@ -243,6 +241,9 @@
         
         //Re-enable scrolling once loading is complete and the loading indicator disappears
         self.tableView.scrollEnabled = YES;
+        
+        // Reveal back button when loading is complete
+        self.navigationItem.hidesBackButton = NO;
     }
 }
 
