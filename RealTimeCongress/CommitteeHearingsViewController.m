@@ -132,8 +132,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-     
-    // Goes through all the committee hearing objects and adds unique strings containing legislative days
     if (parsedHearingData != NULL) {
         return [hearingDays count];
     }
@@ -167,17 +165,15 @@
     
     // Array that holds the hearings for the current day and section
     NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
-    //Position Committee Name text
+    
     if (sectionArray != NULL) {
+        //Position Committee Name text
         committeeNameLabel = (UILabel *)[cell viewWithTag:1];
         committeeNameLabel.text = [[[sectionArray objectAtIndex:indexPath.row] 
                                     objectForKey:@"committee"] objectForKey:@"name"];
         [committeeNameLabel sizeToFitFixedWidth:320];
-    }
     
-    
-    //Position Time and Place text
-    if (sectionArray != NULL) {
+        //Position Time and Place text
         timeAndPlaceLabel = (UILabel *)[cell viewWithTag:2];
         if (chamberControl.selectedSegmentIndex == 0) {
             timeAndPlaceLabel.text = [NSString stringWithFormat:@"%@", 
@@ -192,17 +188,16 @@
         timeAndPlaceLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
                                              (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),320, 0);
         [timeAndPlaceLabel sizeToFitFixedWidth:320];
-    }
-    
-    
-    //Position Description text
-    if (sectionArray != NULL) {
+        
+        
+        //Position Description text
         descriptionLabel = (UILabel *)[cell viewWithTag:3];
         descriptionLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"description"];
         descriptionLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
                                             (timeAndPlaceLabel.frame.origin.y + timeAndPlaceLabel.frame.size.height), 
                                             320, 0);
         [descriptionLabel sizeToFitFixedWidth:320];
+        
     }
     
     return cell;
@@ -212,12 +207,6 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
     if (parsedHearingData != NULL) {
-        hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
-        for (NSDictionary *hearing in parsedHearingData) {
-            if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
-                [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
-            }
-        }
         return [hearingDays objectAtIndex:section];
     }
     else {
@@ -297,8 +286,6 @@
         }
     }
     
-    // Sort hearing days array
-    
     // Create the hearing day dictionary
     self.hearingDayDictionary = [NSMutableDictionary dictionary];
     
@@ -313,7 +300,6 @@
         NSString *anotherString = [hearing objectForKey:@"legislative_day"];
         [[hearingDayDictionary objectForKey:anotherString] addObject:hearing];
     }
-    // Add the arrays stored in the hearing day dictionary to the section data array
     
     // Convert the hearing day dictionary into a mutable array
     NSMutableArray *hearingDayMutableArray = [[NSMutableArray alloc] init];
@@ -340,7 +326,7 @@
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:CommitteeHearings APIMethod:nil];
     
     //JSONKit requests
-    //Request data based on segemented control selection
+    
     jsonData = [NSData dataWithContentsOfURL:[dataRequest.request URL]];
     
     if (jsonData != NULL) {
@@ -355,9 +341,6 @@
                        context:(void *)context
 {
     if ([keyPath isEqual:@"isFinished"]) {
-        // Scroll the table view back to the top
-        //[self.hearingsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition://UITableViewScrollPositionTop animated:NO];
-        
         //Reload the table once data retrieval is complete
         [self.hearingsTableView reloadData];
         

@@ -180,6 +180,7 @@
 
 - (void) parseData
 {
+    //JSONKit decoding
     jsonKitDecoder = [JSONDecoder decoder];
     NSDictionary *items = [jsonKitDecoder objectWithData:jsonData];
     NSArray *data = [items objectForKey:@"documents"];
@@ -218,7 +219,7 @@
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
     
     //JSONKit requests
-    //Request data based on segemented control selection
+    
     jsonData = [NSData dataWithContentsOfURL:[dataRequest.request URL]];
     
     if (jsonData != NULL) {
