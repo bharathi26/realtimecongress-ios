@@ -8,6 +8,7 @@
 
 #import "CommitteeHearingsViewController.h"
 #import "JSONKit.h"
+#import "SunlightLabsRequest.h"
 
 #pragma mark Utility extensions
 
@@ -38,6 +39,8 @@
 @synthesize hearingDays;
 @synthesize committeeHearingsCell;
 @synthesize hearingsTableView;
+@synthesize sectionDataArray;
+@synthesize hearingDayDictionary;
 
 - (void)dealloc
 {
@@ -127,18 +130,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    
-    //Clear hearing days
-    hearingDays = nil;
-    
+     
     // Goes through all the committee hearing objects and adds unique strings containing legislative days
     if (parsedHearingData != NULL) {
-        hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
-        for (NSDictionary *hearing in parsedHearingData) {
-            if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
-                [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
-            }
-        }
         return [hearingDays count];
     }
     else{
@@ -149,16 +143,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Determines the number of hearings on a given day by filtering the parsed hearing data array by each legislative day
-    NSArray *numOfHearingsOnDay;
+    /*NSArray *numOfHearingsOnDay;
     if (parsedHearingData != NULL) {
         NSPredicate *hearingsPerDay = [NSPredicate predicateWithFormat:@"legislative_day like %@", 
                                        [hearingDays objectAtIndex:section]];
         numOfHearingsOnDay = [parsedHearingData filteredArrayUsingPredicate:hearingsPerDay];
+        NSLog(@"%d", [numOfHearingsOnDay count]);
         return [numOfHearingsOnDay count];
     }
     else {
         return 1;
-    }
+    }*/
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:section];
+    return [sectionArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -178,36 +175,45 @@
     UILabel *timeAndPlaceLabel;
     UILabel *descriptionLabel;
     
+    // Array that holds the hearings for the current day and section
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
     //Position Committee Name text
-    committeeNameLabel = (UILabel *)[cell viewWithTag:1];
-    committeeNameLabel.text = [[[parsedHearingData objectAtIndex:indexPath.row] 
-                   objectForKey:@"committee"] objectForKey:@"name"];
-    [committeeNameLabel sizeToFitFixedWidth:320];
+    if (sectionArray != NULL) {
+        committeeNameLabel = (UILabel *)[cell viewWithTag:1];
+        committeeNameLabel.text = [[[sectionArray objectAtIndex:indexPath.row] 
+                                    objectForKey:@"committee"] objectForKey:@"name"];
+        [committeeNameLabel sizeToFitFixedWidth:320];
+    }
+    
     
     //Position Time and Place text
-    timeAndPlaceLabel = (UILabel *)[cell viewWithTag:2];
-    if (parsedHearingData != NULL) {
+    if (sectionArray != NULL) {
+        timeAndPlaceLabel = (UILabel *)[cell viewWithTag:2];
         if (chamberControl.selectedSegmentIndex == 0) {
             timeAndPlaceLabel.text = [NSString stringWithFormat:@"%@", 
-                                      [[parsedHearingData objectAtIndex:indexPath.row] 
+                                      [[sectionArray objectAtIndex:indexPath.row] 
                                         objectForKey:@"time_of_day"]];
         }
         else {
-            timeAndPlaceLabel.text = [NSString stringWithFormat:@"%@ (%@)", 
-                                      [[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"room"]];
+            timeAndPlaceLabel.text = [NSString stringWithFormat:@"%@ (%@) %@", 
+                                      [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"room"],
+                                      [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"legislative_day"]];
         }
+        timeAndPlaceLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
+                                             (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),320, 0);
+        [timeAndPlaceLabel sizeToFitFixedWidth:320];
     }
-    timeAndPlaceLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
-                                         (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),320, 0);
-    [timeAndPlaceLabel sizeToFitFixedWidth:320];
+    
     
     //Position Description text
-    descriptionLabel = (UILabel *)[cell viewWithTag:3];
-    descriptionLabel.text = [[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"description"];
-    descriptionLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
-                                        (timeAndPlaceLabel.frame.origin.y + timeAndPlaceLabel.frame.size.height), 
-                                        320, 0);
-    [descriptionLabel sizeToFitFixedWidth:320];
+    if (sectionArray != NULL) {
+        descriptionLabel = (UILabel *)[cell viewWithTag:3];
+        descriptionLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"description"];
+        descriptionLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
+                                            (timeAndPlaceLabel.frame.origin.y + timeAndPlaceLabel.frame.size.height), 
+                                            320, 0);
+        [descriptionLabel sizeToFitFixedWidth:320];
+    }
     
     return cell;
 
@@ -216,6 +222,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
     if (parsedHearingData != NULL) {
+        hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
+        for (NSDictionary *hearing in parsedHearingData) {
+            if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
+                [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
+            }
+        }
         return [hearingDays objectAtIndex:section];
     }
     else {
@@ -233,21 +245,22 @@
 {
     //Calculates the appropriate row height based on the size of the three text labels
     CGSize maxSize = CGSizeMake(320, CGFLOAT_MAX);
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
     
-    CGSize committeeNameTextSize = [[[[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"committee"] objectForKey:@"name"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
+    CGSize committeeNameTextSize = [[[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"committee"] objectForKey:@"name"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
     
     CGSize timeAndPlaceTextSize;
     if (chamberControl.selectedSegmentIndex == 0) {
         timeAndPlaceTextSize = [[NSString stringWithFormat:@"%@", 
-                                 [[parsedHearingData objectAtIndex:indexPath.row] 
+                                 [[sectionArray objectAtIndex:indexPath.row] 
                                   objectForKey:@"time_of_day"]] sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maxSize];
     }
     else {
         timeAndPlaceTextSize = [[NSString stringWithFormat:@"%@ (%@)", 
-                                 [[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"room"]] sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maxSize];
+                                 [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"room"]] sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maxSize];
     }
     
-    CGSize descriptionTextSize = [[[parsedHearingData objectAtIndex:indexPath.row] objectForKey:@"description"] sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maxSize];
+    CGSize descriptionTextSize = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"description"] sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:maxSize];
     
     return (committeeNameTextSize.height + timeAndPlaceTextSize.height + descriptionTextSize.height + 5);
 }
@@ -281,18 +294,66 @@
     NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"legislative_day" ascending:YES];
     NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, nil];
     parsedHearingData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
+    
+    // A mutable array containing the unique hearing days
+    hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
+    for (NSDictionary *hearing in parsedHearingData) {
+        if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
+            [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
+        }
+    }
+    
+    // Sort hearing days array
+    
+    // Create the hearing day dictionary
+    self.hearingDayDictionary = [NSMutableDictionary dictionary];
+    
+    // Create an array to store hearings for each legislative day
+    for (NSString *aString in hearingDays) {
+        //NSLog(@"Key for hearing day dictionary %@", aString);
+        [hearingDayDictionary setObject:[NSMutableArray array] forKey:aString];
+    }
+    
+    // Iterate through the hearings, adding each one to its respective array
+    for (NSDictionary *hearing in parsedHearingData){
+        NSString *anotherString = [hearing objectForKey:@"legislative_day"];
+        [[hearingDayDictionary objectForKey:anotherString] addObject:hearing];
+    }
+    // Add the arrays stored in the hearing day dictionary to the section data array
+    // Sort array by time
+   // NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"time_of_day" ascending:YES];
+    //NSArray *moreDescriptors = [[NSArray alloc] initWithObjects: sortByTime, nil];
+    
+    // Convert the hearing day dictionary into a mutable array
+    NSMutableArray *hearingDayMutableArray = [[NSMutableArray alloc] init];
+    for (NSString *string in hearingDays) {
+        [hearingDayMutableArray addObject:[hearingDayDictionary objectForKey:string]];
+    }
+    
+    //This line of code is where the problem is. When retrieving all values, the order is mixed up.
+    //NSArray *hearingDayArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
+    sectionDataArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
 }
 
 - (void) retrieveData
 {
+    // Get the current date and format it for a url request
+    NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
+    [dateFomatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *todaysDate = [dateFomatter stringFromDate:[NSDate date]];
+    
+    // Generate request URL using Sunlight Labs Request class
+    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                       [[chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex] lowercaseString], @"chamber",
+                                       todaysDate, @"legislative_day__gte",
+                                       nil];
+    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:CommitteeHearings APIMethod:nil];
+    
     //JSONKit requests
     //Request data based on segemented control selection
-    if (chamberControl.selectedSegmentIndex == 0) {
-        jsonData = [NSData dataWithContentsOfURL:[NSURL URLWithString:HOUSE_URL]];
-    }
-    else {
-        jsonData = [NSData dataWithContentsOfURL:[NSURL URLWithString:SENATE_URL]];
-    }
+    jsonData = [NSData dataWithContentsOfURL:[dataRequest.request URL]];
+    
     if (jsonData != NULL) {
         [self parseData];
     }
@@ -306,7 +367,7 @@
 {
     if ([keyPath isEqual:@"isFinished"]) {
         // Scroll the table view back to the top
-        [self.hearingsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        //[self.hearingsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition://UITableViewScrollPositionTop animated:NO];
         
         //Reload the table once data retrieval is complete
         [self.hearingsTableView reloadData];
