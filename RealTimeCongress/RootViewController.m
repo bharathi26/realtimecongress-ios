@@ -1,6 +1,7 @@
 #import "RootViewController.h"
 #import "AboutViewController.h"
 #import "CommitteeHearingsViewController.h"
+#import "WhipNoticeViewController.h"
 
 @implementation RootViewController
 @synthesize sectionNames;
@@ -95,12 +96,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UITableViewController *whipController = [[UITableViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
     // ...
     // Pass the selected object to the new view controller.
     
     if (indexPath.row == 1) {
+        WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
         [self.navigationController pushViewController:whipController animated:YES];
         [whipController release];
     }

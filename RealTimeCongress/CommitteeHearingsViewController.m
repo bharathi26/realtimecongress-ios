@@ -68,11 +68,6 @@
     hearingsTableView.delegate = self;
     hearingsTableView.dataSource = self;
     
-    // Set frame for the table view
-    hearingsTableView.frame = CGRectMake(chamberControl.frame.origin.x, 
-               chamberControl.frame.origin.y + chamberControl.frame.size.height, 
-               320, 372);
-    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
