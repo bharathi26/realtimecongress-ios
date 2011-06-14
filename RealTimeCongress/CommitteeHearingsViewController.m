@@ -51,6 +51,7 @@
     [parsedHearingData release];
     [hearingDays release];
     [hearingsTableView release];
+    [sectionDataArray release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,6 +62,7 @@
     // Release any cached data, images, etc that aren't in use.
     [parsedHearingData release];
     [hearingDays release];
+    [sectionDataArray release];
 }
 
 #pragma mark - View lifecycle

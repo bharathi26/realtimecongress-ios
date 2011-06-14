@@ -136,8 +136,8 @@
 		28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommitteeHearingsViewController.h; sourceTree = "<group>"; };
 		28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommitteeHearingsViewController.m; sourceTree = "<group>"; };
 		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
-		28BC582B139AA0D100EBA6BE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		28BC582C139AA0D100EBA6BE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		28BC582B139AA0D100EBA6BE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../Resources/JSONKit.h; sourceTree = "<group>"; };
+		28BC582C139AA0D100EBA6BE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../Resources/JSONKit.m; sourceTree = "<group>"; };
 		28DBFF1113A7064F00979270 /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
 		28DBFF1613A7095200979270 /* SunlightLabsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsRequest.h; sourceTree = "<group>"; };
 		28DBFF1713A7095200979270 /* SunlightLabsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsRequest.m; sourceTree = "<group>"; };
@@ -272,6 +272,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28BCE2CA13A7B2DC00BC5A31 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				28BC582B139AA0D100EBA6BE /* JSONKit.h */,
+				28BC582C139AA0D100EBA6BE /* JSONKit.m */,
+			);
+			name = JSONKit;
+			sourceTree = "<group>";
+		};
 		2A787EAB138310E7008EC17E = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +335,7 @@
 				284C060A138BFCFE00ED309D /* AboutViewController.h */,
 				284C060B138BFCFE00ED309D /* AboutViewController.m */,
 				284C060C138BFCFE00ED309D /* AboutViewController.xib */,
+				28BCE2CA13A7B2DC00BC5A31 /* JSONKit */,
 			);
 			path = RealTimeCongress;
 			sourceTree = "<group>";
@@ -364,8 +374,6 @@
 		2A787EF9138324D1008EC17E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				28BC582B139AA0D100EBA6BE /* JSONKit.h */,
-				28BC582C139AA0D100EBA6BE /* JSONKit.m */,
 				284C0610138C21C600ED309D /* AboutInfo.html */,
 				2A787EFA138324D1008EC17E /* 08-chat.png */,
 				2A787EFB138324D1008EC17E /* 08-chat@2x.png */,
