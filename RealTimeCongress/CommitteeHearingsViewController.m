@@ -310,6 +310,9 @@
                        context:(void *)context
 {
     if ([keyPath isEqual:@"isFinished"]) {
+        // Scroll the table view back to the top
+        [self.hearingsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        
         //Reload the table once data retrieval is complete
         [self.hearingsTableView reloadData];
         
