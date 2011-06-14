@@ -12,7 +12,7 @@
 #define HOUSE_URL @"http://api.realtimecongress.org/api/v1/committee_hearings.json?apikey=dc060e7c2e154278a4167b2c4c571695&chamber=house&per_page=100&legislative_day__gte=2011-06-01"
 #define SENATE_URL @"http://api.realtimecongress.org/api/v1/committee_hearings.json?apikey=dc060e7c2e154278a4167b2c4c571695&chamber=senate&per_page=100&legislative_day__gte=2011-06-01"
 
-@interface CommitteeHearingsViewController : UITableViewController {
+@interface CommitteeHearingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSArray *parsedHearingData;
     NSData *jsonData;
     JSONDecoder *jsonKitDecoder;
@@ -21,6 +21,7 @@
     NSOperationQueue *opQueue;
     UITableViewCell *committeeHearingsCell;
     NSMutableArray *hearingDays;
+    UITableView *hearingsTableView;
 }
 
 @property(nonatomic,retain) NSArray *parsedHearingData;
@@ -30,7 +31,8 @@
 @property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic,retain) NSOperationQueue *opQueue;
 @property(nonatomic,retain) NSMutableArray *hearingDays;
-@property (nonatomic, assign) IBOutlet UITableViewCell *committeeHearingsCell;
+@property(nonatomic,retain) IBOutlet UITableView *hearingsTableView;
+@property (nonatomic, assign) UITableViewCell *committeeHearingsCell;
 
 - (void) refresh;
 - (void) parseData;

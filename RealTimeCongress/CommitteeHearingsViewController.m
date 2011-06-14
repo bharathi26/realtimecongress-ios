@@ -37,15 +37,7 @@
 @synthesize opQueue;
 @synthesize hearingDays;
 @synthesize committeeHearingsCell;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize hearingsTableView;
 
 - (void)dealloc
 {
@@ -55,6 +47,7 @@
     [opQueue release];
     [parsedHearingData release];
     [hearingDays release];
+    [hearingsTableView release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,11 +65,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    hearingsTableView.delegate = self;
+    hearingsTableView.dataSource = self;
+    
+    // Set frame for the table view
+    hearingsTableView.frame = CGRectMake(chamberControl.frame.origin.x, 
+               chamberControl.frame.origin.y + chamberControl.frame.size.height, 
+               320, 372);
+    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
     //Make cells unselectable
-    self.tableView.allowsSelection = NO;
+    self.hearingsTableView.allowsSelection = NO;
     
     //Initialize the operation queue
     opQueue = [[NSOperationQueue alloc] init];
@@ -263,7 +264,7 @@
     self.title = [NSString stringWithFormat:@"%@ Hearings", [chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex]];
     
     //Disable scrolling while data is loading
-    self.tableView.scrollEnabled = NO;
+    self.hearingsTableView.scrollEnabled = NO;
     
     //Animate the activity indicator when loading data
     [self.loadingIndicator startAnimating];
@@ -310,13 +311,13 @@
 {
     if ([keyPath isEqual:@"isFinished"]) {
         //Reload the table once data retrieval is complete
-        [self.tableView reloadData];
+        [self.hearingsTableView reloadData];
         
         //Hide the activity indicator once loading is complete
         [loadingIndicator stopAnimating];
         
         //Re-enable scrolling once loading is complete and the loading indicator disappears
-        self.tableView.scrollEnabled = YES;
+        self.hearingsTableView.scrollEnabled = YES;
     }
 }
 
