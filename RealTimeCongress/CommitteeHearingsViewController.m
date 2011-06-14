@@ -292,7 +292,8 @@
 
     //Sort data by legislative day then split in to sections
     NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"legislative_day" ascending:YES];
-    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, nil];
+    NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"occurs_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime,nil];
     parsedHearingData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
     
     // A mutable array containing the unique hearing days
@@ -320,9 +321,6 @@
         [[hearingDayDictionary objectForKey:anotherString] addObject:hearing];
     }
     // Add the arrays stored in the hearing day dictionary to the section data array
-    // Sort array by time
-   // NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"time_of_day" ascending:YES];
-    //NSArray *moreDescriptors = [[NSArray alloc] initWithObjects: sortByTime, nil];
     
     // Convert the hearing day dictionary into a mutable array
     NSMutableArray *hearingDayMutableArray = [[NSMutableArray alloc] init];
@@ -330,8 +328,6 @@
         [hearingDayMutableArray addObject:[hearingDayDictionary objectForKey:string]];
     }
     
-    //This line of code is where the problem is. When retrieving all values, the order is mixed up.
-    //NSArray *hearingDayArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
     sectionDataArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
 }
 
