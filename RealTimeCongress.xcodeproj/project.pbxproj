@@ -15,6 +15,7 @@
 		28BC5829139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */; };
 		28BC582D139AA0D100EBA6BE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC582C139AA0D100EBA6BE /* JSONKit.m */; };
 		28DBFF1213A7064F00979270 /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28DBFF1113A7064F00979270 /* APIKeys.plist */; };
+		28DBFF1813A7095200979270 /* SunlightLabsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DBFF1713A7095200979270 /* SunlightLabsRequest.m */; };
 		2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBA138310E8008EC17E /* UIKit.framework */; };
 		2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBC138310E8008EC17E /* Foundation.framework */; };
 		2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBE138310E8008EC17E /* CoreGraphics.framework */; };
@@ -138,6 +139,8 @@
 		28BC582B139AA0D100EBA6BE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		28BC582C139AA0D100EBA6BE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		28DBFF1113A7064F00979270 /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
+		28DBFF1613A7095200979270 /* SunlightLabsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsRequest.h; sourceTree = "<group>"; };
+		28DBFF1713A7095200979270 /* SunlightLabsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsRequest.m; sourceTree = "<group>"; };
 		2A787EB6138310E8008EC17E /* Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Congress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A787EBA138310E8008EC17E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2A787EBC138310E8008EC17E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -304,6 +307,8 @@
 		2A787EC0138310E8008EC17E /* RealTimeCongress */ = {
 			isa = PBXGroup;
 			children = (
+				28DBFF1613A7095200979270 /* SunlightLabsRequest.h */,
+				28DBFF1713A7095200979270 /* SunlightLabsRequest.m */,
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
 				28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */,
 				28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */,
@@ -650,6 +655,7 @@
 				284C060D138BFCFE00ED309D /* AboutViewController.m in Sources */,
 				28BC5828139AA0BC00EBA6BE /* CommitteeHearingsViewController.m in Sources */,
 				28BC582D139AA0D100EBA6BE /* JSONKit.m in Sources */,
+				28DBFF1813A7095200979270 /* SunlightLabsRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
