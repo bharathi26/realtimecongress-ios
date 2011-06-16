@@ -188,24 +188,8 @@
     //Sort data by legislative day then split in to sections
     NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"for_date" ascending:NO];
     NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime,nil];
-    parsedWhipNoticeData = [NSArray arrayWithArray:[data sortedArrayUsingDescriptors:descriptors]];
-    
-    // Get the current date and format it
-    NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
-    [dateFomatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *todaysDate = [dateFomatter stringFromDate:[NSDate date]];
-    
-    NSPredicate *datePredicate = [NSPredicate predicateWithFormat:@"for_date >= %@", todaysDate];
-    NSArray *testArray = [parsedWhipNoticeData filteredArrayUsingPredicate:datePredicate];
-    if ([testArray count] == 0) {
-        NSDictionary *mostRecentNotice = [parsedWhipNoticeData objectAtIndex:0];
-        parsedWhipNoticeData = [[NSArray alloc] initWithObjects:mostRecentNotice, nil];
-    }
-    else {
-        parsedWhipNoticeData = [[NSArray alloc] initWithArray:testArray];
-    }
-    
+    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
+    parsedWhipNoticeData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
 }
 
 - (void) retrieveData
