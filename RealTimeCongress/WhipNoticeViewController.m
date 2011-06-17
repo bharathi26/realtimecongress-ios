@@ -5,11 +5,14 @@
 
 @implementation WhipNoticeViewController
 
-@synthesize parsedHearingData;
+@synthesize parsedWhipNoticeData;
 @synthesize jsonData;
 @synthesize jsonKitDecoder;
 @synthesize loadingIndicator;
 @synthesize opQueue;
+@synthesize noticeDaysDictionary;
+@synthesize sectionDataArray;
+@synthesize noticeDaysArray;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -25,7 +28,7 @@
     [super dealloc];
     [loadingIndicator release];
     [opQueue release];
-    [parsedHearingData release];
+    [parsedWhipNoticeData release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,19 +100,18 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    if (parsedWhipNoticeData != NULL) {
+        return [noticeDaysArray count];
+    }
+    else{
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    if ([parsedWhipNoticeData count] > 0) {
-        return [parsedWhipNoticeData count];
-    }
-    else {
-        return 1;
-    }
-    
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:section];
+    return [sectionArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,22 +122,26 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    if ([parsedWhipNoticeData count] > 0) {
+    
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
+    
+    if (sectionArray != NULL) {
         // Configure the cell...
         NSString *partyType;
         NSString *noticeType;
-        if ([[[parsedWhipNoticeData objectAtIndex:indexPath.row] objectForKey:@"party"] isEqual:@"D"]) {
+        if ([[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"party"] isEqual:@"D"]) {
             partyType = @"Democratic";
         }
         else {
             partyType = @"Republican";
         }
         
-        noticeType = [[[parsedWhipNoticeData objectAtIndex:indexPath.row] objectForKey:@"notice_type"] capitalizedString];
+        noticeType = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"notice_type"] capitalizedString];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSDate *noticeDate = [dateFormatter dateFromString: [[parsedWhipNoticeData objectAtIndex:indexPath.row] objectForKey:@"for_date"]];
+        NSDate *noticeDate = [dateFormatter dateFromString: [[sectionArray objectAtIndex:indexPath.row] 
+                                                             objectForKey:@"for_date"]];
         [dateFormatter setDateFormat:@"EEEE, MMMM d"];
         NSString *formattedDate = [dateFormatter stringFromDate:noticeDate];
         
@@ -146,6 +152,15 @@
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // Sets the title of each section to the legislative day
+    if (parsedWhipNoticeData != NULL) {
+        return [noticeDaysArray objectAtIndex:section];
+    }
+    else {
+        return [NSString stringWithString:@" "];
+    }
+}
 
 #pragma mark - Table view delegate
 
@@ -190,6 +205,36 @@
     NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
     parsedWhipNoticeData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
+    
+    // A mutable array containing the unique notice days
+    noticeDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
+    for (NSDictionary *notice in parsedWhipNoticeData) {
+        if (!([noticeDaysArray containsObject:[notice objectForKey:@"for_date"]])) {
+            [noticeDaysArray addObject:[notice objectForKey:@"for_date"]];
+        }
+    }
+    
+    // Create the notice day dictionary
+    self.noticeDaysDictionary = [NSMutableDictionary dictionary];
+    
+    // Create an array to store notices for each notice day
+    for (NSString *aString in noticeDaysArray) {
+        [noticeDaysDictionary setObject:[NSMutableArray array] forKey:aString];
+    }
+    
+    // Iterate through the notices, adding each one to its respective array
+    for (NSDictionary *notice in parsedWhipNoticeData){
+        NSString *anotherString = [notice objectForKey:@"for_date"];
+        [[noticeDaysDictionary objectForKey:anotherString] addObject:notice];
+    }
+    
+    // Convert the notice day dictionary into a mutable array
+    NSMutableArray *noticeDayMutableArray = [[NSMutableArray alloc] init];
+    for (NSString *string in noticeDaysArray) {
+        [noticeDayMutableArray addObject:[noticeDaysDictionary objectForKey:string]];
+    }
+    
+    sectionDataArray = [[NSArray alloc] initWithArray:noticeDayMutableArray];
 }
 
 - (void) retrieveData

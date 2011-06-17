@@ -279,7 +279,9 @@
     parsedHearingData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
     
     // A mutable array containing the unique hearing days
-    hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
+    if (hearingDays == NULL) {
+        hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
+    }
     for (NSDictionary *hearing in parsedHearingData) {
         if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
             [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
@@ -291,7 +293,6 @@
     
     // Create an array to store hearings for each legislative day
     for (NSString *aString in hearingDays) {
-        //NSLog(@"Key for hearing day dictionary %@", aString);
         [hearingDayDictionary setObject:[NSMutableArray array] forKey:aString];
     }
     
