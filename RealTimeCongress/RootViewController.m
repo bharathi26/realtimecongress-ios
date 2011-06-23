@@ -2,6 +2,7 @@
 #import "AboutViewController.h"
 #import "CommitteeHearingsViewController.h"
 #import "WhipNoticeViewController.h"
+#import "FloorUpdateViewController.h"
 
 @implementation RootViewController
 @synthesize sectionNames;
@@ -99,20 +100,26 @@
     // ...
     // Pass the selected object to the new view controller.
     
-    if (indexPath.row == 1) {
+    if (indexPath.row == 0) {
+        FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController" bundle:nil];
+        [self.navigationController pushViewController:floorUpdateController animated:YES];
+        [floorUpdateController release];
+    }
+    
+    else if (indexPath.row == 1) {
         WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
         [self.navigationController pushViewController:whipController animated:YES];
         [whipController release];
     }
     
-    if (indexPath.row == 2) {
+    else if (indexPath.row == 2) {
         // Pushes the Committee Hearings view controller
         CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController" bundle:nil];
         [self.navigationController pushViewController:hearingsController animated:YES];
         [hearingsController release];
     }
     
-    if (indexPath.row == 4) {
+    else if (indexPath.row == 4) {
         // Pushes the About Screen view controller
         AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]; 
         [self.navigationController pushViewController:aboutController animated:YES];
