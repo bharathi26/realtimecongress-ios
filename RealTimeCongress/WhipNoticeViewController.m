@@ -180,8 +180,9 @@
     //Disable scrolling while data is loading
     self.tableView.scrollEnabled = NO;
     
-    //Animate the activity indicator when loading data
+    //Animate the activity indicator and network activity indicator when loading data
     [self.loadingIndicator startAnimating];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     //Asynchronously retrieve data
     NSInvocationOperation* dataRetrievalOp = [[[NSInvocationOperation alloc] initWithTarget:self
@@ -263,8 +264,9 @@
         //Reload the table once data retrieval is complete
         [self.tableView reloadData];
         
-        //Hide the activity indicator once loading is complete
+        //Hide the activity indicator and network activity indicator once loading is complete
         [loadingIndicator stopAnimating];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         //Re-enable scrolling once loading is complete and the loading indicator disappears
         self.tableView.scrollEnabled = YES;
