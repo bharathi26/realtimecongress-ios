@@ -183,9 +183,6 @@
     //Animate the activity indicator when loading data
     [self.loadingIndicator startAnimating];
     
-    // Hide back button while loading
-    self.navigationItem.hidesBackButton = YES;
-    
     //Asynchronously retrieve data
     NSInvocationOperation* dataRetrievalOp = [[[NSInvocationOperation alloc] initWithTarget:self
                                                                                    selector:@selector(retrieveData) object:nil] autorelease];
