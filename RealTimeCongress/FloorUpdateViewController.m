@@ -26,14 +26,8 @@
 
 @implementation FloorUpdateViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        
-    }
-    return self;
-}
+@synthesize control;
+@synthesize floorUpdatesTableView;
 
 - (void)dealloc
 {
@@ -79,7 +73,7 @@
     [floorUpdates addObjectsFromArray:tempFloorUpdates];
     [floorUpdates addObject:last];
     [last release];
-    [self.tableView reloadData];
+    [self.floorUpdatesTableView reloadData];
 }
 
 - (void)refresh {
@@ -91,7 +85,7 @@
     [floorUpdates makeObjectsPerformSelector:@selector(cancelRequest)];
     [floorUpdates removeAllObjects];
     [floorUpdates addObject:@"LoadingRow"];
-    [self.tableView reloadData];
+    [self.floorUpdatesTableView reloadData];
 }
 
 #pragma mark - View lifecycle
@@ -116,14 +110,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationItem.title = @"Floor Updates";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
-    self.navigationController.toolbarHidden = NO;
-    control = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Senate",@"House",nil]];
-    [control setSelectedSegmentIndex:1];
     [control addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
-    [self setToolbarItems:[NSArray arrayWithObjects:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease],[[[UIBarButtonItem alloc] initWithCustomView:control] autorelease],[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease],nil]];
     page = 0;
-    self.tableView.allowsSelection = NO;
+    self.floorUpdatesTableView.allowsSelection = NO;
     if (!floorUpdates) {
         floorUpdates = [[NSMutableArray alloc] initWithCapacity:20];
         [floorUpdates addObject:@"LoadingRow"];
@@ -176,7 +165,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
         page += 1;
-        NSString * chamber = [control selectedSegmentIndex] == 0 ? @"senate" : @"house";
+        NSString * chamber = [control selectedSegmentIndex] == 0 ? @"house" : @"senate";
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:[[[SunlightLabsRequest alloc] initFloorUpdateRequestWithParameters:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil]] autorelease]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];

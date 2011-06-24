@@ -11,12 +11,16 @@
 #import "SunlightLabsConnection.h"
 @class FloorUpdate;
 
-@interface FloorUpdateViewController : UITableViewController <UITableViewDataSource,UITableViewDelegate> {
+@interface FloorUpdateViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>  {
     @private
     SunlightLabsConnection * connection;
     NSMutableArray * floorUpdates;
     NSUInteger page;
     UISegmentedControl * control;
+    UITableView *floorUpdatesTableView;
 }
+
+@property(nonatomic, retain) IBOutlet UISegmentedControl *control;
+@property(nonatomic, retain) IBOutlet UITableView *floorUpdatesTableView;
 
 @end

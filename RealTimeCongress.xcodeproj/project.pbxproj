@@ -843,6 +843,7 @@
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
 				PRODUCT_NAME = Congress;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -856,6 +857,7 @@
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
 				PRODUCT_NAME = Congress;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
