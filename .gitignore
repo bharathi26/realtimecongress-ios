@@ -10,3 +10,4 @@ build/
 xcuserdata
 
 APIKeys.plist
+JSONCache.plist
