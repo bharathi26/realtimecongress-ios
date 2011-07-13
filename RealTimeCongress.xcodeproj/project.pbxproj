@@ -30,6 +30,7 @@
 		28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28E0D73D13CE573B00E21A5B /* APIKeys.plist */; };
 		28E0D74513CE582F00E21A5B /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */; };
 		28E0D74713CE584000E21A5B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74613CE584000E21A5B /* CFNetwork.framework */; };
+		28E0D75113CE5B3200E21A5B /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */; };
 		2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBA138310E8008EC17E /* UIKit.framework */; };
 		2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBC138310E8008EC17E /* Foundation.framework */; };
 		2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBE138310E8008EC17E /* CoreGraphics.framework */; };
@@ -178,6 +179,7 @@
 		28E0D74313CE582F00E21A5B /* GANTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GANTracker.h; sourceTree = "<group>"; };
 		28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		28E0D74613CE584000E21A5B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		2A787EB6138310E8008EC17E /* Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Congress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A787EBA138310E8008EC17E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2A787EBC138310E8008EC17E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -290,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28E0D75113CE5B3200E21A5B /* libsqlite3.0.dylib in Frameworks */,
 				2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */,
 				2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */,
 				2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */,
@@ -351,6 +354,7 @@
 		28E0D73F13CE57FC00E21A5B /* Google Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */,
 				28E0D74313CE582F00E21A5B /* GANTracker.h */,
 				28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */,
 			);

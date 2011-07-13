@@ -1,4 +1,8 @@
 #import "RealTimeCongressAppDelegate.h"
+#import "GANTracker.h"
+
+// Dispatch period in seconds
+static const NSInteger kGANDispatchPeriodSec = 10;
 
 @implementation RealTimeCongressAppDelegate
 
@@ -10,7 +14,34 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    // Add the navigation controller's view to the window and display.
+    
+    //Start up the Google Analytics tracker object
+    [[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-0000000-1"
+                                           dispatchPeriod:kGANDispatchPeriodSec
+                                                 delegate:nil];
+    
+    NSError *error;
+    if (![[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                         name:@"iPhone1"
+                                                        value:@"iv1"
+                                                    withError:&error]) {
+        // Handle error here
+    }
+    
+    if (![[GANTracker sharedTracker] trackEvent:@"my_category"
+                                         action:@"my_action"
+                                          label:@"my_label"
+                                          value:-1
+                                      withError:&error]) {
+        // Handle error here
+    }
+    
+    if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
+                                         withError:&error]) {
+        // Handle error here
+    }
+    
+    // Add the navigation controller's view to the window and display
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;
@@ -57,6 +88,7 @@
 
 - (void)dealloc
 {
+    [[GANTracker sharedTracker] stopTracker];
     [_window release];
     [_navigationController release];
     [super dealloc];
