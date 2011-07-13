@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2830B2EC13B26D7B00968B79 /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2830B2EB13B26D7B00968B79 /* APIKeys.plist */; };
 		284044D813A1857D00A609CB /* CommitteeHearingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */; };
 		284C060D138BFCFE00ED309D /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284C060B138BFCFE00ED309D /* AboutViewController.m */; };
 		284C060E138BFCFE00ED309D /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284C060C138BFCFE00ED309D /* AboutViewController.xib */; };
@@ -28,6 +27,9 @@
 		28BCE2CF13A7C53A00BC5A31 /* WhipNoticesWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BCE2CD13A7C53A00BC5A31 /* WhipNoticesWebViewController.m */; };
 		28BCE2D013A7C53A00BC5A31 /* WhipNoticesWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */; };
 		28DBFF1813A7095200979270 /* SunlightLabsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DBFF1713A7095200979270 /* SunlightLabsRequest.m */; };
+		28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28E0D73D13CE573B00E21A5B /* APIKeys.plist */; };
+		28E0D74513CE582F00E21A5B /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */; };
+		28E0D74713CE584000E21A5B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74613CE584000E21A5B /* CFNetwork.framework */; };
 		2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBA138310E8008EC17E /* UIKit.framework */; };
 		2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBC138310E8008EC17E /* Foundation.framework */; };
 		2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBE138310E8008EC17E /* CoreGraphics.framework */; };
@@ -140,7 +142,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2830B2EB13B26D7B00968B79 /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
 		284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommitteeHearingsCell.xib; sourceTree = "<group>"; };
 		284C060A138BFCFE00ED309D /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		284C060B138BFCFE00ED309D /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -173,6 +174,10 @@
 		28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhipNoticesWebViewController.xib; sourceTree = "<group>"; };
 		28DBFF1613A7095200979270 /* SunlightLabsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsRequest.h; sourceTree = "<group>"; };
 		28DBFF1713A7095200979270 /* SunlightLabsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsRequest.m; sourceTree = "<group>"; };
+		28E0D73D13CE573B00E21A5B /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
+		28E0D74313CE582F00E21A5B /* GANTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GANTracker.h; sourceTree = "<group>"; };
+		28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		28E0D74613CE584000E21A5B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2A787EB6138310E8008EC17E /* Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Congress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A787EBA138310E8008EC17E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2A787EBC138310E8008EC17E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -288,6 +293,8 @@
 				2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */,
 				2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */,
 				2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */,
+				28E0D74513CE582F00E21A5B /* libGoogleAnalytics.a in Frameworks */,
+				28E0D74713CE584000E21A5B /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,10 +348,19 @@
 			name = JSONKit;
 			sourceTree = "<group>";
 		};
+		28E0D73F13CE57FC00E21A5B /* Google Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				28E0D74313CE582F00E21A5B /* GANTracker.h */,
+				28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */,
+			);
+			name = "Google Analytics";
+			sourceTree = "<group>";
+		};
 		2A787EAB138310E7008EC17E = {
 			isa = PBXGroup;
 			children = (
-				2830B2EB13B26D7B00968B79 /* APIKeys.plist */,
+				28E0D73D13CE573B00E21A5B /* APIKeys.plist */,
 				2A787EF6138311BF008EC17E /* README.md */,
 				2A787EC0138310E8008EC17E /* RealTimeCongress */,
 				2A787EE0138310E8008EC17E /* RealTimeCongressTests */,
@@ -366,6 +382,7 @@
 		2A787EB9138310E8008EC17E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28E0D74613CE584000E21A5B /* CFNetwork.framework */,
 				2A787EBA138310E8008EC17E /* UIKit.framework */,
 				2A787EBC138310E8008EC17E /* Foundation.framework */,
 				2A787EBE138310E8008EC17E /* CoreGraphics.framework */,
@@ -376,6 +393,7 @@
 		2A787EC0138310E8008EC17E /* RealTimeCongress */ = {
 			isa = PBXGroup;
 			children = (
+				28E0D73F13CE57FC00E21A5B /* Google Analytics */,
 				289F99C713B3CD550061FDE8 /* Congress Model */,
 				289F99A313B3C9680061FDE8 /* API Requests */,
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
@@ -689,10 +707,10 @@
 				28BC5829139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib in Resources */,
 				284044D813A1857D00A609CB /* CommitteeHearingsCell.xib in Resources */,
 				28BCE2D013A7C53A00BC5A31 /* WhipNoticesWebViewController.xib in Resources */,
-				2830B2EC13B26D7B00968B79 /* APIKeys.plist in Resources */,
 				289F99B713B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib in Resources */,
 				289F99B913B3CA8A0061FDE8 /* FloorUpdateViewController.xib in Resources */,
 				289F99C913B3CE370061FDE8 /* LoadingTableViewCell.xib in Resources */,
+				28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,6 +860,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
+					"\"$(SRCROOT)/RealTimeCongress\"",
+				);
 				PRODUCT_NAME = Congress;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -856,6 +879,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
+					"\"$(SRCROOT)/RealTimeCongress\"",
+				);
 				PRODUCT_NAME = Congress;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
