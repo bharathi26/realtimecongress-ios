@@ -16,30 +16,12 @@ static const NSInteger kGANDispatchPeriodSec = 10;
     // Override point for customization after application launch.
     
     //Start up the Google Analytics tracker object
-    [[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-0000000-1"
+    [[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-1265484-75"
                                            dispatchPeriod:kGANDispatchPeriodSec
                                                  delegate:nil];
     
-    NSError *error;
-    if (![[GANTracker sharedTracker] setCustomVariableAtIndex:1
-                                                         name:@"iPhone1"
-                                                        value:@"iv1"
-                                                    withError:&error]) {
-        // Handle error here
-    }
-    
-    if (![[GANTracker sharedTracker] trackEvent:@"my_category"
-                                         action:@"my_action"
-                                          label:@"my_label"
-                                          value:-1
-                                      withError:&error]) {
-        // Handle error here
-    }
-    
-    if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
-                                         withError:&error]) {
-        // Handle error here
-    }
+    //Set Dry Run flag for testing
+    [GANTracker sharedTracker].dryRun = YES;
     
     // Add the navigation controller's view to the window and display
     self.window.rootViewController = self.navigationController;
