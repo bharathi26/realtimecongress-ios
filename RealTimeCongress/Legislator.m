@@ -9,6 +9,7 @@
 #import "Legislator.h"
 #import "SunlightLabsRequest.h"
 #import "SunlightLabsConnection.h"
+#import "CongressionalArtifact.h"
 
 @interface Legislator (Private)
 

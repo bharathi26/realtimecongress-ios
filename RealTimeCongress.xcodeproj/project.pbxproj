@@ -30,6 +30,7 @@
 		28E0D74513CE582F00E21A5B /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */; };
 		28E0D74713CE584000E21A5B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74613CE584000E21A5B /* CFNetwork.framework */; };
 		28E0D75113CE5B3200E21A5B /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */; };
+		28E0D76013CF698700E21A5B /* Legislator.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E0D75F13CF698700E21A5B /* Legislator.m */; };
 		2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBA138310E8008EC17E /* UIKit.framework */; };
 		2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBC138310E8008EC17E /* Foundation.framework */; };
 		2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBE138310E8008EC17E /* CoreGraphics.framework */; };
@@ -177,6 +178,8 @@
 		28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		28E0D74613CE584000E21A5B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		28E0D75E13CF698700E21A5B /* Legislator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Legislator.h; sourceTree = "<group>"; };
+		28E0D75F13CF698700E21A5B /* Legislator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Legislator.m; sourceTree = "<group>"; };
 		2A787EB6138310E8008EC17E /* Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Congress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A787EBA138310E8008EC17E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2A787EBC138310E8008EC17E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -327,6 +330,8 @@
 		289F99C713B3CD550061FDE8 /* Congress Model */ = {
 			isa = PBXGroup;
 			children = (
+				28E0D75E13CF698700E21A5B /* Legislator.h */,
+				28E0D75F13CF698700E21A5B /* Legislator.m */,
 				289F99BA13B3CB4F0061FDE8 /* FloorUpdate.h */,
 				289F99BB13B3CB4F0061FDE8 /* FloorUpdate.m */,
 				289F99BD13B3CD320061FDE8 /* Bill.h */,
@@ -760,6 +765,7 @@
 				289F99BC13B3CB4F0061FDE8 /* FloorUpdate.m in Sources */,
 				289F99C313B3CD330061FDE8 /* Bill.m in Sources */,
 				289F99C413B3CD330061FDE8 /* CongressionalArtifact.m in Sources */,
+				28E0D76013CF698700E21A5B /* Legislator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
