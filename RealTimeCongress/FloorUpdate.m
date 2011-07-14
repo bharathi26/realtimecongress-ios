@@ -19,7 +19,6 @@
 @synthesize displayTextWithDate = _displayTextWithDate;
 @synthesize textHeight = _textHeight;
 @synthesize textViewHeightRequired;
-@synthesize legislators = _legislators;
 @synthesize bills = _bills;
 @synthesize hasAbbreviations;
 
@@ -29,7 +28,6 @@
         _displayText = [text copy];
         _date = [date copy];
         _textHeight = -1;
-        _legislators = [[NSMutableSet alloc] initWithCapacity:5];
         _bills = [[NSMutableSet alloc] initWithCapacity:5];
     }
     return self;
@@ -66,18 +64,8 @@
     return [self textHeight] + 15;
 }
 
-- (void)addLegislator:(Legislator *)legislator {
-    [_legislators addObject:legislator];
-}
-
-- (void)addBill:(Bill *)bill {
-    [_legislators addObject:bill];
-}
-
 - (BOOL)hasAbbreviations {
     if ([_bills count] > 0)
-        return YES;
-    else if ([_legislators count] > 0)
         return YES;
     else
         return NO;
@@ -88,7 +76,6 @@
     [_displayTextWithDate release];
     [_displayText release];
     [_date release];
-    [_legislators release];
     [_bills release];
     [super dealloc];
 }

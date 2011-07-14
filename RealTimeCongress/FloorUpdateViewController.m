@@ -61,11 +61,6 @@
             [floorUpdateText appendFormat:@"%@",str];
         }
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
-        for (id str in [update objectForKey:@"legislator_ids"]) {
-            Legislator * legislator = [[[Legislator alloc] initWithBioguideId:str] autorelease];
-            [legislator requestInformation];
-            [floorUpdate addLegislator:legislator];
-        }
         [tempFloorUpdates addObject:floorUpdate];
         [floorUpdateText setString:@""];
     }

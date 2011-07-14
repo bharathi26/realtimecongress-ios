@@ -19,7 +19,6 @@
 		289F99BC13B3CB4F0061FDE8 /* FloorUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99BB13B3CB4F0061FDE8 /* FloorUpdate.m */; };
 		289F99C313B3CD330061FDE8 /* Bill.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99BE13B3CD330061FDE8 /* Bill.m */; };
 		289F99C413B3CD330061FDE8 /* CongressionalArtifact.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */; };
-		289F99C513B3CD330061FDE8 /* Legislator.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99C213B3CD330061FDE8 /* Legislator.m */; };
 		289F99C913B3CE370061FDE8 /* LoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */; };
 		28BC5828139AA0BC00EBA6BE /* CommitteeHearingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */; };
 		28BC5829139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */; };
@@ -162,8 +161,6 @@
 		289F99BE13B3CD330061FDE8 /* Bill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bill.m; sourceTree = "<group>"; };
 		289F99BF13B3CD330061FDE8 /* CongressionalArtifact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongressionalArtifact.h; sourceTree = "<group>"; };
 		289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CongressionalArtifact.m; sourceTree = "<group>"; };
-		289F99C113B3CD330061FDE8 /* Legislator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Legislator.h; sourceTree = "<group>"; };
-		289F99C213B3CD330061FDE8 /* Legislator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Legislator.m; sourceTree = "<group>"; };
 		289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
 		28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommitteeHearingsViewController.h; sourceTree = "<group>"; };
 		28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommitteeHearingsViewController.m; sourceTree = "<group>"; };
@@ -336,8 +333,6 @@
 				289F99BE13B3CD330061FDE8 /* Bill.m */,
 				289F99BF13B3CD330061FDE8 /* CongressionalArtifact.h */,
 				289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */,
-				289F99C113B3CD330061FDE8 /* Legislator.h */,
-				289F99C213B3CD330061FDE8 /* Legislator.m */,
 			);
 			name = "Congress Model";
 			sourceTree = "<group>";
@@ -765,7 +760,6 @@
 				289F99BC13B3CB4F0061FDE8 /* FloorUpdate.m in Sources */,
 				289F99C313B3CD330061FDE8 /* Bill.m in Sources */,
 				289F99C413B3CD330061FDE8 /* CongressionalArtifact.m in Sources */,
-				289F99C513B3CD330061FDE8 /* Legislator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
