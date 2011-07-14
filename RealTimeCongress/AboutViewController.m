@@ -7,6 +7,7 @@
 //
 
 #import "AboutViewController.h"
+#import "GANTracker.h"
 
 
 @implementation AboutViewController
@@ -59,6 +60,19 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSError *error;
+    //Register a page view to the Google Analytics tracker
+    if (![[GANTracker sharedTracker] trackPageview:@"/about"
+                                         withError:&error]) {
+        // Handle error here
+    }
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

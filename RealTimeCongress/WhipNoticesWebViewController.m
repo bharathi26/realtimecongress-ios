@@ -7,6 +7,7 @@
 //
 
 #import "WhipNoticesWebViewController.h"
+#import "GANTracker.h"
 
 
 @implementation WhipNoticesWebViewController
@@ -46,6 +47,18 @@
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:webView  action:@selector(reload)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSError *error;
+    //Register a page view to the Google Analytics tracker
+    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices/webview"
+                                         withError:&error]) {
+        // Handle error here
+    }
 }
 
 - (void)viewDidUnload

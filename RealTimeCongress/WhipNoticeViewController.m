@@ -2,6 +2,7 @@
 #import "SunlightLabsRequest.h"
 #import "WhipNoticesWebViewController.h"
 #import "JSONKit.h"
+#import "GANTracker.h"
 
 @implementation WhipNoticeViewController
 
@@ -72,6 +73,13 @@
     [super viewWillAppear:animated];
     //Refresh data
     [self refresh];
+    
+    NSError *error;
+    //Register a page view to the Google Analytics tracker
+    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+                                         withError:&error]) {
+        // Handle error here
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -2,7 +2,7 @@
 #import "GANTracker.h"
 
 // Dispatch period in seconds
-static const NSInteger kGANDispatchPeriodSec = 10;
+static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
 
 @implementation RealTimeCongressAppDelegate
 
@@ -22,6 +22,9 @@ static const NSInteger kGANDispatchPeriodSec = 10;
     
     //Set Dry Run flag for testing
     [GANTracker sharedTracker].dryRun = YES;
+    
+    //Set Debug flag for test
+    [GANTracker sharedTracker].debug = YES;
     
     // Add the navigation controller's view to the window and display
     self.window.rootViewController = self.navigationController;
@@ -43,6 +46,9 @@ static const NSInteger kGANDispatchPeriodSec = 10;
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    
+    //Dispatch batched tracking requests
+    [[GANTracker sharedTracker] dispatch];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

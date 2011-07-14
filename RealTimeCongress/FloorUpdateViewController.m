@@ -9,6 +9,7 @@
 #import "FloorUpdateViewController.h"
 #import "FloorUpdate.h"
 #import "SunlightLabsRequest.h"
+#import "GANTracker.h"
 
 @interface NSString (CancelRequest)
 
@@ -77,6 +78,23 @@
 }
 
 - (void)refresh {
+    //Track page view based on selected chamber control button
+    NSError *error;
+    if (control.selectedSegmentIndex == 0) {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/floor-updates/house"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
+    
+    else {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/floor-updates/senate"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
     page = 0;
     if (connection) {
         [connection cancel];
@@ -118,6 +136,24 @@
         [floorUpdates addObject:@"LoadingRow"];
     }
     [super viewWillAppear:animated];
+    
+    //Track page view based on selected chamber control button
+    NSError *error;
+    if (control.selectedSegmentIndex == 0) {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/floor-updates/house"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
+    
+    else {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/floor-updates/senate"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

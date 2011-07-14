@@ -9,6 +9,7 @@
 #import "CommitteeHearingsViewController.h"
 #import "JSONKit.h"
 #import "SunlightLabsRequest.h"
+#import "GANTracker.h"
 
 #pragma mark Utility extensions
 
@@ -102,42 +103,24 @@
 {
     [super viewWillAppear:animated];
     
-    //Fetch the cache object from the JSONCache plist and check the timestamp
-    //If the timestamp is greater than the current time by 5 minutes or more, make a new request
-    //Otherwise, load cached data
+    //Track page view based on selected chamber control button
     
-    NSString *errorDesc = nil;
-    NSPropertyListFormat format;
-    NSString *plistPath;
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-    plistPath = [rootPath stringByAppendingPathComponent:@"JSONCache.plist"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
-        plistPath = [[NSBundle mainBundle] pathForResource:@"JSONCache" ofType:@"plist"];
-    }
-    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-    NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
-                                          propertyListFromData:plistXML
-                                          mutabilityOption:NSPropertyListMutableContainersAndLeaves
-                                          format:&format
-                                          errorDescription:&errorDesc];
-    if (!temp) {
-        NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
-    }
-    
-    NSDate *lastUpdated = [[temp objectForKey:@"CommitteeHearingCache"] objectForKey:@"lastUpdated"];
-    if ([[NSDate date] timeIntervalSinceDate:lastUpdated] >= 300) {
-        //Refresh data
-        [self refresh];
-    }
-    
-    else{
-        if ([[temp objectForKey:@"CommitteeHearingCache"] objectForKey:@"cachedResponse"] != NULL) {
-            jsonData = [[temp objectForKey:@"CommitteeHearingCache"] objectForKey:@"lastUpdated"];
-            [self parseData];
+    NSError *error;
+    if (chamberControl.selectedSegmentIndex == 0) {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/house"
+                                             withError:&error]) {
+            // Handle error here
         }
     }
     
+    else {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/senate"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
     
 }
 
@@ -287,6 +270,24 @@
     
     //Disable scrolling while data is loading
     self.hearingsTableView.scrollEnabled = NO;
+    
+    //Track page view based on selected chamber control button
+    NSError *error;
+    if (chamberControl.selectedSegmentIndex == 0) {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/house"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
+    
+    else {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/senate"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
     
     //Animate the activity indicator and network activity indicator when loading data
     [self.loadingIndicator startAnimating];
