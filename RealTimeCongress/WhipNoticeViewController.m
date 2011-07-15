@@ -185,6 +185,13 @@
     //Animate the activity indicator and network activity indicator when loading data
     [self.loadingIndicator startAnimating];
     
+    NSError *error;
+    //Register a page view to the Google Analytics tracker
+    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+                                         withError:&error]) {
+        // Handle error here
+    }
+    
     [self retrieveData];
 }
 
