@@ -7,10 +7,7 @@
 @implementation WhipNoticeViewController
 
 @synthesize parsedWhipNoticeData;
-@synthesize jsonData;
-@synthesize jsonKitDecoder;
 @synthesize loadingIndicator;
-@synthesize opQueue;
 @synthesize noticeDaysDictionary;
 @synthesize sectionDataArray;
 @synthesize noticeDaysArray;
@@ -28,7 +25,6 @@
 {
     [super dealloc];
     [loadingIndicator release];
-    [opQueue release];
     [parsedWhipNoticeData release];
 }
 
@@ -52,9 +48,6 @@
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
-    //Initialize the operation queue
-    opQueue = [[NSOperationQueue alloc] init];
-    
     //An activity indicator to indicate loading
     loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [loadingIndicator setCenter:self.view.center];
@@ -71,8 +64,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //Refresh data
-    [self refresh];
+    
+    //Retrieve data
+    [self retrieveData];
     
     NSError *error;
     //Register a page view to the Google Analytics tracker
@@ -190,20 +184,18 @@
     
     //Animate the activity indicator and network activity indicator when loading data
     [self.loadingIndicator startAnimating];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    //Asynchronously retrieve data
-    NSInvocationOperation* dataRetrievalOp = [[[NSInvocationOperation alloc] initWithTarget:self
-                                                                                   selector:@selector(retrieveData) object:nil] autorelease];
-    [dataRetrievalOp addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
-    [opQueue addOperation:dataRetrievalOp];
+    [self retrieveData];
 }
 
-- (void) parseData
+- (void) parseData: (NSNotification *)notification
 {
-    //JSONKit decoding
-    jsonKitDecoder = [JSONDecoder decoder];
-    NSDictionary *items = [jsonKitDecoder objectWithData:jsonData];
+    //Release connection upon data receiption
+    [connection release];
+    connection = nil;
+    
+    //Assign received data
+    NSDictionary *items = [notification userInfo];
     NSArray *data = [items objectForKey:@"documents"];
     
     //Sort data by legislative day then split in to sections
@@ -241,6 +233,18 @@
     }
     
     sectionDataArray = [[NSArray alloc] initWithArray:noticeDayMutableArray];
+    
+    //Reload the table once data retrieval is complete
+    [self.tableView reloadData];
+    
+    //Hide the activity indicator and network activity indicator once loading is complete
+    [loadingIndicator stopAnimating];
+    
+    //Re-enable scrolling once loading is complete and the loading indicator disappears
+    self.tableView.scrollEnabled = YES;
+    
+    // Reveal back button when loading is complete
+    self.navigationItem.hidesBackButton = NO;
 }
 
 - (void) retrieveData
@@ -253,35 +257,9 @@
                                        nil];
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
     
-    //JSONKit requests
-    
-    jsonData = [NSData dataWithContentsOfURL:[dataRequest.request URL]];
-    
-    if (jsonData != NULL) {
-        [self parseData];
-    }
-}
-
-#pragma mark Key-Value Observing methods
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if ([keyPath isEqual:@"isFinished"]) {
-        //Reload the table once data retrieval is complete
-        [self.tableView reloadData];
-        
-        //Hide the activity indicator and network activity indicator once loading is complete
-        [loadingIndicator stopAnimating];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-        //Re-enable scrolling once loading is complete and the loading indicator disappears
-        self.tableView.scrollEnabled = YES;
-        
-        // Reveal back button when loading is complete
-        self.navigationItem.hidesBackButton = NO;
-    }
+    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+    [connection sendRequest];
 }
 
 @end

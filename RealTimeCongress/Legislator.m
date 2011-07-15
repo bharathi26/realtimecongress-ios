@@ -66,10 +66,10 @@
 
 - (void)requestInformation {
     _informationRequested = YES;
-    if (_connection) {
+    /*if (_connection]) {
         [self receiveInformation:[NSNotification notificationWithName:nil object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSError errorWithDomain:@"CongressModel" code:1001 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Connection already in progress for this artifact of congress.",@"NSLocalizedDescriptionKey", nil]],@"error", nil]]];
         return;
-    }
+    }*/
     SunlightLabsRequest * request;
     if ([_informationAvailibilityDictionary objectForKey:@"bioguideId"] == InformationAvailable) {
         request = [[SunlightLabsRequest alloc] initLegislatorRequestWithParameters:[NSDictionary dictionaryWithObjectsAndKeys:_bioguideId,@"bioguide_id", nil] multiple:NO];
@@ -93,7 +93,7 @@
 - (void)receiveInformation:(NSNotification *)notification {
     if ([[notification userInfo] objectForKey:@"error"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:ReceivedCongressionalInformationNotification object:self userInfo:[notification userInfo]];
-        _abbreviated = YES;
+        //_abbreviated = YES;
     } else {
         NSDictionary * data = [[[notification userInfo] objectForKey:@"response"] objectForKey:@"legislator"];
         _title = [[data objectForKey:@"title"] retain];
@@ -159,7 +159,7 @@
             [formatter release];
         }
         [super receiveInformation:notification];
-        _abbreviated = NO;
+        //_abbreviated = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:ReceivedCongressionalInformationNotification object:self];
     }
 }

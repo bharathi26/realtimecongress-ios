@@ -1,34 +1,28 @@
 #import <UIKit/UIKit.h>
 #import "JSONKit.h"
+#import "SunlightLabsConnection.h"
 
 #define REQUEST_PAGE_SIZE @"100"
 
 @interface WhipNoticeViewController : UITableViewController {
+    @private
     NSArray *parsedWhipNoticeData;
-    NSData *jsonData;
-    JSONDecoder *jsonKitDecoder;
     UIActivityIndicatorView *loadingIndicator;
-    NSOperationQueue *opQueue;
     NSMutableDictionary *noticeDaysDictionary;
     NSArray *sectionDataArray;
     NSMutableArray *noticeDaysArray;
+    SunlightLabsConnection *connection;
 }
 
 @property(nonatomic,retain) NSArray *parsedWhipNoticeData;
-@property(nonatomic,retain) NSData *jsonData;
-@property(nonatomic,retain) JSONDecoder *jsonKitDecoder;
-@property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;
-@property(nonatomic,retain) NSOperationQueue *opQueue;
+@property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;;
 @property(nonatomic,retain) NSMutableDictionary *noticeDaysDictionary;
 @property(nonatomic,retain) NSArray *sectionDataArray;
 @property(nonatomic,retain) NSMutableArray *noticeDaysArray;
 
 
 - (void) refresh;
-- (void) parseData;
+- (void) parseData: (NSNotification *)notification;
 - (void) retrieveData;
-- (void) observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context;
+
 @end
