@@ -260,7 +260,6 @@
     NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
                                        @"for_date", @"sort",
-                                       @"desc", @"order",
                                        nil];
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
     
