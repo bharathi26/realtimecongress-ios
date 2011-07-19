@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1056</int>
-		<string key="IBDocument.SystemVersion">10J4138</string>
+		<string key="IBDocument.SystemVersion">10K540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1306</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -73,7 +73,7 @@
 							<object class="IBUILabel" id="702038961">
 								<reference key="NSNextResponder" ref="607216145"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{320, 0}</string>
+								<string key="NSFrame">{{0, 30}, {320, 0}}</string>
 								<reference key="NSSuperview" ref="607216145"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="562833600"/>
@@ -260,13 +260,11 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chamberControl</string>
-							<string>hearingTableView</string>
 							<string>hearingsTableView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UISegmentedControl</string>
-							<string>UITableView</string>
 							<string>UITableView</string>
 						</object>
 					</object>
@@ -275,7 +273,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>chamberControl</string>
-							<string>hearingTableView</string>
 							<string>hearingsTableView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -283,10 +280,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">chamberControl</string>
 								<string key="candidateClassName">UISegmentedControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">hearingTableView</string>
-								<string key="candidateClassName">UITableView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">hearingsTableView</string>
