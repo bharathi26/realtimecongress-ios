@@ -60,6 +60,10 @@
             str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             [floorUpdateText appendFormat:@"%@",str];
         }
+        if (control.selectedSegmentIndex == 1) {
+            NSString *prependString = [NSString stringWithFormat: @"Spoke: Senator %@", floorUpdateText];
+            [floorUpdateText setString:prependString];
+        }
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
         [tempFloorUpdates addObject:floorUpdate];
         [floorUpdateText setString:@""];
