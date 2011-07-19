@@ -11,7 +11,7 @@
 
 @implementation FloorUpdate
 
-#define kTextViewFontSize        14.0 //This matches the height of the font in the UITextView in the nib (FloorUpdateTableViewCell.xib)
+#define kTextViewFontSize        17.0 //This matches the height of the font in the UITextView in the nib (FloorUpdateTableViewCell.xib)
 
 @synthesize displayText = _displayText;
 @synthesize date = _date;

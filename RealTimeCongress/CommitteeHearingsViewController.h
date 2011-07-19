@@ -11,6 +11,7 @@
 #import "SunlightLabsConnection.h"
 
 #define REQUEST_PAGE_SIZE @"100"
+#define CELL_WIDTH 260
 
 @interface CommitteeHearingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     @private

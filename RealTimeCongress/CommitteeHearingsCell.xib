@@ -47,36 +47,13 @@
 						<int key="NSvFlags">256</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUILabel" id="562833600">
-								<reference key="NSNextResponder" ref="607216145"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 11}, {42, 21}}</string>
-								<reference key="NSSuperview" ref="607216145"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="413580115"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">7</int>
-								<int key="IBUITag">2</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText"/>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC43MTE5NTY1MjE3IDAuNzExOTU2NTIxNyAwLjcxMTk1NjUyMTcAA</bytes>
-								</object>
-								<nil key="IBUIHighlightedColor"/>
-								<int key="IBUIBaselineAdjustment">1</int>
-								<float key="IBUIMinimumFontSize">10</float>
-								<int key="IBUILineBreakMode">0</int>
-							</object>
 							<object class="IBUILabel" id="702038961">
 								<reference key="NSNextResponder" ref="607216145"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 30}, {320, 0}}</string>
+								<string key="NSFrame">{{25, 30}, {295, 0}}</string>
 								<reference key="NSSuperview" ref="607216145"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="562833600"/>
+								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -100,12 +77,36 @@
 								<int key="IBUINumberOfLines">0</int>
 								<int key="IBUILineBreakMode">0</int>
 							</object>
+							<object class="IBUILabel" id="562833600">
+								<reference key="NSNextResponder" ref="607216145"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{0, 11}, {42, 21}}</string>
+								<reference key="NSSuperview" ref="607216145"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="413580115"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<int key="IBUITag">2</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText"/>
+								<object class="NSColor" key="IBUITextColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC43MTE5NTY1MjE3IDAuNzExOTU2NTIxNyAwLjcxMTk1NjUyMTcAA</bytes>
+								</object>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">1</int>
+								<float key="IBUIMinimumFontSize">10</float>
+								<int key="IBUILineBreakMode">0</int>
+							</object>
 							<object class="IBUILabel" id="413580115">
 								<reference key="NSNextResponder" ref="607216145"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{0, 23}, {42, 21}}</string>
 								<reference key="NSSuperview" ref="607216145"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="702038961"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -123,7 +124,7 @@
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="454943130"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="702038961"/>
+						<reference key="NSNextKeyView" ref="562833600"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
@@ -188,9 +189,9 @@
 						<reference key="object" ref="454943130"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="702038961"/>
 							<reference ref="562833600"/>
 							<reference ref="413580115"/>
+							<reference ref="702038961"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>

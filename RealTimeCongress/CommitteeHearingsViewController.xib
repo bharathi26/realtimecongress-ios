@@ -85,9 +85,9 @@
 							<object class="NSNull" id="4"/>
 							<reference ref="4"/>
 						</object>
-						<object class="NSColor" key="IBTintColor" id="371774513">
+						<object class="NSColor" key="IBTintColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MAA</bytes>
+							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 						</object>
 					</object>
 					<object class="IBUITableView" id="873029372">
@@ -119,7 +119,10 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="294816238"/>
-				<reference key="IBUIBackgroundColor" ref="371774513"/>
+				<object class="NSColor" key="IBUIBackgroundColor">
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MAA</bytes>
+				</object>
 				<bool key="IBUIOpaque">NO</bool>
 				<bool key="IBUIAutoresizesSubviews">NO</bool>
 				<bool key="IBUIClipsSubviews">YES</bool>

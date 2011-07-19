@@ -186,7 +186,7 @@
         committeeNameLabel = (UILabel *)[cell viewWithTag:1];
         committeeNameLabel.text = [[[sectionArray objectAtIndex:indexPath.row] 
                                     objectForKey:@"committee"] objectForKey:@"name"];
-        [committeeNameLabel sizeToFitFixedWidth:320];
+        [committeeNameLabel sizeToFitFixedWidth:CELL_WIDTH];
     
         //Position Time and Place text
         timeAndPlaceLabel = (UILabel *)[cell viewWithTag:2];
@@ -201,8 +201,8 @@
                                       [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"legislative_day"]];
         }
         timeAndPlaceLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
-                                             (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),320, 0);
-        [timeAndPlaceLabel sizeToFitFixedWidth:320];
+                                             (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),CELL_WIDTH, 0);
+        [timeAndPlaceLabel sizeToFitFixedWidth:CELL_WIDTH];
         
         
         //Position Description text
@@ -210,8 +210,8 @@
         descriptionLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"description"];
         descriptionLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
                                             (timeAndPlaceLabel.frame.origin.y + timeAndPlaceLabel.frame.size.height), 
-                                            320, 0);
-        [descriptionLabel sizeToFitFixedWidth:320];
+                                            CELL_WIDTH, 0);
+        [descriptionLabel sizeToFitFixedWidth:CELL_WIDTH];
     }
     
     return cell;
@@ -236,7 +236,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //Calculates the appropriate row height based on the size of the three text labels
-    CGSize maxSize = CGSizeMake(320, CGFLOAT_MAX);
+    CGSize maxSize = CGSizeMake(CELL_WIDTH, CGFLOAT_MAX);
     NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
     
     CGSize committeeNameTextSize = [[[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"committee"] objectForKey:@"name"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
