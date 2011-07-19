@@ -26,6 +26,9 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
     //Set Debug flag for test
     [GANTracker sharedTracker].debug = YES;
     
+    //Set status bar color to black
+    [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    
     // Add the navigation controller's view to the window and display
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
