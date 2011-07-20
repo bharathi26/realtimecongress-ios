@@ -220,7 +220,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
     if (parsedHearingData != nil) {
-        return [hearingDays objectAtIndex:section];
+        //Date Formatter for each hearing day
+        NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
+        [dateFomatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate *rawDate = [dateFomatter dateFromString: [hearingDays objectAtIndex:section]];
+        [dateFomatter setDateFormat:@"EEEE, MMMM dd"];
+        return [dateFomatter stringFromDate:rawDate];
     }
     else {
         return [NSString stringWithString:@"No hearings scheduled"];
@@ -307,6 +312,7 @@
         NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"occurs_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
         NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime,nil];
         parsedHearingData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
+        
         
         // A mutable array containing the unique hearing days
         hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
