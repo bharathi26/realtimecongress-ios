@@ -157,7 +157,11 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
     if (parsedWhipNoticeData != NULL) {
-        return [noticeDaysArray objectAtIndex:section];
+        NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
+        [dateFomatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate *rawDate = [dateFomatter dateFromString: [noticeDaysArray objectAtIndex:section]];
+        [dateFomatter setDateFormat:@"EEEE, MMMM dd"];
+        return [dateFomatter stringFromDate:rawDate];
     }
     else {
         return [NSString stringWithString:@" "];
