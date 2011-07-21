@@ -139,16 +139,7 @@
         }
         
         noticeType = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"notice_type"] capitalizedString];
-        /*
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSDate *noticeDate = [dateFormatter dateFromString: [[sectionArray objectAtIndex:indexPath.row] 
-                                                             objectForKey:@"for_date"]];
-        [dateFormatter setDateFormat:@"EEEE, MMMM d"];
-        NSString *formattedDate = [dateFormatter stringFromDate:noticeDate];
-        */
         cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ Whip", partyType, noticeType];
-        //cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", formattedDate];
     }
 
     return cell;
