@@ -14,6 +14,7 @@
     @private
     SunlightLabsConnection * connection;
     NSMutableArray * floorUpdates;
+    NSMutableArray *updateDays;
     NSUInteger page;
     UISegmentedControl * control;
     UITableView *floorUpdatesTableView;

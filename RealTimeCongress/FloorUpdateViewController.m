@@ -65,6 +65,13 @@
             [floorUpdateText setString:prependString];
         }
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
+        
+        // Check if the date has been added to update days array. Add it if it hasn't.
+        NSDate *updateDay = [floorUpdate date];
+        if (![updateDays containsObject: updateDay]) {
+            [updateDays addObject:updateDay];
+        }
+        
         [tempFloorUpdates addObject:floorUpdate];
         [floorUpdateText setString:@""];
     }
@@ -129,6 +136,12 @@
         floorUpdates = [[NSMutableArray alloc] initWithCapacity:20];
         [floorUpdates addObject:@"LoadingRow"];
     }
+    
+    //Array to keep track of the unique days for each update
+    if (!updateDays){
+        updateDays = [[NSMutableArray alloc] initWithCapacity:20];
+    }
+    
     [super viewWillAppear:animated];
     
     //Track page view based on selected chamber control button
@@ -176,7 +189,12 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    if ([updateDays count] > 0) {
+        return [updateDays count];
+    }
+    else{
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -228,6 +246,19 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         return cell;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // Sets the title of each section to the legislative day
+    if ([updateDays count] > 0) {
+        //Date Formatter for each hearing day
+        NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
+        [dateFomatter setDateFormat:@"EEEE, MMMM dd"];
+        return [dateFomatter stringFromDate:[updateDays objectAtIndex:section]];
+    }
+    else {
+        return [NSString stringWithString:@"No hearings scheduled"];
     }
 }
 
