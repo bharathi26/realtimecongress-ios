@@ -69,7 +69,7 @@
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
-        NSString *updateDay = [updateDayFomatter stringFromDate:[floorUpdate date] ];
+        NSString *updateDay = [updateDayFomatter stringFromDate:[floorUpdate date]];
         if (![updateDays containsObject: updateDay]) {
             [updateDays addObject:updateDay];
         }
@@ -110,6 +110,7 @@
     }
     [floorUpdates makeObjectsPerformSelector:@selector(cancelRequest)];
     [floorUpdates removeAllObjects];
+    [updateDays removeAllObjects];
     [floorUpdates addObject:@"LoadingRow"];
     [self.floorUpdatesTableView reloadData];
 }
