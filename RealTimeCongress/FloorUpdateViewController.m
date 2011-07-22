@@ -56,6 +56,10 @@
     NSDateFormatter *updateDayFomatter = [[NSDateFormatter alloc] init];
     [updateDayFomatter setDateFormat:@"EEEE, MMMM dd"];
     NSMutableString * floorUpdateText = [NSMutableString stringWithCapacity:100];
+    
+    // Create a dictionary to associate updates with days
+    NSMutableDictionary *updateDayDictionary = [NSMutableDictionary dictionary];
+    
     for (id update in [userInfo objectForKey:@"floor_updates"]) {
         NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"timestamp"]];
         for (id str in [update objectForKey:@"events"]) {
@@ -73,6 +77,16 @@
         if (![updateDays containsObject: updateDay]) {
             [updateDays addObject:updateDay];
         }
+
+        // Check if there is an array for the update day. If there isn't, create an array to store updates for that day. 
+        if ([updateDayDictionary objectForKey:updateDay] == nil) {
+            [updateDayDictionary setObject:[NSMutableArray array] forKey:updateDay];
+        }
+        
+        // Add the update to its respective array
+        [updateDayDictionary objectForKey:updateDay];
+        
+        // Convert the hearing day dictionary into a mutable array
         
         [tempFloorUpdates addObject:floorUpdate];
         [floorUpdateText setString:@""];
