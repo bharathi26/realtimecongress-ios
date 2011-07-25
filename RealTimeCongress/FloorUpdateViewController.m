@@ -84,11 +84,12 @@
         }
         
         // Add the update to its respective array
-        [updateDayDictionary objectForKey:updateDay];
+        [[updateDayDictionary objectForKey:updateDay] addObject:floorUpdate];
         
         // Convert the hearing day dictionary into a mutable array
         
-        [tempFloorUpdates addObject:floorUpdate];
+        [tempFloorUpdates addObject:[updateDayDictionary objectForKey:updateDay]];
+        
         [floorUpdateText setString:@""];
     }
     id last = [[floorUpdates lastObject] retain];
@@ -122,7 +123,12 @@
         [connection cancel];
         [connection release];
     }
-    [floorUpdates makeObjectsPerformSelector:@selector(cancelRequest)];
+    //[floorUpdates makeObjectsPerformSelector:@selector(cancelRequest)];
+    for (id obj in floorUpdates) {
+        if (obj != @"LoadingRow") {
+            [obj makeObjectsPerformSelector:@selector(cancelRequest)];
+        }
+    }
     [floorUpdates removeAllObjects];
     [updateDays removeAllObjects];
     [floorUpdates addObject:@"LoadingRow"];
@@ -217,17 +223,27 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [floorUpdates count];
+    if ([[floorUpdates objectAtIndex:section] isEqual:@"LoadingRow"]) {
+        return 1;
+    }
+    else{
+        NSArray *sectionArray = [floorUpdates objectAtIndex:section];
+        return [sectionArray count];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[floorUpdates objectAtIndex:indexPath.row] isMemberOfClass:[FloorUpdate class]]) {
-        return [[floorUpdates objectAtIndex:indexPath.row] textHeight] + 60; //55 = the height of the table cell wihtout the event text (76 - 21)
-    } else {
+    if ([[floorUpdates objectAtIndex:indexPath.row] isEqual:@"LoadingRow"]) {
         return 44.0;
+    }
+    else{
+        NSArray *sectionArray = [floorUpdates objectAtIndex:indexPath.section];
+        return [[sectionArray objectAtIndex:indexPath.row] textHeight] + 60;
+        //55 = the height of the table cell wihtout the event text (76 - 21)
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@", [floorUpdates lastObject]);
     if (indexPath.row == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
         page += 1;
         NSString * chamber = [control selectedSegmentIndex] == 0 ? @"house" : @"senate";
@@ -239,24 +255,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if ([[floorUpdates objectAtIndex:indexPath.row] isMemberOfClass:[FloorUpdate class]]) {
-        static NSString *CellIdentifier = @"FloorUpdateCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"FloorUpdateTableViewCell" owner:self options:nil] objectAtIndex:0];
-        }
-        [(UILabel *)[cell viewWithTag:1] setText:[[floorUpdates objectAtIndex:indexPath.row] displayDate]];
-        [(UITextView *)[cell viewWithTag:2] setFrame:CGRectMake([cell viewWithTag:2].frame.origin.x, [cell viewWithTag:2].frame.origin.y, [cell viewWithTag:2].frame.size.width,[[floorUpdates objectAtIndex:indexPath.row] textViewHeightRequired])];
-        [(UITextView *)[cell viewWithTag:2] setText:[[floorUpdates objectAtIndex:indexPath.row] displayText]];
-        return cell;
-    } else if ([[floorUpdates objectAtIndex:indexPath.row] isEqual:@"LoadingRow"]) {
+    NSArray *sectionArray = [floorUpdates objectAtIndex:indexPath.section];
+    
+    if ([[floorUpdates objectAtIndex:indexPath.row] isEqual:@"LoadingRow"]) {
         static NSString *CellIdentifier = @"LoadingCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"LoadingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
         return cell;
-    } else {
+    }
+    
+    else if ([[sectionArray objectAtIndex:indexPath.row] isMemberOfClass:[FloorUpdate class]]) {
+        static NSString *CellIdentifier = @"FloorUpdateCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"FloorUpdateTableViewCell" owner:self options:nil] objectAtIndex:0];
+        }
+        [(UILabel *)[cell viewWithTag:1] setText:[[sectionArray objectAtIndex:indexPath.row] displayDate]];
+        [(UITextView *)[cell viewWithTag:2] setFrame:CGRectMake([cell viewWithTag:2].frame.origin.x, [cell viewWithTag:2].frame.origin.y, [cell viewWithTag:2].frame.size.width,[[sectionArray objectAtIndex:indexPath.row] textViewHeightRequired])];
+        [(UITextView *)[cell viewWithTag:2] setText:[[sectionArray objectAtIndex:indexPath.row] displayText]];
+        return cell;
+    }  
+    
+    else {
         static NSString * cellIdentifier = @"Cell";
         UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
@@ -270,12 +292,10 @@
     // Sets the title of each section to the legislative day
     if ([updateDays count] > 0) {
         //Date Formatter for each hearing day
-        NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
-        [dateFomatter setDateFormat:@"EEEE, MMMM dd"];
-        return [dateFomatter stringFromDate:[updateDays objectAtIndex:section]];
+        return [updateDays objectAtIndex:section];
     }
     else {
-        return [NSString stringWithString:@"No hearings scheduled"];
+        return [NSString stringWithString:@"No events logged"];
     }
 }
 
