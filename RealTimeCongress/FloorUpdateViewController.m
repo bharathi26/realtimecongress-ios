@@ -57,9 +57,6 @@
     [updateDayFomatter setDateFormat:@"EEEE, MMMM dd"];
     NSMutableString * floorUpdateText = [NSMutableString stringWithCapacity:100];
     
-    // Create a dictionary to associate updates with days
-    NSMutableDictionary *updateDayDictionary = [NSMutableDictionary dictionary];
-    
     for (id update in [userInfo objectForKey:@"floor_updates"]) {
         NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"timestamp"]];
         for (id str in [update objectForKey:@"events"]) {
@@ -81,20 +78,32 @@
         // Check if there is an array for the update day. If there isn't, create an array to store updates for that day. 
         if ([updateDayDictionary objectForKey:updateDay] == nil) {
             [updateDayDictionary setObject:[NSMutableArray array] forKey:updateDay];
+            // Add the update to its respective array
+            [[updateDayDictionary objectForKey:updateDay] addObject:floorUpdate];
         }
-        
-        // Add the update to its respective array
-        [[updateDayDictionary objectForKey:updateDay] addObject:floorUpdate];
-        
-        // Convert the hearing day dictionary into a mutable array
-        
-        [tempFloorUpdates addObject:[updateDayDictionary objectForKey:updateDay]];
+        else {
+            // Add the update to its respective array if it already exists
+            [[updateDayDictionary objectForKey:updateDay] addObject:floorUpdate];
+        }
         
         [floorUpdateText setString:@""];
     }
+    
     id last = [[floorUpdates lastObject] retain];
     [floorUpdates removeObject:[floorUpdates lastObject]];
-    [floorUpdates addObjectsFromArray:tempFloorUpdates];
+    [floorUpdates removeAllObjects];
+    for (NSString *updateDayString in updateDayDictionary) {
+        [floorUpdates addObject:[updateDayDictionary objectForKey:updateDayString]];
+    }
+    //[floorUpdates addObjectsFromArray:tempFloorUpdates];
+    // Convert the hearing day dictionary into a mutable array
+    /*if ([updateDays count] > 0) {
+        for (NSString *day in updateDays) {
+            [floorUpdates replaceObjectAtIndex:[updateDays indexOfObject:day] withObject:[updateDayDictionary objectForKey:day]];
+            //[floorUpdates addObject:[updateDayDictionary objectForKey:day]];
+        }    
+    }*/
+    
     [floorUpdates addObject:last];
     [last release];
     [self.floorUpdatesTableView reloadData];
@@ -165,6 +174,9 @@
         updateDays = [[NSMutableArray alloc] initWithCapacity:20];
     }
     
+    // Create a dictionary to associate updates with days
+    updateDayDictionary = [[NSMutableDictionary dictionary] retain];
+    
     [super viewWillAppear:animated];
     
     //Track page view based on selected chamber control button
@@ -213,7 +225,7 @@
 {
     // Return the number of sections.
     if ([updateDays count] > 0) {
-        return [updateDays count];
+        return ([updateDays count]+1);
     }
     else{
         return 1;
@@ -233,7 +245,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[floorUpdates objectAtIndex:indexPath.row] isEqual:@"LoadingRow"]) {
+    if ([[floorUpdates objectAtIndex:indexPath.section] isEqual:@"LoadingRow"]) {
         return 44.0;
     }
     else{
@@ -243,8 +255,8 @@
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", [floorUpdates lastObject]);
-    if (indexPath.row == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
+    if (indexPath.section == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
+        NSLog(@"Load data");
         page += 1;
         NSString * chamber = [control selectedSegmentIndex] == 0 ? @"house" : @"senate";
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:[[[SunlightLabsRequest alloc] initFloorUpdateRequestWithParameters:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil]] autorelease]];
@@ -254,10 +266,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSArray *sectionArray = [floorUpdates objectAtIndex:indexPath.section];
-    
-    if ([[floorUpdates objectAtIndex:indexPath.row] isEqual:@"LoadingRow"]) {
+    if ([[floorUpdates objectAtIndex:indexPath.section] isEqual:@"LoadingRow"]) {
+        NSLog(@"Loading Row Cell loaded");
         static NSString *CellIdentifier = @"LoadingCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -266,7 +276,8 @@
         return cell;
     }
     
-    else if ([[sectionArray objectAtIndex:indexPath.row] isMemberOfClass:[FloorUpdate class]]) {
+    else if ([[[floorUpdates objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] isMemberOfClass:[FloorUpdate class]]) {
+        NSArray *sectionArray = [floorUpdates objectAtIndex:indexPath.section];
         static NSString *CellIdentifier = @"FloorUpdateCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -291,8 +302,13 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
     if ([updateDays count] > 0) {
-        //Date Formatter for each hearing day
-        return [updateDays objectAtIndex:section];
+        if (section == [updateDays count]) {
+            return nil;
+        }
+        else {
+            return [updateDays objectAtIndex:section];
+        }
+        
     }
     else {
         return [NSString stringWithString:@"No events logged"];

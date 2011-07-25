@@ -18,6 +18,7 @@
     NSUInteger page;
     UISegmentedControl * control;
     UITableView *floorUpdatesTableView;
+    NSMutableDictionary *updateDayDictionary;
 }
 
 @property(nonatomic, retain) IBOutlet UISegmentedControl *control;
