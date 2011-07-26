@@ -37,6 +37,12 @@
         [_receivedData appendData:data];
     }
 }
+
+- (void)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse{
+    //Store a cached response for the given data request
+    [[NSURLCache sharedURLCache] storeCachedResponse:cachedResponse forRequest:[_request request]];
+}
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"Sunlight Labs Connection did fail with error:%@",error);
     [[SunlightLabsConnectionTracker sharedInstance] reduceConnection];
