@@ -315,13 +315,13 @@
     
     // Check if there is an unexpired cached response
     if ([[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] != nil) {
-        
+        [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
     }
-
-    
-    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
-    [connection sendRequest];
+    else{
+        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+        [connection sendRequest];
+    }
 }
 
 @end
