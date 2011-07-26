@@ -39,8 +39,13 @@
 }
 
 - (void)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse{
+    
+    //Create a customize cached response object
+    NSDictionary *currentDate = [NSDictionary dictionaryWithObject:[NSDate date] forKey:@"CreationDate"];
+    NSCachedURLResponse *newCachedResponse = [[NSCachedURLResponse alloc] initWithResponse:[cachedResponse response] data:[cachedResponse data] userInfo:currentDate storagePolicy:NSURLCacheStorageAllowedInMemoryOnly];
+    
     //Store a cached response for the given data request
-    [[NSURLCache sharedURLCache] storeCachedResponse:cachedResponse forRequest:[_request request]];
+    [[NSURLCache sharedURLCache] storeCachedResponse:newCachedResponse forRequest:[_request request]];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
