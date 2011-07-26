@@ -50,7 +50,6 @@
     connection = nil;
     NSDictionary * userInfo = [notification userInfo];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    NSMutableArray * tempFloorUpdates = [NSMutableArray arrayWithCapacity:20];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     NSDateFormatter *updateDayFomatter = [[NSDateFormatter alloc] init];
@@ -92,17 +91,10 @@
     id last = [[floorUpdates lastObject] retain];
     [floorUpdates removeObject:[floorUpdates lastObject]];
     [floorUpdates removeAllObjects];
-    for (NSString *updateDayString in updateDayDictionary) {
+    
+    for (NSString *updateDayString in updateDays) {
         [floorUpdates addObject:[updateDayDictionary objectForKey:updateDayString]];
     }
-    //[floorUpdates addObjectsFromArray:tempFloorUpdates];
-    // Convert the hearing day dictionary into a mutable array
-    /*if ([updateDays count] > 0) {
-        for (NSString *day in updateDays) {
-            [floorUpdates replaceObjectAtIndex:[updateDays indexOfObject:day] withObject:[updateDayDictionary objectForKey:day]];
-            //[floorUpdates addObject:[updateDayDictionary objectForKey:day]];
-        }    
-    }*/
     
     [floorUpdates addObject:last];
     [last release];
