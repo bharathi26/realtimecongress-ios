@@ -29,9 +29,6 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
     //Set status bar color to black
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     
-    //Set up the shared URL Cache
-    [NSURLCache sharedURLCache];
-    
     // Add the navigation controller's view to the window and display
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];

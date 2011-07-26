@@ -36,6 +36,9 @@
     [super viewDidLoad];
     self.title = @"Main Menu";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    //Set up the shared URL Cache
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:10485760 diskCapacity:0 diskPath:nil]; //10MB of memory dedicated to cache
+    [NSURLCache setSharedURLCache:URLCache];
 }
 
 - (void)viewWillAppear:(BOOL)animated
