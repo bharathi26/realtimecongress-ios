@@ -249,6 +249,60 @@
     self.navigationItem.hidesBackButton = NO;
 }
 
+- (void) parseCachedData:(NSData *)data {
+    NSDictionary *decodedData = [[JSONDecoder decoder] objectWithData:data];
+    NSArray *dataArray = [decodedData objectForKey:@"documents"];
+    
+    //Sort data by legislative day then split in to sections
+    NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"for_date" ascending:NO];
+    NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
+    parsedWhipNoticeData = [[NSArray alloc] initWithArray:[dataArray sortedArrayUsingDescriptors:descriptors]];
+    
+    // A mutable array containing the unique notice days
+    noticeDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
+    for (NSDictionary *notice in parsedWhipNoticeData) {
+        if (!([noticeDaysArray containsObject:[notice objectForKey:@"for_date"]])) {
+            [noticeDaysArray addObject:[notice objectForKey:@"for_date"]];
+        }
+    }
+    
+    // Create the notice day dictionary
+    self.noticeDaysDictionary = [NSMutableDictionary dictionary];
+    
+    // Create an array to store notices for each notice day
+    for (NSString *aString in noticeDaysArray) {
+        [noticeDaysDictionary setObject:[NSMutableArray array] forKey:aString];
+    }
+    
+    // Iterate through the notices, adding each one to its respective array
+    for (NSDictionary *notice in parsedWhipNoticeData){
+        NSString *anotherString = [notice objectForKey:@"for_date"];
+        [[noticeDaysDictionary objectForKey:anotherString] addObject:notice];
+    }
+    
+    // Convert the notice day dictionary into a mutable array
+    NSMutableArray *noticeDayMutableArray = [[NSMutableArray alloc] init];
+    for (NSString *string in noticeDaysArray) {
+        [noticeDayMutableArray addObject:[noticeDaysDictionary objectForKey:string]];
+    }
+    
+    sectionDataArray = [[NSArray alloc] initWithArray:noticeDayMutableArray];
+    
+    //Reload the table once data retrieval is complete
+    [self.tableView reloadData];
+    
+    //Hide the activity indicator and network activity indicator once loading is complete
+    [loadingIndicator stopAnimating];
+    
+    //Re-enable scrolling once loading is complete and the loading indicator disappears
+    self.tableView.scrollEnabled = YES;
+    
+    // Reveal back button when loading is complete
+    self.navigationItem.hidesBackButton = NO;
+    
+}
+
 - (void) retrieveData
 {
     // Generate request URL using Sunlight Labs Request class
@@ -258,6 +312,12 @@
                                        @"desc", @"sort",
                                        nil];
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+    
+    // Check if there is an unexpired cached response
+    if ([[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] != nil) {
+        
+    }
+
     
     connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
