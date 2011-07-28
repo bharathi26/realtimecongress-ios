@@ -22,7 +22,7 @@ static NSString * SunglightLabsRequestFinishedNotification = @"SunglightLabsRequ
 - (void)cancel;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
-- (void)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse;
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 
 @end
