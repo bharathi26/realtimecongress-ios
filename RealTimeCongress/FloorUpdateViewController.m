@@ -49,11 +49,20 @@
     [connection release];
     connection = nil;
     NSDictionary * userInfo = [notification userInfo];
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    
+    static NSDateFormatter * dateFormatter;
+    static NSDateFormatter *updateDayFormatter;
+    
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-    NSDateFormatter *updateDayFomatter = [[NSDateFormatter alloc] init];
-    [updateDayFomatter setDateFormat:@"EEEE, MMMM dd"];
+    
+    if (updateDayFormatter == nil) {
+        updateDayFormatter = [[NSDateFormatter alloc] init];
+    }
+    [updateDayFormatter setDateFormat:@"EEEE, MMMM dd"];
     NSMutableString * floorUpdateText = [NSMutableString stringWithCapacity:100];
     
     for (id update in [userInfo objectForKey:@"floor_updates"]) {
@@ -69,7 +78,7 @@
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
-        NSString *updateDay = [updateDayFomatter stringFromDate:[floorUpdate date]];
+        NSString *updateDay = [updateDayFormatter stringFromDate:[floorUpdate date]];
         if (![updateDays containsObject: updateDay]) {
             [updateDays addObject:updateDay];
         }

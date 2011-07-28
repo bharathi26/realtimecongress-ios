@@ -219,13 +219,17 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
+    
+    static NSDateFormatter *dateFormatter;
+    
     if (parsedHearingData != nil) {
-        //Date Formatter for each hearing day
-        NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
-        [dateFomatter setDateFormat:@"yyyy-MM-dd"];
-        NSDate *rawDate = [dateFomatter dateFromString: [hearingDays objectAtIndex:section]];
-        [dateFomatter setDateFormat:@"EEEE, MMMM dd"];
-        return [dateFomatter stringFromDate:rawDate];
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+        }
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSDate *rawDate = [dateFormatter dateFromString: [hearingDays objectAtIndex:section]];
+        [dateFormatter setDateFormat:@"EEEE, MMMM dd"];
+        return [dateFormatter stringFromDate:rawDate];
     }
     else {
         return [NSString stringWithString:@"No hearings scheduled"];
@@ -366,9 +370,12 @@
 - (void) retrieveData
 {
     // Get the current date and format it for a url request
-    NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
-    [dateFomatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *todaysDate = [dateFomatter stringFromDate:[NSDate date]];
+    static NSDateFormatter *dateFormatter;
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *todaysDate = [dateFormatter stringFromDate:[NSDate date]];
     
     // Generate request URL using Sunlight Labs Request class
     NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
