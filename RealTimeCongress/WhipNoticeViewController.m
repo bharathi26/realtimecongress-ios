@@ -187,7 +187,18 @@
         // Handle error here
     }
     
-    [self retrieveData];
+    //[self retrieveData];
+    // Generate request URL using Sunlight Labs Request class
+    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                       @"for_date", @"order",
+                                       @"desc", @"sort",
+                                       nil];
+    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+    [connection sendRequest];
+    NSLog(@"User initiated refresh. Use network.");
 }
 
 - (void) parseData: (NSNotification *)notification
@@ -313,8 +324,12 @@
                                        nil];
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
     
+    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
+    NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
+    NSDate *currentDate = [NSDate date];
+    
     // Check if there is an unexpired cached response
-    if ([[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] != nil) {
+    if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
         [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
         NSLog(@"Cached data loaded");
     }
