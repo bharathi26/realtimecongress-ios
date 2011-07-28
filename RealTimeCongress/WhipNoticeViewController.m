@@ -34,6 +34,9 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+    
+    // Release all cached URL responses if memory warning is received
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 #pragma mark - View lifecycle
