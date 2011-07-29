@@ -366,6 +366,69 @@
     self.navigationItem.hidesBackButton = NO;
 }
 
+- (void) parseCachedData:(NSData *)data {
+    NSDictionary *decodedData = [[JSONDecoder decoder] objectWithData:data];
+    NSArray *dataArray = [decodedData objectForKey:@"committee_hearings"];
+    
+    //If there is data returned, process it.
+    if ([dataArray count] > 0) {
+        //Sort data by legislative day then split in to sections
+        NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"legislative_day" ascending:YES];
+        NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"occurs_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+        NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime,nil];
+        parsedHearingData = [[NSArray alloc] initWithArray:[dataArray sortedArrayUsingDescriptors:descriptors]];
+        
+        
+        // A mutable array containing the unique hearing days
+        hearingDays = [[NSMutableArray alloc] initWithCapacity:1];
+        for (NSDictionary *hearing in parsedHearingData) {
+            if (!([hearingDays containsObject:[hearing objectForKey:@"legislative_day"]])) {
+                [hearingDays addObject:[hearing objectForKey:@"legislative_day"]];
+            }
+        }
+        
+        // Create the hearing day dictionary
+        self.hearingDayDictionary = [NSMutableDictionary dictionary];
+        
+        // Create an array to store hearings for each legislative day
+        for (NSString *aString in hearingDays) {
+            [hearingDayDictionary setObject:[NSMutableArray array] forKey:aString];
+        }
+        
+        // Iterate through the hearings, adding each one to its respective array
+        for (NSDictionary *hearing in parsedHearingData){
+            NSString *anotherString = [hearing objectForKey:@"legislative_day"];
+            [[hearingDayDictionary objectForKey:anotherString] addObject:hearing];
+        }
+        
+        // Convert the hearing day dictionary into a mutable array
+        NSMutableArray *hearingDayMutableArray = [[NSMutableArray alloc] init];
+        for (NSString *string in hearingDays) {
+            [hearingDayMutableArray addObject:[hearingDayDictionary objectForKey:string]];
+        }
+        
+        sectionDataArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
+    }
+    
+    else {
+        sectionDataArray = nil;
+        parsedHearingData = nil;
+    }    
+    
+    //Reload the table once data retrieval is complete
+    [self.hearingsTableView reloadData];
+    
+    //Hide the activity indicator and network activity indicator once loading is complete
+    [loadingIndicator stopAnimating];
+    
+    //Re-enable scrolling once loading is complete and the loading indicator disappears
+    self.hearingsTableView.scrollEnabled = YES;
+    
+    // Reveal back button when loading is complete
+    self.navigationItem.hidesBackButton = NO;
+    
+}
+
 - (void) retrieveData
 {
     // Get the current date and format it for a url request

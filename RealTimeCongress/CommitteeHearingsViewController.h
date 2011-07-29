@@ -37,6 +37,7 @@
 
 - (void) refresh;
 - (void) parseData: (NSNotification *)notification;
+- (void) parseCachedData: (NSData *) data;
 - (void) retrieveData;
 
 @end
