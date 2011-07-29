@@ -46,7 +46,7 @@
 - (NSString *)displayDate {
     if (!_displayDate) {
         NSDateFormatter * dateFormatPrinter = [[NSDateFormatter alloc] init];
-        [dateFormatPrinter setDateFormat:@"MMMM dd, yyyy h:mm aa"];
+        [dateFormatPrinter setDateFormat:@"h:mm aa"];
         [dateFormatPrinter setTimeZone:[NSTimeZone systemTimeZone]];
         _displayDate = [[NSString alloc] initWithFormat:@"%@",[dateFormatPrinter stringFromDate:_date]];
     }
