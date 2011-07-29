@@ -46,8 +46,6 @@
     
     NSLog(@"Cached");
     
-    //Store a cached response for the given data request
-    //[[NSURLCache sharedURLCache] storeCachedResponse:newCachedResponse forRequest:[_request request]];
     return newCachedResponse;
     
 }

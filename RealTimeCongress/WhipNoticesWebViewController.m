@@ -13,6 +13,7 @@
 @implementation WhipNoticesWebViewController
 
 @synthesize urlRequest;
+@synthesize loadingIndicator;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,6 +60,14 @@
                                          withError:&error]) {
         // Handle error here
     }
+    
+    //An activity indicator to indicate loading
+    loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [loadingIndicator setCenter:self.view.center];
+    [self.view addSubview:loadingIndicator];
+    
+    // Set the view controller as the web view's delegate
+    webView.delegate = self;
 }
 
 - (void)viewDidUnload
@@ -73,5 +82,26 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+#pragma mark - Web View delegate methods
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    // Animate the activity indicator to indicate loading
+    [self.loadingIndicator startAnimating];
+    
+    // Show the network activity indicator
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    // Stop animating the activity indicator to indicate loading complete
+    [loadingIndicator stopAnimating];
+    
+    // Stop showing the network activity indicator
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{}
+
 
 @end

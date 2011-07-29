@@ -12,8 +12,10 @@
 @interface WhipNoticesWebViewController : UIViewController <UIWebViewDelegate>{
     IBOutlet UIWebView *webView;
     NSURLRequest *urlRequest;
+    UIActivityIndicatorView *loadingIndicator;
 }
 
 @property (nonatomic, retain) NSURLRequest *urlRequest;
+@property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;
 
 @end
