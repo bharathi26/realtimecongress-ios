@@ -77,7 +77,7 @@
     self.hearingsTableView.allowsSelection = NO;
     
     // Refreshes table view data on segmented control press;
-    [chamberControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [chamberControl addTarget:self action:@selector(retrieveData) forControlEvents:UIControlEventValueChanged];
     
     //An activity indicator to indicate loading
     loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -115,7 +115,7 @@
         }
     }
     
-    [self refresh];
+    [self retrieveData];
     
 }
 
@@ -295,17 +295,26 @@
     //Animate the activity indicator and network activity indicator when loading data
     [self.loadingIndicator startAnimating];
 
+    // Get the current date and format it for a url request
+    static NSDateFormatter *dateFormatter;
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *todaysDate = [dateFormatter stringFromDate:[NSDate date]];
+    
     // Generate request URL using Sunlight Labs Request class
     NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                       @"for_date", @"order",
-                                       @"desc", @"sort",
+                                       [[chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex] lowercaseString], @"chamber",
+                                       todaysDate, @"legislative_day__gte",
                                        nil];
-    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:CommitteeHearings APIMethod:nil];
+    
     connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
     [connection sendRequest];
-    NSLog(@"User initiated refresh. Use network.");
+    NSLog(@"No cached data. Use network.");
 }
 
 - (void) parseData: (NSNotification *)notification
