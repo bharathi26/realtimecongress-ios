@@ -133,12 +133,16 @@
         [connection cancel];
         [connection release];
     }
-    //[floorUpdates makeObjectsPerformSelector:@selector(cancelRequest)];
+    
     for (id obj in floorUpdates) {
         if (obj != @"LoadingRow") {
             [obj makeObjectsPerformSelector:@selector(cancelRequest)];
         }
     }
+    
+    // Sets the appropriate header title
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ Updates", [control titleForSegmentAtIndex:control.selectedSegmentIndex]];
+    
     [floorUpdates removeAllObjects];
     [updateDays removeAllObjects];
     [floorUpdates addObject:@"LoadingRow"];
@@ -160,7 +164,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.navigationItem.title = @"Floor Updates";
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ Updates", [control titleForSegmentAtIndex:control.selectedSegmentIndex]];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     [control addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     page = 0;
