@@ -447,9 +447,21 @@
                                        nil];
     SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:CommitteeHearings APIMethod:nil];
     
-    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
-    [connection sendRequest];
+    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
+    NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
+    NSDate *currentDate = [NSDate date];
+    
+    // Check if there is an unexpired cached response
+    if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
+        [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
+        NSLog(@"Cached data loaded");
+    }
+    else{
+        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+        [connection sendRequest];
+        NSLog(@"No cached data. Use network.");
+    }
 
 }
 
