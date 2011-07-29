@@ -195,7 +195,6 @@
         // Handle error here
     }
     
-    //[self retrieveData];
     // Generate request URL using Sunlight Labs Request class
     NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",

@@ -295,7 +295,17 @@
     //Animate the activity indicator and network activity indicator when loading data
     [self.loadingIndicator startAnimating];
 
-    [self retrieveData];
+    // Generate request URL using Sunlight Labs Request class
+    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                       @"for_date", @"order",
+                                       @"desc", @"sort",
+                                       nil];
+    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+    [connection sendRequest];
+    NSLog(@"User initiated refresh. Use network.");
 }
 
 - (void) parseData: (NSNotification *)notification
