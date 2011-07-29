@@ -196,9 +196,8 @@
                                         objectForKey:@"time_of_day"]];
         }
         else {
-            timeAndPlaceLabel.text = [NSString stringWithFormat:@"%@ (%@) %@", 
-                                      [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"room"],
-                                      [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"legislative_day"]];
+            timeAndPlaceLabel.text = [NSString stringWithFormat:@"%@ (%@)", 
+                                      [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"room"]];
         }
         timeAndPlaceLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
                                              (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),CELL_WIDTH, 0);
