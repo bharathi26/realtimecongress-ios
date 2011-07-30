@@ -19,6 +19,7 @@
     UISegmentedControl * control;
     UITableView *floorUpdatesTableView;
     NSMutableDictionary *updateDayDictionary;
+    BOOL refreshed;
 }
 
 @property(nonatomic, retain) IBOutlet UISegmentedControl *control;

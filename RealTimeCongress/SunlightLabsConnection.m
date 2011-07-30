@@ -44,7 +44,7 @@
     NSDictionary *currentDate = [NSDictionary dictionaryWithObject:[NSDate date] forKey:@"CreationDate"];
     NSCachedURLResponse *newCachedResponse = [[[NSCachedURLResponse alloc] initWithResponse:[cachedResponse response] data:[cachedResponse data] userInfo:currentDate storagePolicy:NSURLCacheStorageAllowedInMemoryOnly] autorelease];
     
-    NSLog(@"Cached");
+    NSLog(@"URL Cached");
     
     return newCachedResponse;
     

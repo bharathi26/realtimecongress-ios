@@ -10,6 +10,7 @@
 #import "FloorUpdate.h"
 #import "SunlightLabsRequest.h"
 #import "GANTracker.h"
+#import "JSONKit.h"
 
 @interface NSString (CancelRequest)
 
@@ -97,6 +98,73 @@
         [floorUpdateText setString:@""];
     }
     
+    NSLog(@"Recieved floor updates");
+    
+    id last = [[floorUpdates lastObject] retain];
+    [floorUpdates removeObject:[floorUpdates lastObject]];
+    [floorUpdates removeAllObjects];
+    
+    for (NSString *updateDayString in updateDays) {
+        [floorUpdates addObject:[updateDayDictionary objectForKey:updateDayString]];
+    }
+    
+    [floorUpdates addObject:last];
+    [last release];
+    [self.floorUpdatesTableView reloadData];
+}
+
+- (void) parseCachedData:(NSData *)data {
+    NSDictionary *userInfo = [[JSONDecoder decoder] objectWithData:data];
+    
+    NSLog(@"Parsing cached data");
+    
+    static NSDateFormatter * dateFormatter;
+    static NSDateFormatter *updateDayFormatter;
+    
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    
+    if (updateDayFormatter == nil) {
+        updateDayFormatter = [[NSDateFormatter alloc] init];
+    }
+    [updateDayFormatter setDateFormat:@"EEEE, MMMM dd"];
+    NSMutableString * floorUpdateText = [NSMutableString stringWithCapacity:100];
+    
+    for (id update in [userInfo objectForKey:@"floor_updates"]) {
+        NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"timestamp"]];
+        for (id str in [update objectForKey:@"events"]) {
+            str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            [floorUpdateText appendFormat:@"%@",str];
+        }
+        if (control.selectedSegmentIndex == 1) {
+            NSString *prependString = [NSString stringWithFormat: @"Spoke: Senator %@", floorUpdateText];
+            [floorUpdateText setString:prependString];
+        }
+        FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
+        
+        // Check if the date has been added to update days array. Add it if it hasn't.
+        NSString *updateDay = [updateDayFormatter stringFromDate:[floorUpdate date]];
+        if (![updateDays containsObject: updateDay]) {
+            [updateDays addObject:updateDay];
+        }
+        
+        // Check if there is an array for the update day. If there isn't, create an array to store updates for that day. 
+        if ([updateDayDictionary objectForKey:updateDay] == nil) {
+            [updateDayDictionary setObject:[NSMutableArray array] forKey:updateDay];
+            // Add the update to its respective array
+            [[updateDayDictionary objectForKey:updateDay] addObject:floorUpdate];
+        }
+        else {
+            // Add the update to its respective array if it already exists
+            [[updateDayDictionary objectForKey:updateDay] addObject:floorUpdate];
+        }
+        
+        [floorUpdateText setString:@""];
+    }
+    
     id last = [[floorUpdates lastObject] retain];
     [floorUpdates removeObject:[floorUpdates lastObject]];
     [floorUpdates removeAllObjects];
@@ -112,6 +180,7 @@
 
 - (void)refresh {
     //Track page view based on selected chamber control button
+    NSLog(@"Data refreshed");
     NSError *error;
     if (control.selectedSegmentIndex == 0) {
         //Register a page view to the Google Analytics tracker
@@ -146,7 +215,16 @@
     [floorUpdates removeAllObjects];
     [updateDays removeAllObjects];
     [floorUpdates addObject:@"LoadingRow"];
+    
+    // set refresh flag
+    refreshed = YES;
+    
     [self.floorUpdatesTableView reloadData];
+}
+
+- (void)switchChambers {
+    [self refresh];
+    refreshed = NO;
 }
 
 #pragma mark - View lifecycle
@@ -166,7 +244,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationItem.title = [NSString stringWithFormat:@"%@ Updates", [control titleForSegmentAtIndex:control.selectedSegmentIndex]];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
-    [control addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [control addTarget:self action:@selector(switchChambers) forControlEvents:UIControlEventValueChanged];
     page = 0;
     self.floorUpdatesTableView.allowsSelection = NO;
     if (!floorUpdates) {
@@ -211,6 +289,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [floorUpdates removeAllObjects];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -261,18 +340,47 @@
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
-        NSLog(@"Load data");
         page += 1;
-        NSString * chamber = [control selectedSegmentIndex] == 0 ? @"house" : @"senate";
-        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:[[[SunlightLabsRequest alloc] initFloorUpdateRequestWithParameters:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil]] autorelease]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
-        [connection sendRequest];
+        NSString * chamber = [control selectedSegmentIndex] == 0 ? [NSString stringWithString:@"house"] : [NSString stringWithString:@"senate"];
+        
+        NSDictionary *requestParameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil];
+        SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:FloorUpdates APIMethod:nil];
+        
+        // If refreshed flag is set to yes, load data from network source.
+        if (refreshed) {
+            connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
+            [connection sendRequest];
+            refreshed = NO;
+            NSLog(@"User initiated refresh. Network source used");
+        }
+        else{
+            NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
+            NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
+            NSDate *currentDate = [NSDate date];
+            
+            // Check if there is an unexpired cached response
+            if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
+                [self parseCachedData:[cachedResponse data]];
+                NSLog(@"Cached data loaded");
+            }
+            else {
+                connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
+                [connection sendRequest];
+                refreshed = NO;
+                NSLog(@"Network source used");
+            }
+        }
+        
+        [dataRequest release];
+        
     }
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[floorUpdates objectAtIndex:indexPath.section] isEqual:@"LoadingRow"]) {
-        NSLog(@"Loading Row Cell loaded");
         static NSString *CellIdentifier = @"LoadingCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
