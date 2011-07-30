@@ -60,6 +60,7 @@
     [parsedHearingData release];
     [hearingDays release];
     [sectionDataArray release];
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 #pragma mark - View lifecycle
