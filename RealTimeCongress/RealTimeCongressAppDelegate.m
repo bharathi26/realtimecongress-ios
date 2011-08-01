@@ -26,6 +26,10 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
     //Set Debug flag for test
     [GANTracker sharedTracker].debug = YES;
     
+    //Set up the shared URL Cache
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:10485760 diskCapacity:0 diskPath:nil]; //10MB of memory dedicated to cache
+    [NSURLCache setSharedURLCache:URLCache];
+    
     //Set status bar color to black
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     
