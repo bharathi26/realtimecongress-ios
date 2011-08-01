@@ -44,6 +44,7 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 - (void)receiveFloorUpdate:(NSNotification *)notification {
@@ -179,6 +180,12 @@
 }
 
 - (void)refresh {
+    
+    // Check if URL Cache memory size is set to zero. Reset to 10 MB if it is.
+    if([[NSURLCache sharedURLCache] memoryCapacity] == 0){
+        [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
+    }
+    
     //Track page view based on selected chamber control button
     NSLog(@"Data refreshed");
     NSError *error;
@@ -197,6 +204,7 @@
             // Handle error here
         }
     }
+    NSLog(@"Current cache memory size: %u", [[NSURLCache sharedURLCache] memoryCapacity]);
     page = 0;
     if (connection) {
         [connection cancel];
@@ -339,6 +347,12 @@
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*
+    if ([[NSURLCache sharedURLCache] memoryCapacity] == 0) {
+        [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
+        NSLog(@"Current cache memory size: %u", [[NSURLCache sharedURLCache] memoryCapacity]);
+    }*/
+    
     if (indexPath.section == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
         page += 1;
         NSString * chamber = [control selectedSegmentIndex] == 0 ? [NSString stringWithString:@"house"] : [NSString stringWithString:@"senate"];
@@ -374,7 +388,6 @@
         }
         
         [dataRequest release];
-        
     }
     
 }

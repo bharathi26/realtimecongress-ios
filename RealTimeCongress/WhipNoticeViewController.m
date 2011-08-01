@@ -68,6 +68,11 @@
 {
     [super viewWillAppear:animated];
     
+    // Check if URL Cache memory size is set to zero. Reset to 10 MB if it is.
+    if([[NSURLCache sharedURLCache] memoryCapacity] == 0){
+        [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
+    }
+    
     //Retrieve data
     [self retrieveData];
     

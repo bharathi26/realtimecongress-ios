@@ -47,7 +47,6 @@
     NSLog(@"URL Cached");
     
     return newCachedResponse;
-    
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -67,6 +66,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:SunglightLabsRequestFinishedNotification object:self userInfo:decodedData];
     }
     [[SunlightLabsConnectionTracker sharedInstance] reduceConnection];
+    NSLog(@"Current cache memory size: %u", [[NSURLCache sharedURLCache] memoryCapacity]);
+    NSLog(@"Current memory usage in bytes: %u", [[NSURLCache sharedURLCache] currentMemoryUsage]);
 }
 
 - (void)dealloc

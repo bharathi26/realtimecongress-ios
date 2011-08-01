@@ -114,7 +114,7 @@ static NSString * LegislatorPhotoBasePath = @"http://assets.sunlightfoundation.c
     self = [super init];
     if (self) {
         _urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestString]];
-        //[_urlRequest addValue:[[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"APIKeys" ofType:@"plist"]] objectForKey:@"SunlightLabsKey"] forHTTPHeaderField:@"X-APIKEY"];
+        [_urlRequest setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     }
     return self;
 }
