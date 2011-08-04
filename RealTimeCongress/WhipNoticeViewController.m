@@ -3,6 +3,7 @@
 #import "WhipNoticesWebViewController.h"
 #import "JSONKit.h"
 #import "GANTracker.h"
+#import "Reachability.h"
 
 @implementation WhipNoticeViewController
 
@@ -73,8 +74,25 @@
         [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
     }
     
-    //Retrieve data
-    [self retrieveData];
+    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];    
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    if (internetStatus != NotReachable) {
+        //Retrieve data
+        [self retrieveData];
+    }
+    else {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
+                                                         message:@"Internet inaccessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
     
     NSError *error;
     //Register a page view to the Google Analytics tracker
