@@ -80,6 +80,12 @@
     if (internetStatus != NotReachable) {
         //Retrieve data
         [self retrieveData];
+        NSError *error;
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+                                             withError:&error]) {
+            // Handle error here
+        }
     }
     else {
         NSLog(@"The internet is inaccessible.");
@@ -92,13 +98,6 @@
         
         [alert show];
         [alert release];
-    }
-    
-    NSError *error;
-    //Register a page view to the Google Analytics tracker
-    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
-                                         withError:&error]) {
-        // Handle error here
     }
 }
 
@@ -205,30 +204,47 @@
 
 - (void) refresh
 {
-    //Disable scrolling while data is loading
-    self.tableView.scrollEnabled = NO;
-    
-    //Animate the activity indicator and network activity indicator when loading data
-    [self.loadingIndicator startAnimating];
-    
-    NSError *error;
-    //Register a page view to the Google Analytics tracker
-    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
-                                         withError:&error]) {
-        // Handle error here
+    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];    
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    if (internetStatus != NotReachable) {
+        //Disable scrolling while data is loading
+        self.tableView.scrollEnabled = NO;
+        
+        //Animate the activity indicator and network activity indicator when loading data
+        [self.loadingIndicator startAnimating];
+        
+        NSError *error;
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+                                             withError:&error]) {
+            // Handle error here
+        }
+        
+        // Generate request URL using Sunlight Labs Request class
+        NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                           [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                           @"for_date", @"order",
+                                           @"desc", @"sort",
+                                           nil];
+        SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+        [connection sendRequest];
+        NSLog(@"User initiated refresh. Use network.");
     }
-    
-    // Generate request URL using Sunlight Labs Request class
-    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                       @"for_date", @"order",
-                                       @"desc", @"sort",
-                                       nil];
-    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
-    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
-    [connection sendRequest];
-    NSLog(@"User initiated refresh. Use network.");
+    else {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
+                                                         message:@"Internet inaccessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
 }
 
 - (void) parseData: (NSNotification *)notification
