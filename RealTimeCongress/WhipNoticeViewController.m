@@ -74,30 +74,14 @@
         [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
     }
     
-    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];    
-    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
-    if (internetStatus != NotReachable) {
-        //Retrieve data
-        [self retrieveData];
-        NSError *error;
-        //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
-                                             withError:&error]) {
-            // Handle error here
-        }
-    }
-    else {
-        NSLog(@"The internet is inaccessible.");
-        
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
-                                                         message:@"Internet inaccessible."
-                                                        delegate:self
-                                               cancelButtonTitle:@"Ok"  
-                                               otherButtonTitles:nil];
-        
-        [alert show];
-        [alert release];
+    //Retrieve data
+    [self retrieveData];
+    NSError *error;
+    
+    //Register a page view to the Google Analytics tracker
+    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+                                         withError:&error]) {
+        // Handle error here
     }
 }
 
@@ -362,28 +346,45 @@
 
 - (void) retrieveData
 {
-    // Generate request URL using Sunlight Labs Request class
-    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                       @"for_date", @"order",
-                                       @"desc", @"sort",
-                                       nil];
-    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
-    
-    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
-    NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
-    NSDate *currentDate = [NSDate date];
-    
-    // Check if there is an unexpired cached response
-    if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
-        [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
-        NSLog(@"Cached data loaded");
+    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];    
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    if (internetStatus != NotReachable) {
+        // Generate request URL using Sunlight Labs Request class
+        NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                           [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                           @"for_date", @"order",
+                                           @"desc", @"sort",
+                                           nil];
+        SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+        
+        NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
+        NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
+        NSDate *currentDate = [NSDate date];
+        
+        // Check if there is an unexpired cached response
+        if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
+            [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
+            NSLog(@"Cached data loaded");
+        }
+        else{
+            connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+            [connection sendRequest];
+            NSLog(@"No cached data. Use network.");
+        }
     }
-    else{
-        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
-        [connection sendRequest];
-        NSLog(@"No cached data. Use network.");
+    else {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
+                                                         message:@"Internet inaccessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
     }
 }
 
