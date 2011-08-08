@@ -232,8 +232,8 @@
     else {
         NSLog(@"The internet is inaccessible.");
         
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
-                                                         message:@"Internet inaccessible."
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
                                                         delegate:self
                                                cancelButtonTitle:@"Ok"  
                                                otherButtonTitles:nil];
@@ -388,8 +388,8 @@
     else {
         NSLog(@"The internet is inaccessible.");
         
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
-                                                         message:@"Internet inaccessible."
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
                                                         delegate:self
                                                cancelButtonTitle:@"Ok"  
                                                otherButtonTitles:nil];
@@ -404,8 +404,8 @@
     if (internetStatus == NotReachable) {
         NSLog(@"The internet is inaccessible.");
         
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
-                                                         message:@"Internet inaccessible."
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
                                                         delegate:self
                                                cancelButtonTitle:@"Ok"  
                                                otherButtonTitles:nil];
