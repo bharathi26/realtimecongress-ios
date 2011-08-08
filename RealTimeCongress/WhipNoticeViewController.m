@@ -12,6 +12,7 @@
 @synthesize noticeDaysDictionary;
 @synthesize sectionDataArray;
 @synthesize noticeDaysArray;
+@synthesize reachabilityInfo;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,6 +28,8 @@
     [super dealloc];
     [loadingIndicator release];
     [parsedWhipNoticeData release];
+    [reachabilityInfo release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +59,12 @@
     loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [loadingIndicator setCenter:self.view.center];
     [self.view addSubview:loadingIndicator];
+    
+    //Register for reachability changed notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -73,6 +82,10 @@
     if([[NSURLCache sharedURLCache] memoryCapacity] == 0){
         [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
     }
+    
+    //Create a reachability object to monitor internet reachability
+    reachabilityInfo = [[Reachability reachabilityForInternetConnection] retain];
+    [reachabilityInfo startNotifier];
     
     //Retrieve data
     [self retrieveData];
@@ -189,8 +202,7 @@
 - (void) refresh
 {
     // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];    
-    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
     if (internetStatus != NotReachable) {
         //Disable scrolling while data is loading
         self.tableView.scrollEnabled = NO;
@@ -347,8 +359,7 @@
 - (void) retrieveData
 {
     // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
-    Reachability *reachability = [Reachability reachabilityForInternetConnection];    
-    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
     if (internetStatus != NotReachable) {
         // Generate request URL using Sunlight Labs Request class
         NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -379,6 +390,35 @@
         
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
                                                          message:@"Internet inaccessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
+}
+
+- (void) reachabilityChanged {
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+    if (internetStatus == NotReachable) {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet inaccessible."
+                                                         message:@"Internet inaccessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+
+    }
+    else {
+        NSLog(@"The internet is now accessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet now accessible."
+                                                         message:@"Internet now accessible."
                                                         delegate:self
                                                cancelButtonTitle:@"Ok"  
                                                otherButtonTitles:nil];

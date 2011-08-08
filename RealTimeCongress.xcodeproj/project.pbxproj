@@ -13,7 +13,6 @@
 		284C0611138C21C600ED309D /* AboutInfo.html in Resources */ = {isa = PBXBuildFile; fileRef = 284C0610138C21C600ED309D /* AboutInfo.html */; };
 		2884477613E9D43600377079 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2884477513E9D43600377079 /* Reachability.m */; };
 		2884477C13EB2C5400377079 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2884477B13EB2C5400377079 /* SystemConfiguration.framework */; };
-		2884477E13EB2C8600377079 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2884477D13EB2C8600377079 /* SystemConfiguration.framework */; };
 		289F99B113B3C9D50061FDE8 /* SunlightLabsConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99AE13B3C9D50061FDE8 /* SunlightLabsConnection.m */; };
 		289F99B213B3C9D50061FDE8 /* SunlightLabsConnectionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99B013B3C9D50061FDE8 /* SunlightLabsConnectionTracker.m */; };
 		289F99B713B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */; };
@@ -306,7 +305,6 @@
 				2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */,
 				28E0D74513CE582F00E21A5B /* libGoogleAnalytics.a in Frameworks */,
 				28E0D74713CE584000E21A5B /* CFNetwork.framework in Frameworks */,
-				2884477E13EB2C8600377079 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +623,7 @@
 		2A787EAD138310E7008EC17E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0410;
 				ORGANIZATIONNAME = "Sunlight Labs";
 			};
 			buildConfigurationList = 2A787EB0138310E7008EC17E /* Build configuration list for PBXProject "RealTimeCongress" */;
