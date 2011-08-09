@@ -49,6 +49,7 @@
     [hearingDays release];
     [hearingsTableView release];
     [sectionDataArray release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +85,12 @@
     loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [loadingIndicator setCenter:self.view.center];
     [self.view addSubview:loadingIndicator];
+    
+    //Register for reachability changed notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -96,6 +103,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //Create a reachability object to monitor internet reachability
+    reachabilityInfo = [[Reachability reachabilityForInternetConnection] retain];
+    [reachabilityInfo startNotifier];
+    
+    //Retrieve Data
+    [self retrieveData];
     
     //Track page view based on selected chamber control button
     
@@ -116,7 +130,7 @@
         }
     }
     
-    [self retrieveData];
+    
     
 }
 
@@ -128,6 +142,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -275,47 +290,64 @@
     //Disable scrolling while data is loading
     self.hearingsTableView.scrollEnabled = NO;
     
-    //Track page view based on selected chamber control button
-    NSError *error;
-    if (chamberControl.selectedSegmentIndex == 0) {
-        //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/house"
-                                             withError:&error]) {
-            // Handle error here
+    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+    if (internetStatus != NotReachable) {
+        //Track page view based on selected chamber control button
+        NSError *error;
+        if (chamberControl.selectedSegmentIndex == 0) {
+            //Register a page view to the Google Analytics tracker
+            if (![[GANTracker sharedTracker] trackPageview:@"/hearings/house"
+                                                 withError:&error]) {
+                // Handle error here
+            }
         }
-    }
-    
-    else {
-        //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/senate"
-                                             withError:&error]) {
-            // Handle error here
+        
+        else {
+            //Register a page view to the Google Analytics tracker
+            if (![[GANTracker sharedTracker] trackPageview:@"/hearings/senate"
+                                                 withError:&error]) {
+                // Handle error here
+            }
         }
+        
+        //Animate the activity indicator and network activity indicator when loading data
+        [self.loadingIndicator startAnimating];
+        
+        // Get the current date and format it for a url request
+        static NSDateFormatter *dateFormatter;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+        }
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *todaysDate = [dateFormatter stringFromDate:[NSDate date]];
+        
+        // Generate request URL using Sunlight Labs Request class
+        NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                           [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                           [[chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex] lowercaseString], @"chamber",
+                                           todaysDate, @"legislative_day__gte",
+                                           nil];
+        SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:CommitteeHearings APIMethod:nil];
+        
+        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+        [connection sendRequest];
+        NSLog(@"No cached data. Use network.");
     }
     
-    //Animate the activity indicator and network activity indicator when loading data
-    [self.loadingIndicator startAnimating];
-
-    // Get the current date and format it for a url request
-    static NSDateFormatter *dateFormatter;
-    if (dateFormatter == nil) {
-        dateFormatter = [[NSDateFormatter alloc] init];
+    else{
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
     }
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *todaysDate = [dateFormatter stringFromDate:[NSDate date]];
-    
-    // Generate request URL using Sunlight Labs Request class
-    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                       [[chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex] lowercaseString], @"chamber",
-                                       todaysDate, @"legislative_day__gte",
-                                       nil];
-    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:CommitteeHearings APIMethod:nil];
-    
-    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
-    [connection sendRequest];
-    NSLog(@"No cached data. Use network.");
 }
 
 - (void) parseData: (NSNotification *)notification
@@ -456,6 +488,7 @@
     if (dateFormatter == nil) {
         dateFormatter = [[NSDateFormatter alloc] init];
     }
+    
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *todaysDate = [dateFormatter stringFromDate:[NSDate date]];
     
@@ -477,12 +510,58 @@
         NSLog(@"Cached data loaded");
     }
     else{
-        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
-        [connection sendRequest];
-        NSLog(@"No cached data. Use network.");
-    }
+        // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+        NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+        if (internetStatus != NotReachable) {
+            connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+            [connection sendRequest];
+            NSLog(@"No cached data. Use network.");
+        }
+        else {
+            NSLog(@"The internet is inaccessible.");
+            
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                             message:@"Please check your connection and try again."
+                                                            delegate:self
+                                                   cancelButtonTitle:@"Ok"  
+                                                   otherButtonTitles:nil];
+            
+            [alert show];
+            [alert release];
+        }
 
+    }
 }
+
+- (void) reachabilityChanged {
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+    if (internetStatus == NotReachable) {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+        
+    }
+    else {
+        NSLog(@"The internet is now accessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet now accessible."
+                                                         message:@"Internet now accessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
+}
+
 
 @end

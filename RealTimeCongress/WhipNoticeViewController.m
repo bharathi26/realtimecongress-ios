@@ -12,7 +12,6 @@
 @synthesize noticeDaysDictionary;
 @synthesize sectionDataArray;
 @synthesize noticeDaysArray;
-@synthesize reachabilityInfo;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -106,6 +105,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -358,44 +358,44 @@
 
 - (void) retrieveData
 {
-    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
-    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
-    if (internetStatus != NotReachable) {
-        // Generate request URL using Sunlight Labs Request class
-        NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                           [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                           @"for_date", @"order",
-                                           @"desc", @"sort",
-                                           nil];
-        SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
-        
-        NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
-        NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
-        NSDate *currentDate = [NSDate date];
-        
-        // Check if there is an unexpired cached response
-        if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
-            [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
-            NSLog(@"Cached data loaded");
-        }
-        else{
+    // Generate request URL using Sunlight Labs Request class
+    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                       @"for_date", @"order",
+                                       @"desc", @"sort",
+                                       nil];
+    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+    
+    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
+    NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
+    NSDate *currentDate = [NSDate date];
+    
+    // Check if there is an unexpired cached response
+    if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
+        [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
+        NSLog(@"Cached data loaded");
+    }
+    else{
+        // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+        NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+        if (internetStatus != NotReachable) {
             connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
             [connection sendRequest];
             NSLog(@"No cached data. Use network.");
         }
-    }
-    else {
-        NSLog(@"The internet is inaccessible.");
-        
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
-                                                         message:@"Please check your connection and try again."
-                                                        delegate:self
-                                               cancelButtonTitle:@"Ok"  
-                                               otherButtonTitles:nil];
-        
-        [alert show];
-        [alert release];
+        else {
+            NSLog(@"The internet is inaccessible.");
+            
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                             message:@"Please check your connection and try again."
+                                                            delegate:self
+                                                   cancelButtonTitle:@"Ok"  
+                                                   otherButtonTitles:nil];
+            
+            [alert show];
+            [alert release];
+        }
     }
 }
 

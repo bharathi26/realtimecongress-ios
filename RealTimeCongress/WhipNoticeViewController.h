@@ -21,7 +21,6 @@
 @property(nonatomic,retain) NSMutableDictionary *noticeDaysDictionary;
 @property(nonatomic,retain) NSArray *sectionDataArray;
 @property(nonatomic,retain) NSMutableArray *noticeDaysArray;
-@property(nonatomic, retain) Reachability *reachabilityInfo;
 
 
 - (void) refresh;

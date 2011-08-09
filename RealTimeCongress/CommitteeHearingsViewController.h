@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JSONKit.h"
 #import "SunlightLabsConnection.h"
+#import "Reachability.h"
 
 #define REQUEST_PAGE_SIZE @"100"
 #define CELL_WIDTH 260
@@ -24,6 +25,7 @@
     NSMutableDictionary *hearingDayDictionary;
     UITableView *hearingsTableView;
     SunlightLabsConnection *connection;
+    Reachability *reachabilityInfo;
 }
 
 @property(nonatomic,retain) NSArray *parsedHearingData;
