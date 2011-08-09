@@ -3,6 +3,7 @@
 #import "CommitteeHearingsViewController.h"
 #import "WhipNoticeViewController.h"
 #import "FloorUpdateViewController.h"
+#import "DocumentsListViewController.h"
 
 @implementation RootViewController
 @synthesize sectionNames;
@@ -117,6 +118,13 @@
         CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController" bundle:nil];
         [self.navigationController pushViewController:hearingsController animated:YES];
         [hearingsController release];
+    }
+    
+    else if (indexPath.row == 3) {
+        // Pushes the Documents List view controller
+        DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
+        [self.navigationController pushViewController:documentsController animated:YES];
+        [documentsController release];
     }
     
     else if (indexPath.row == 4) {

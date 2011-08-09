@@ -13,6 +13,8 @@
 		284C0611138C21C600ED309D /* AboutInfo.html in Resources */ = {isa = PBXBuildFile; fileRef = 284C0610138C21C600ED309D /* AboutInfo.html */; };
 		2884477613E9D43600377079 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2884477513E9D43600377079 /* Reachability.m */; };
 		2884477C13EB2C5400377079 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2884477B13EB2C5400377079 /* SystemConfiguration.framework */; };
+		2884478713F0B19E00377079 /* DocumentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2884478513F0B19E00377079 /* DocumentsListViewController.m */; };
+		2884478813F0B19E00377079 /* DocumentsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2884478613F0B19E00377079 /* DocumentsListViewController.xib */; };
 		289F99B113B3C9D50061FDE8 /* SunlightLabsConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99AE13B3C9D50061FDE8 /* SunlightLabsConnection.m */; };
 		289F99B213B3C9D50061FDE8 /* SunlightLabsConnectionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99B013B3C9D50061FDE8 /* SunlightLabsConnectionTracker.m */; };
 		289F99B713B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */; };
@@ -154,6 +156,9 @@
 		2884477513E9D43600377079 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2884477B13EB2C5400377079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2884477D13EB2C8600377079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2884478413F0B19E00377079 /* DocumentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentsListViewController.h; sourceTree = "<group>"; };
+		2884478513F0B19E00377079 /* DocumentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentsListViewController.m; sourceTree = "<group>"; };
+		2884478613F0B19E00377079 /* DocumentsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DocumentsListViewController.xib; path = ../DocumentsListViewController.xib; sourceTree = "<group>"; };
 		289F99AD13B3C9D50061FDE8 /* SunlightLabsConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsConnection.h; sourceTree = "<group>"; };
 		289F99AE13B3C9D50061FDE8 /* SunlightLabsConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsConnection.m; sourceTree = "<group>"; };
 		289F99AF13B3C9D50061FDE8 /* SunlightLabsConnectionTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsConnectionTracker.h; sourceTree = "<group>"; };
@@ -337,6 +342,8 @@
 				28BCE2CD13A7C53A00BC5A31 /* WhipNoticesWebViewController.m */,
 				284C060A138BFCFE00ED309D /* AboutViewController.h */,
 				284C060B138BFCFE00ED309D /* AboutViewController.m */,
+				2884478413F0B19E00377079 /* DocumentsListViewController.h */,
+				2884478513F0B19E00377079 /* DocumentsListViewController.m */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -444,6 +451,7 @@
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
 				2A787EC9138310E8008EC17E /* RealTimeCongressAppDelegate.h */,
 				2A787ECA138310E8008EC17E /* RealTimeCongressAppDelegate.m */,
+				2884478613F0B19E00377079 /* DocumentsListViewController.xib */,
 				289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */,
 				289F99B613B3CA8A0061FDE8 /* FloorUpdateViewController.xib */,
 				289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */,
@@ -744,6 +752,7 @@
 				289F99B913B3CA8A0061FDE8 /* FloorUpdateViewController.xib in Resources */,
 				289F99C913B3CE370061FDE8 /* LoadingTableViewCell.xib in Resources */,
 				28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */,
+				2884478813F0B19E00377079 /* DocumentsListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,6 +805,7 @@
 				289F99C413B3CD330061FDE8 /* CongressionalArtifact.m in Sources */,
 				28E0D76013CF698700E21A5B /* Legislator.m in Sources */,
 				2884477613E9D43600377079 /* Reachability.m in Sources */,
+				2884478713F0B19E00377079 /* DocumentsListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
