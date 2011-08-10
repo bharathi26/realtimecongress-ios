@@ -35,6 +35,8 @@
 		28E0D74713CE584000E21A5B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74613CE584000E21A5B /* CFNetwork.framework */; };
 		28E0D75113CE5B3200E21A5B /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */; };
 		28E0D76013CF698700E21A5B /* Legislator.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E0D75F13CF698700E21A5B /* Legislator.m */; };
+		28EAE7FB13F34BA1001E7CB1 /* CRSReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EAE7F913F34BA1001E7CB1 /* CRSReportViewController.m */; };
+		28EAE7FC13F34BA1001E7CB1 /* CRSReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */; };
 		2A787EBB138310E8008EC17E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBA138310E8008EC17E /* UIKit.framework */; };
 		2A787EBD138310E8008EC17E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBC138310E8008EC17E /* Foundation.framework */; };
 		2A787EBF138310E8008EC17E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A787EBE138310E8008EC17E /* CoreGraphics.framework */; };
@@ -191,6 +193,9 @@
 		28E0D75013CE5B3200E21A5B /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		28E0D75E13CF698700E21A5B /* Legislator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Legislator.h; sourceTree = "<group>"; };
 		28E0D75F13CF698700E21A5B /* Legislator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Legislator.m; sourceTree = "<group>"; };
+		28EAE7F813F34BA1001E7CB1 /* CRSReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRSReportViewController.h; sourceTree = "<group>"; };
+		28EAE7F913F34BA1001E7CB1 /* CRSReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRSReportViewController.m; sourceTree = "<group>"; };
+		28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CRSReportViewController.xib; path = ../CRSReportViewController.xib; sourceTree = "<group>"; };
 		2A787EB6138310E8008EC17E /* Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Congress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A787EBA138310E8008EC17E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2A787EBC138310E8008EC17E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -344,6 +349,8 @@
 				284C060B138BFCFE00ED309D /* AboutViewController.m */,
 				2884478413F0B19E00377079 /* DocumentsListViewController.h */,
 				2884478513F0B19E00377079 /* DocumentsListViewController.m */,
+				28EAE7F813F34BA1001E7CB1 /* CRSReportViewController.h */,
+				28EAE7F913F34BA1001E7CB1 /* CRSReportViewController.m */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -451,6 +458,7 @@
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
 				2A787EC9138310E8008EC17E /* RealTimeCongressAppDelegate.h */,
 				2A787ECA138310E8008EC17E /* RealTimeCongressAppDelegate.m */,
+				28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */,
 				2884478613F0B19E00377079 /* DocumentsListViewController.xib */,
 				289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */,
 				289F99B613B3CA8A0061FDE8 /* FloorUpdateViewController.xib */,
@@ -753,6 +761,7 @@
 				289F99C913B3CE370061FDE8 /* LoadingTableViewCell.xib in Resources */,
 				28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */,
 				2884478813F0B19E00377079 /* DocumentsListViewController.xib in Resources */,
+				28EAE7FC13F34BA1001E7CB1 /* CRSReportViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +815,7 @@
 				28E0D76013CF698700E21A5B /* Legislator.m in Sources */,
 				2884477613E9D43600377079 /* Reachability.m in Sources */,
 				2884478713F0B19E00377079 /* DocumentsListViewController.m in Sources */,
+				28EAE7FB13F34BA1001E7CB1 /* CRSReportViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
