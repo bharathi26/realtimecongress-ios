@@ -71,6 +71,8 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [reachabilityInfo stopNotifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -106,6 +108,7 @@
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [reachabilityInfo stopNotifier];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
