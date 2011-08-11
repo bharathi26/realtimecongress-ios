@@ -11,6 +11,7 @@
 #import "SunlightLabsRequest.h"
 #import "GANTracker.h"
 #import "JSONKit.h"
+#import "Reachability.h"
 
 @interface NSString (CancelRequest)
 
@@ -240,11 +241,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Register for reachability changed notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [reachabilityInfo stopNotifier];
+    
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -269,6 +280,10 @@
     updateDayDictionary = [[NSMutableDictionary dictionary] retain];
     
     [super viewWillAppear:animated];
+    
+    //Create a reachability object to monitor internet reachability
+    reachabilityInfo = [[Reachability reachabilityForInternetConnection] retain];
+    [reachabilityInfo startNotifier];
     
     //Track page view based on selected chamber control button
     NSError *error;
@@ -347,11 +362,6 @@
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*
-    if ([[NSURLCache sharedURLCache] memoryCapacity] == 0) {
-        [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
-        NSLog(@"Current cache memory size: %u", [[NSURLCache sharedURLCache] memoryCapacity]);
-    }*/
     
     if (indexPath.section == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
         page += 1;
@@ -360,13 +370,30 @@
         NSDictionary *requestParameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil];
         SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:FloorUpdates APIMethod:nil];
         
+        // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+        NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+        
         // If refreshed flag is set to yes, load data from network source.
         if (refreshed) {
-            connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
-            [connection sendRequest];
-            refreshed = NO;
-            NSLog(@"User initiated refresh. Network source used");
+            if (internetStatus != NotReachable) {
+                connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
+                [connection sendRequest];
+                refreshed = NO;
+                NSLog(@"User initiated refresh. Network source used");
+            }
+            else {
+                NSLog(@"The internet is inaccessible.");
+                
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                                 message:@"Please check your connection and try again."
+                                                                delegate:self
+                                                       cancelButtonTitle:@"Ok"  
+                                                       otherButtonTitles:nil];
+                
+                [alert show];
+                [alert release];
+            }
         }
         else{
             NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
@@ -379,11 +406,25 @@
                 NSLog(@"Cached data loaded");
             }
             else {
-                connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
-                [connection sendRequest];
-                refreshed = NO;
-                NSLog(@"Network source used");
+                if (internetStatus != NotReachable) {
+                    connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
+                    [connection sendRequest];
+                    refreshed = NO;
+                    NSLog(@"User initiated refresh. Network source used");
+                }
+                else {
+                    NSLog(@"The internet is inaccessible.");
+                    
+                    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                                     message:@"Please check your connection and try again."
+                                                                    delegate:self
+                                                           cancelButtonTitle:@"Ok"  
+                                                           otherButtonTitles:nil];
+                    
+                    [alert show];
+                    [alert release];
+                }
             }
         }
         

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SunlightLabsConnection.h"
+#import "Reachability.h"
 @class FloorUpdate;
 
 @interface FloorUpdateViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>  {
@@ -20,6 +21,7 @@
     UITableView *floorUpdatesTableView;
     NSMutableDictionary *updateDayDictionary;
     BOOL refreshed;
+    Reachability *reachabilityInfo;
 }
 
 @property(nonatomic, retain) IBOutlet UISegmentedControl *control;
