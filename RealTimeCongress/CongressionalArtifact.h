@@ -10,7 +10,7 @@
 @class SunlightLabsRequest;
 @class SunlightLabsConnection;
 
-static NSString * ReceivedCongressionalInformationNotification = @"ReceivedCongressionalInformationNotification";
+#define  ReceivedCongressionalInformationNotification @"ReceivedCongressionalInformationNotification"
 
 typedef enum {
     InformationAvailable,

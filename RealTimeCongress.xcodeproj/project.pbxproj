@@ -178,7 +178,7 @@
 		289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
 		28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommitteeHearingsViewController.h; path = RealTimeCongress/CommitteeHearingsViewController.h; sourceTree = "<group>"; };
 		28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommitteeHearingsViewController.m; path = RealTimeCongress/CommitteeHearingsViewController.m; sourceTree = "<group>"; };
-		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommitteeHearingsViewController.xib; path = RealTimeCongress/CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
+		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
 		28BC582B139AA0D100EBA6BE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../Resources/JSONKit.h; sourceTree = "<group>"; };
 		28BC582C139AA0D100EBA6BE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../Resources/JSONKit.m; sourceTree = "<group>"; };
 		28BCE2CC13A7C53900BC5A31 /* WhipNoticesWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhipNoticesWebViewController.h; path = RealTimeCongress/WhipNoticesWebViewController.h; sourceTree = "<group>"; };
@@ -336,7 +336,6 @@
 			children = (
 				28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */,
 				28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */,
-				28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */,
 				289F99B413B3CA8A0061FDE8 /* FloorUpdateViewController.h */,
 				289F99B513B3CA8A0061FDE8 /* FloorUpdateViewController.m */,
 				2A787ECF138310E8008EC17E /* RootViewController.h */,
@@ -456,6 +455,7 @@
 				289F99C713B3CD550061FDE8 /* Congress Model */,
 				289F99A313B3C9680061FDE8 /* API Requests */,
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
+				28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */,
 				2A787EC9138310E8008EC17E /* RealTimeCongressAppDelegate.h */,
 				2A787ECA138310E8008EC17E /* RealTimeCongressAppDelegate.m */,
 				28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */,
@@ -465,10 +465,10 @@
 				289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */,
 				2A787ECC138310E8008EC17E /* MainWindow.xib */,
 				2A787ED2138310E8008EC17E /* RootViewController.xib */,
-				2A787EC1138310E8008EC17E /* Supporting Files */,
 				2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */,
 				28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */,
 				284C060C138BFCFE00ED309D /* AboutViewController.xib */,
+				2A787EC1138310E8008EC17E /* Supporting Files */,
 				28BCE2CA13A7B2DC00BC5A31 /* JSONKit */,
 			);
 			path = RealTimeCongress;
