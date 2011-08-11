@@ -7,6 +7,7 @@
 //
 
 #import "DocumentsListViewController.h"
+#import "CRSReportViewController.h"
 
 @implementation DocumentsListViewController
 
@@ -145,14 +146,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    if (indexPath.row == 0) {
+        CRSReportViewController *crsReportViewController = [[CRSReportViewController alloc] initWithNibName:@"CRSReportViewController" bundle:nil];
+        [self.navigationController pushViewController:crsReportViewController animated:YES];
+        [crsReportViewController release];
+    }
 }
 
 @end
