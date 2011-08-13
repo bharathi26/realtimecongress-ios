@@ -157,4 +157,133 @@
      */
 }
 
+#pragma mark - UI Actions
+
+- (void) refresh
+{
+    // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+    if (internetStatus != NotReachable) {
+        //Disable scrolling while data is loading
+        self.tableView.scrollEnabled = NO;
+        
+        //Animate the activity indicator and network activity indicator when loading data
+        [self.loadingIndicator startAnimating];
+        
+        NSError *error;
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+                                             withError:&error]) {
+            // Handle error here
+        }
+        
+        // Generate request URL using Sunlight Labs Request class
+        NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                           [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                           @"for_date", @"order",
+                                           @"desc", @"sort",
+                                           nil];
+        SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+        //NSLog(@"%@", [[dataRequest request] URL]);
+        connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+        [connection sendRequest];
+        NSLog(@"User initiated refresh. Use network.");
+    }
+    else {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
+}
+
+- (void) parseData: (NSNotification *)notification
+{
+    //Release connection upon data receiption
+    [connection release];
+    connection = nil;
+}
+
+- (void) parseCachedData:(NSData *)data {
+    }
+
+- (void) retrieveData
+{
+    // Generate request URL using Sunlight Labs Request class
+    NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                       [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
+                                       @"crs_report", @"document_type,"
+                                       nil];
+    SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+    
+    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
+    NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
+    NSDate *currentDate = [NSDate date];
+    
+    // Check if there is an unexpired cached response
+    if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
+        [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
+        NSLog(@"Cached data loaded");
+    }
+    else{
+        // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
+        NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+        if (internetStatus != NotReachable) {
+            connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
+            [connection sendRequest];
+            NSLog(@"No cached data. Use network.");
+        }
+        else {
+            NSLog(@"The internet is inaccessible.");
+            
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                             message:@"Please check your connection and try again."
+                                                            delegate:self
+                                                   cancelButtonTitle:@"Ok"  
+                                                   otherButtonTitles:nil];
+            
+            [alert show];
+            [alert release];
+        }
+    }
+}
+
+- (void) reachabilityChanged {
+    NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
+    if (internetStatus == NotReachable) {
+        NSLog(@"The internet is inaccessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
+                                                         message:@"Please check your connection and try again."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+        
+    }
+    else {
+        NSLog(@"The internet is now accessible.");
+        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet now accessible."
+                                                         message:@"Internet now accessible."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Ok"  
+                                               otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
+}
+
+
 @end

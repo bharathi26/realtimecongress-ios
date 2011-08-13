@@ -227,6 +227,7 @@
                                            @"desc", @"sort",
                                            nil];
         SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
+        //NSLog(@"%@", [[dataRequest request] URL]);
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];

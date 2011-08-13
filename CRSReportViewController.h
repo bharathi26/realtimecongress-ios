@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSONKit.h"
+#import "SunlightLabsConnection.h"
+#import "Reachability.h"
+
+#define REQUEST_PAGE_SIZE @"100"
 
 @interface CRSReportViewController : UITableViewController
+
+
+- (void) refresh;
+- (void) parseData: (NSNotification *)notification;
+- (void) parseCachedData: (NSData *) data;
+- (void) retrieveData;
 
 @end
