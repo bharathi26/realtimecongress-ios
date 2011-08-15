@@ -12,6 +12,24 @@
 #import "GANTracker.h"
 #import "Reachability.h"
 
+#pragma mark Utility extensions
+
+@interface UILabel (sizingExtensions)
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth;
+@end
+
+@implementation UILabel (sizingExtensions)
+
+
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth
+{
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, fixedWidth, 0);
+    self.lineBreakMode = UILineBreakModeWordWrap;
+    self.numberOfLines = 0;
+    [self sizeToFit];
+}
+@end
+
 @implementation CRSReportViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -29,6 +47,15 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)dealloc
+{
+    [super dealloc];
+    [loadingIndicator release];
+    [sectionDataArray release];
+    [reachabilityInfo release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - View lifecycle
@@ -124,7 +151,7 @@
 {
     // Return the number of sections.
     if ([reportDaysArray count] > 0) {
-        return ([reportDaysArray count]+1);
+        return ([reportDaysArray count]);
     }
     else{
         return 1;
@@ -134,6 +161,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    
     NSArray *sectionArray = [sectionDataArray objectAtIndex:section];
     return [sectionArray count];
 }
@@ -144,12 +172,16 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
-    cell.textLabel.text = @"";
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
     
+    if (sectionArray != NULL) {
+        // Configure the cell...
+        [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
+        cell.textLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"];
+    }
     return cell;
 }
 
@@ -169,45 +201,6 @@
     }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -220,6 +213,17 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //Calculates the appropriate row height based on the size of the three text labels
+    CGSize maxSize = CGSizeMake(CELL_WIDTH, CGFLOAT_MAX);
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
+    
+    CGSize titleTextSize = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
+    
+    return (titleTextSize.height + 60);
 }
 
 #pragma mark - UI Actions
@@ -237,7 +241,7 @@
         
         NSError *error;
         //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices"
+        if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports"
                                              withError:&error]) {
             // Handle error here
         }
@@ -312,49 +316,13 @@
             // Add the update to its respective array if it already exists
             [[reportDaysDictionary objectForKey:updateDay] addObject:update];
         }
-        
     }
     
-    NSLog(@"%@", reportDaysArray);
-    /*
-    //Sort data by posted and released date then split in to sections
-    NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"released_at" ascending:NO];
-    NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
-    parsedCRSReportData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
+    sectionDataArray = [[NSMutableArray alloc] initWithCapacity:20];
     
-    // A mutable array containing the unique report days
-    reportDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
-    for (NSDictionary *notice in parsedCRSReportData) {
-        if (!([reportDaysArray containsObject:[notice objectForKey:@"posted_at"]])) {
-            [reportDaysArray addObject:[notice objectForKey:@"posted_at"]];
-        }
+    for (NSString *updateDayString in reportDaysArray) {
+        [sectionDataArray addObject:[reportDaysDictionary objectForKey:updateDayString]];
     }
-    
-    // Create the notice day dictionary
-    reportDaysDictionary = [NSMutableDictionary dictionary];
-    
-    // Create an array to store notices for each report day
-    for (NSString *aString in reportDaysArray) {
-        [reportDaysDictionary setObject:[NSMutableArray array] forKey:aString];
-    }
-    
-    // Iterate through the reports, adding each one to its respective array
-    for (NSDictionary *report in parsedCRSReportData){
-        NSString *anotherString = [report objectForKey:@"posted_at"];
-        [[reportDaysDictionary objectForKey:anotherString] addObject:report];
-    }
-    
-    // Convert the notice day dictionary into a mutable array
-    NSMutableArray *reportDayMutableArray = [[NSMutableArray alloc] init];
-    for (NSString *string in reportDaysArray) {
-        [reportDayMutableArray addObject:[reportDaysDictionary objectForKey:string]];
-    }
-    */
-    
-    //sectionDataArray = [[NSArray alloc] initWithArray:reportDaysArray];
-    
-    //NSLog(@"%@", [sectionDataArray objectAtIndex:0]);
     
     //Reload the table once data retrieval is complete
     [self.tableView reloadData];

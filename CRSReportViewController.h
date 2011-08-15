@@ -12,13 +12,14 @@
 #import "Reachability.h"
 
 #define REQUEST_PAGE_SIZE @"100"
+#define CELL_WIDTH 260
 
 @interface CRSReportViewController : UITableViewController {
 @private
     NSArray *parsedCRSReportData;
     UIActivityIndicatorView *loadingIndicator;
     NSMutableDictionary *reportDaysDictionary;
-    NSArray *sectionDataArray;
+    NSMutableArray *sectionDataArray;
     NSMutableArray *reportDaysArray;
     SunlightLabsConnection *connection;
     Reachability *reachabilityInfo;
