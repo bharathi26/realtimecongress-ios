@@ -250,11 +250,9 @@
         // Generate request URL using Sunlight Labs Request class
         NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                            [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                           @"for_date", @"order",
-                                           @"desc", @"sort",
+                                           @"crs_report", @"document_type",
                                            nil];
         SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
-        //NSLog(@"%@", [[dataRequest request] URL]);
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];
