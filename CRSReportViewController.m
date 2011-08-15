@@ -282,7 +282,6 @@
     
     //Assign received data
     NSDictionary *items = [notification userInfo];
-    //NSArray *data = [items objectForKey:@"documents"];
     
     static NSDateFormatter * dateFormatter;
     static NSDateFormatter *updateDayFormatter;
@@ -336,46 +335,48 @@
 }
 
 - (void) parseCachedData:(NSData *)data {
-    NSDictionary *decodedData = [[JSONDecoder decoder] objectWithData:data];
-    NSArray *dataArray = [decodedData objectForKey:@"documents"];
+    NSDictionary *items = [[JSONDecoder decoder] objectWithData:data];
     
-    //Sort data by posted and released date then split in to sections
-    NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"released_at" ascending:NO];
-    //NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, nil];
-    parsedCRSReportData = [[NSArray alloc] initWithArray:[dataArray sortedArrayUsingDescriptors:descriptors]];
+    static NSDateFormatter * dateFormatter;
+    static NSDateFormatter *updateDayFormatter;
     
-    // A mutable array containing the unique report days
-    reportDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
-    for (NSDictionary *notice in parsedCRSReportData) {
-        if (!([reportDaysArray containsObject:[notice objectForKey:@"released_at"]])) {
-            [reportDaysArray addObject:[notice objectForKey:@"released_at"]];
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    
+    if (updateDayFormatter == nil) {
+        updateDayFormatter = [[NSDateFormatter alloc] init];
+    }
+    [updateDayFormatter setDateFormat:@"EEEE, MMMM dd"];
+    
+    for (id update in [items objectForKey:@"documents"]) {
+        NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"released_at"]];
+        
+        // Check if the date has been added to update days array. Add it if it hasn't.
+        NSString *updateDay = [updateDayFormatter stringFromDate: date];
+        if (![reportDaysArray containsObject: updateDay]) {
+            [reportDaysArray addObject:updateDay];
+        }
+        
+        // Check if there is an array for the update day. If there isn't, create an array to store updates for that day. 
+        if ([reportDaysDictionary objectForKey:updateDay] == nil) {
+            [reportDaysDictionary setObject:[NSMutableArray array] forKey:updateDay];
+            // Add the update to its respective array
+            [[reportDaysDictionary objectForKey:updateDay] addObject:update];
+        }
+        else {
+            // Add the update to its respective array if it already exists
+            [[reportDaysDictionary objectForKey:updateDay] addObject:update];
         }
     }
     
-    // Create the notice day dictionary
-    reportDaysDictionary = [NSMutableDictionary dictionary];
+    sectionDataArray = [[NSMutableArray alloc] initWithCapacity:20];
     
-    // Create an array to store notices for each report day
-    for (NSString *aString in reportDaysArray) {
-        [reportDaysDictionary setObject:[NSMutableArray array] forKey:aString];
+    for (NSString *updateDayString in reportDaysArray) {
+        [sectionDataArray addObject:[reportDaysDictionary objectForKey:updateDayString]];
     }
-    
-    // Iterate through the reports, adding each one to its respective array
-    for (NSDictionary *report in parsedCRSReportData){
-        NSString *anotherString = [report objectForKey:@"released_at"];
-        [[reportDaysDictionary objectForKey:anotherString] addObject:report];
-    }
-    
-    // Convert the notice day dictionary into a mutable array
-    NSMutableArray *reportDayMutableArray = [[NSMutableArray alloc] init];
-    for (NSString *string in reportDaysArray) {
-        [reportDayMutableArray addObject:[reportDaysDictionary objectForKey:string]];
-    }
-    
-    sectionDataArray = [[NSArray alloc] initWithArray:reportDayMutableArray];
-    
-    NSLog(@"%@", [sectionDataArray objectAtIndex:0]);
     
     //Reload the table once data retrieval is complete
     [self.tableView reloadData];
