@@ -7,6 +7,7 @@
 //
 
 #import "CRSReportViewController.h"
+#import "WhipNoticesWebViewController.h"
 #import "SunlightLabsRequest.h"
 #import "JSONKit.h"
 #import "GANTracker.h"
@@ -206,13 +207,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    WhipNoticesWebViewController *webViewController = [[WhipNoticesWebViewController alloc] initWithNibName:@"WhipNoticesWebViewController" bundle:nil];
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
+    NSURL * url = [NSURL URLWithString:[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"url"]];
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
+    webViewController.urlRequest = urlRequest;
+    [self.navigationController pushViewController:webViewController animated:YES];
+    [WhipNoticesWebViewController release];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
