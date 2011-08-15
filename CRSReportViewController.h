@@ -13,7 +13,16 @@
 
 #define REQUEST_PAGE_SIZE @"100"
 
-@interface CRSReportViewController : UITableViewController
+@interface CRSReportViewController : UITableViewController {
+@private
+    NSArray *parsedCRSReportData;
+    UIActivityIndicatorView *loadingIndicator;
+    NSMutableDictionary *reportDaysDictionary;
+    NSArray *sectionDataArray;
+    NSMutableArray *reportDaysArray;
+    SunlightLabsConnection *connection;
+    Reachability *reachabilityInfo;
+}
 
 
 - (void) refresh;
