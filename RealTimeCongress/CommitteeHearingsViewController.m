@@ -76,6 +76,8 @@
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
+    //
+    
     //Make cells unselectable
     self.hearingsTableView.allowsSelection = NO;
     
@@ -487,6 +489,9 @@
 
 - (void) retrieveData
 {
+    //Set the navigation bar title to that of the selected chamber
+    self.title = [NSString stringWithFormat:@"%@ Hearings", [chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex]];
+    
     // Get the current date and format it for a url request
     static NSDateFormatter *dateFormatter;
     if (dateFormatter == nil) {
