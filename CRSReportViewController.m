@@ -226,7 +226,7 @@
 {
     // Navigation logic may go here. Create and push another view controller.
     WhipNoticesWebViewController *webViewController = [[WhipNoticesWebViewController alloc] initWithNibName:@"WhipNoticesWebViewController" bundle:nil];
-    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:(indexPath.section - 1)];
     NSURL * url = [NSURL URLWithString:[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"url"]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
     webViewController.urlRequest = urlRequest;
