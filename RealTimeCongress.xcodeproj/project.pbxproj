@@ -29,6 +29,8 @@
 		28BC582D139AA0D100EBA6BE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC582C139AA0D100EBA6BE /* JSONKit.m */; };
 		28BCE2CF13A7C53A00BC5A31 /* WhipNoticesWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BCE2CD13A7C53A00BC5A31 /* WhipNoticesWebViewController.m */; };
 		28BCE2D013A7C53A00BC5A31 /* WhipNoticesWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */; };
+		28D86A6C13FAFF53000433E7 /* CBOEstimateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D86A6A13FAFF53000433E7 /* CBOEstimateViewController.m */; };
+		28D86A6D13FAFF53000433E7 /* CBOEstimateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */; };
 		28DBFF1813A7095200979270 /* SunlightLabsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DBFF1713A7095200979270 /* SunlightLabsRequest.m */; };
 		28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28E0D73D13CE573B00E21A5B /* APIKeys.plist */; };
 		28E0D74513CE582F00E21A5B /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E0D74413CE582F00E21A5B /* libGoogleAnalytics.a */; };
@@ -184,6 +186,9 @@
 		28BCE2CC13A7C53900BC5A31 /* WhipNoticesWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhipNoticesWebViewController.h; path = RealTimeCongress/WhipNoticesWebViewController.h; sourceTree = "<group>"; };
 		28BCE2CD13A7C53A00BC5A31 /* WhipNoticesWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhipNoticesWebViewController.m; path = RealTimeCongress/WhipNoticesWebViewController.m; sourceTree = "<group>"; };
 		28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhipNoticesWebViewController.xib; sourceTree = "<group>"; };
+		28D86A6913FAFF53000433E7 /* CBOEstimateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBOEstimateViewController.h; sourceTree = "<group>"; };
+		28D86A6A13FAFF53000433E7 /* CBOEstimateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBOEstimateViewController.m; sourceTree = "<group>"; };
+		28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CBOEstimateViewController.xib; path = ../CBOEstimateViewController.xib; sourceTree = "<group>"; };
 		28DBFF1613A7095200979270 /* SunlightLabsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsRequest.h; sourceTree = "<group>"; };
 		28DBFF1713A7095200979270 /* SunlightLabsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsRequest.m; sourceTree = "<group>"; };
 		28E0D73D13CE573B00E21A5B /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
@@ -350,6 +355,8 @@
 				2884478513F0B19E00377079 /* DocumentsListViewController.m */,
 				28EAE7F813F34BA1001E7CB1 /* CRSReportViewController.h */,
 				28EAE7F913F34BA1001E7CB1 /* CRSReportViewController.m */,
+				28D86A6913FAFF53000433E7 /* CBOEstimateViewController.h */,
+				28D86A6A13FAFF53000433E7 /* CBOEstimateViewController.m */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -455,6 +462,7 @@
 				289F99C713B3CD550061FDE8 /* Congress Model */,
 				289F99A313B3C9680061FDE8 /* API Requests */,
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
+				28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */,
 				28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */,
 				2A787EC9138310E8008EC17E /* RealTimeCongressAppDelegate.h */,
 				2A787ECA138310E8008EC17E /* RealTimeCongressAppDelegate.m */,
@@ -762,6 +770,7 @@
 				28E0D73E13CE573B00E21A5B /* APIKeys.plist in Resources */,
 				2884478813F0B19E00377079 /* DocumentsListViewController.xib in Resources */,
 				28EAE7FC13F34BA1001E7CB1 /* CRSReportViewController.xib in Resources */,
+				28D86A6D13FAFF53000433E7 /* CBOEstimateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -816,6 +825,7 @@
 				2884477613E9D43600377079 /* Reachability.m in Sources */,
 				2884478713F0B19E00377079 /* DocumentsListViewController.m in Sources */,
 				28EAE7FB13F34BA1001E7CB1 /* CRSReportViewController.m in Sources */,
+				28D86A6C13FAFF53000433E7 /* CBOEstimateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
