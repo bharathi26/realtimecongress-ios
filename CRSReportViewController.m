@@ -174,6 +174,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
@@ -238,7 +239,7 @@
         self.tableView.scrollEnabled = NO;
         
         //Animate the activity indicator and network activity indicator when loading data
-        //[self.loadingIndicator startAnimating];
+        [loadingIndicator startAnimating];
         
         NSError *error;
         //Register a page view to the Google Analytics tracker
@@ -398,6 +399,9 @@
     NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
     NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
     NSDate *currentDate = [NSDate date];
+    
+    //Animate the activity indicator and network activity indicator when loading data
+    [loadingIndicator startAnimating];
     
     // Check if there is an unexpired cached response
     if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
