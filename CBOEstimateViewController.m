@@ -159,14 +159,34 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        }
+        [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.text = @"The Congressional Budget Office is required to develop a cost estimate for virtually every bill reported by Congressional committees to show how it would affect spending or revenues over the next five years or more.";
+        return cell;
     }
     
-    // Configure the cell...
-    
-    return cell;
+    else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        NSArray *sectionArray = [sectionDataArray objectAtIndex:(indexPath.section - 1)];
+        
+        if (sectionArray != NULL) {
+            // Configure the cell...
+            [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
+            cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
+            cell.textLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"];
+        }
+        return cell;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
