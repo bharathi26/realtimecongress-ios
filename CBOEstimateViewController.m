@@ -13,6 +13,24 @@
 #import "GANTracker.h"
 #import "Reachability.h"
 
+#pragma mark Utility extensions
+
+@interface UILabel (sizingExtensions)
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth;
+@end
+
+@implementation UILabel (sizingExtensions)
+
+
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth
+{
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, fixedWidth, 0);
+    self.lineBreakMode = UILineBreakModeWordWrap;
+    self.numberOfLines = 0;
+    [self sizeToFit];
+}
+@end
+
 @implementation CBOEstimateViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -116,16 +134,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    if ([reportDaysArray count] > 0) {
+        return ([reportDaysArray count] + 1);
+    }
+    else{
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    if (section == 0) {
+        return 1;
+    }
+    else {
+        NSArray *sectionArray = [sectionDataArray objectAtIndex:section - 1];
+        return [sectionArray count];   
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,44 +169,21 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // Sets the title of each section to the legislative day
+    if ([reportDaysArray count] > 0) {
+        if ((section == [reportDaysArray count]) || (section == 0)) {
+            return nil;
+        }
+        else {
+            return [reportDaysArray objectAtIndex:section - 1];
+        }
+        
+    }
+    else {
+        return [NSString stringWithString:@"No events logged"];
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -193,6 +197,22 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return 90;
+    }
+    else {
+        //Calculates the appropriate row height based on the size of the three text labels
+        CGSize maxSize = CGSizeMake(CELL_WIDTH, CGFLOAT_MAX);
+        NSArray *sectionArray = [sectionDataArray objectAtIndex:(indexPath.section - 1)];
+        
+        CGSize titleTextSize = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
+        
+        return (titleTextSize.height + 60);
+    }
 }
 
 #pragma mark - UI Actions
@@ -251,6 +271,7 @@
     
     //Assign received data
     NSDictionary *items = [notification userInfo];
+    NSLog(@"%@", items);
     
     static NSDateFormatter * dateFormatter;
     static NSDateFormatter *updateDayFormatter;
