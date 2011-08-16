@@ -8,6 +8,7 @@
 
 #import "DocumentsListViewController.h"
 #import "CRSReportViewController.h"
+#import "CBOEstimateViewController.h"
 
 @implementation DocumentsListViewController
 
@@ -99,7 +100,14 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = @"CRS Reports";
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = @"CRS Reports";
+            break;
+            
+        case 1:
+            cell.textLabel.text = @"CBO Estimates";
+    }
     
     return cell;
 }
@@ -113,6 +121,12 @@
         [self.navigationController pushViewController:crsReportViewController animated:YES];
         [crsReportViewController release];
     }
+    else if (indexPath.row == 1) {
+        CBOEstimateViewController *cboEstimateViewController = [[CBOEstimateViewController alloc] initWithNibName:@"CBOEstimateViewController" bundle:nil];
+        [self.navigationController pushViewController:cboEstimateViewController animated:YES];
+        [cboEstimateViewController release];
+    }
+    
 }
 
 @end
