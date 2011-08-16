@@ -119,7 +119,7 @@
     NSError *error;
     
     //Register a page view to the Google Analytics tracker
-    if (![[GANTracker sharedTracker] trackPageview:@"/crsreports"
+    if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports"
                                          withError:&error]) {
         // Handle error here
     }
@@ -152,7 +152,7 @@
 {
     // Return the number of sections.
     if ([reportDaysArray count] > 0) {
-        return ([reportDaysArray count]);
+        return ([reportDaysArray count] + 1);
     }
     else{
         return 1;
@@ -162,39 +162,56 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    
-    NSArray *sectionArray = [sectionDataArray objectAtIndex:section];
-    return [sectionArray count];
+    if (section == 0) {
+        return 1;
+    }
+    else {
+        NSArray *sectionArray = [sectionDataArray objectAtIndex:section - 1];
+        return [sectionArray count];   
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
-    
-    if (sectionArray != NULL) {
-        // Configure the cell...
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        }
         [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
-        cell.textLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"];
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.text = @"Reports issued by the Congressional Research Service, an arm of the Library of Congress that provides Congress with research and analysis on legislative issues.";
+        return cell;
     }
-    return cell;
+    
+    else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        NSArray *sectionArray = [sectionDataArray objectAtIndex:(indexPath.section - 1)];
+        
+        if (sectionArray != NULL) {
+            // Configure the cell...
+            [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
+            cell.textLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"];
+        }
+        return cell;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Sets the title of each section to the legislative day
     if ([reportDaysArray count] > 0) {
-        if (section == [reportDaysArray count]) {
+        if ((section == [reportDaysArray count]) || (section == 0)) {
             return nil;
         }
         else {
-            return [reportDaysArray objectAtIndex:section];
+            return [reportDaysArray objectAtIndex:section - 1];
         }
         
     }
@@ -219,13 +236,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //Calculates the appropriate row height based on the size of the three text labels
-    CGSize maxSize = CGSizeMake(CELL_WIDTH, CGFLOAT_MAX);
-    NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
-    
-    CGSize titleTextSize = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
-    
-    return (titleTextSize.height + 60);
+    if (indexPath.section == 0) {
+        return 90;
+    }
+    else {
+        //Calculates the appropriate row height based on the size of the three text labels
+        CGSize maxSize = CGSizeMake(CELL_WIDTH, CGFLOAT_MAX);
+        NSArray *sectionArray = [sectionDataArray objectAtIndex:(indexPath.section - 1)];
+        
+        CGSize titleTextSize = [[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"title"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];
+        
+        return (titleTextSize.height + 60);
+    }
 }
 
 #pragma mark - UI Actions
@@ -279,6 +301,9 @@
     [connection release];
     connection = nil;
     
+    // Clear array when new data received
+    [reportDaysArray removeAllObjects];
+    
     //Assign received data
     NSDictionary *items = [notification userInfo];
     
@@ -320,7 +345,9 @@
     sectionDataArray = [[NSMutableArray alloc] initWithCapacity:20];
     
     for (NSString *updateDayString in reportDaysArray) {
-        [sectionDataArray addObject:[reportDaysDictionary objectForKey:updateDayString]];
+        if (updateDayString != @"") {
+            [sectionDataArray addObject:[reportDaysDictionary objectForKey:updateDayString]];
+        }
     }
     
     //Reload the table once data retrieval is complete
