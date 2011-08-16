@@ -38,11 +38,23 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //Set title
+    self.title = @"CBO Estimates";
+    
+    //Set up refresh button
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = refreshButton;
+    
+    //An activity indicator to indicate loading
+    loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [loadingIndicator setCenter:self.view.center];
+    [self.view addSubview:loadingIndicator];
+    
+    //Register for reachability changed notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidUnload
@@ -50,11 +62,33 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [reachabilityInfo stopNotifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    // Check if URL Cache memory size is set to zero. Reset to 10 MB if it is.
+    if([[NSURLCache sharedURLCache] memoryCapacity] == 0){
+        [[NSURLCache sharedURLCache] setMemoryCapacity:10485760];
+    }
+    
+    //Array to keep track of the unique days for each update
+    if (!reportDaysArray){
+        reportDaysArray = [[NSMutableArray alloc] initWithCapacity:20];
+    }
+    
+    // Create a dictionary to associate updates with days
+    reportDaysDictionary = [[NSMutableDictionary dictionary] retain];
+    
+    //Create a reachability object to monitor internet reachability
+    reachabilityInfo = [[Reachability reachabilityForInternetConnection] retain];
+    [reachabilityInfo startNotifier];
+    
+    //Retrieve data
+    [self retrieveData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -176,7 +210,7 @@
         
         NSError *error;
         //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports"
+        if (![[GANTracker sharedTracker] trackPageview:@"/cbo_estimates"
                                              withError:&error]) {
             // Handle error here
         }
@@ -184,7 +218,7 @@
         // Generate request URL using Sunlight Labs Request class
         NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                            [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",
-                                           @"crs_report", @"document_type",
+                                           @"cbo_estimate", @"document_type",
                                            nil];
         SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:Documents APIMethod:nil];
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
@@ -233,7 +267,7 @@
     [updateDayFormatter setDateFormat:@"EEEE, MMMM dd"];
     
     for (id update in [items objectForKey:@"documents"]) {
-        NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"released_at"]];
+        NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"posted_at"]];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
         NSString *updateDay = [updateDayFormatter stringFromDate: date];
@@ -289,7 +323,7 @@
     [updateDayFormatter setDateFormat:@"EEEE, MMMM dd"];
     
     for (id update in [items objectForKey:@"documents"]) {
-        NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"released_at"]];
+        NSDate * date = [dateFormatter dateFromString:[update objectForKey:@"posted_at"]];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
         NSString *updateDay = [updateDayFormatter stringFromDate: date];
@@ -329,7 +363,7 @@
 {
     NSError *error;
     //Register a page view to the Google Analytics tracker
-    if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports"
+    if (![[GANTracker sharedTracker] trackPageview:@"/cbo_estimates"
                                          withError:&error]) {
         // Handle error here
     }
