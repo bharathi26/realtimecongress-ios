@@ -116,13 +116,6 @@
     
     //Retrieve data
     [self retrieveData];
-    NSError *error;
-    
-    //Register a page view to the Google Analytics tracker
-    if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports"
-                                         withError:&error]) {
-        // Handle error here
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -417,6 +410,13 @@
 
 - (void) retrieveData
 {
+    NSError *error;
+    //Register a page view to the Google Analytics tracker
+    if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports"
+                                         withError:&error]) {
+        // Handle error here
+    }
+    
     // Generate request URL using Sunlight Labs Request class
     NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        [NSString stringWithFormat:@"%@", REQUEST_PAGE_SIZE], @"per_page",

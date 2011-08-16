@@ -115,28 +115,6 @@
     
     //Retrieve Data
     [self retrieveData];
-    
-    //Track page view based on selected chamber control button
-    
-    NSError *error;
-    if (chamberControl.selectedSegmentIndex == 0) {
-        //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/house"
-                                             withError:&error]) {
-            // Handle error here
-        }
-    }
-    
-    else {
-        //Register a page view to the Google Analytics tracker
-        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/senate"
-                                             withError:&error]) {
-            // Handle error here
-        }
-    }
-    
-    
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -491,6 +469,25 @@
 {
     //Set the navigation bar title to that of the selected chamber
     self.title = [NSString stringWithFormat:@"%@ Hearings", [chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex]];
+    
+    //Track page view based on selected chamber control button
+    
+    NSError *error;
+    if (chamberControl.selectedSegmentIndex == 0) {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/house"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
+    
+    else {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/hearings/senate"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
     
     // Get the current date and format it for a url request
     static NSDateFormatter *dateFormatter;
