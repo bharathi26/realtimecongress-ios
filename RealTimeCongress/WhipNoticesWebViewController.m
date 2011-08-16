@@ -63,9 +63,16 @@
             // Handle error here
         }
     }
-    else {
+    else if (launchType == @"crs_reports") {
         //Register a page view to the Google Analytics tracker
         if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports/webview"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
+    else if (launchType == @"cbo_estimates") {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/cbo_estimates/webview"
                                              withError:&error]) {
             // Handle error here
         }
