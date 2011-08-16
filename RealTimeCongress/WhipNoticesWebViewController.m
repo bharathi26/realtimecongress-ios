@@ -14,6 +14,7 @@
 
 @synthesize urlRequest;
 @synthesize loadingIndicator;
+@synthesize launchType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,11 +56,21 @@
     [super viewWillAppear:animated];
     
     NSError *error;
-    //Register a page view to the Google Analytics tracker
-    if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices/webview"
-                                         withError:&error]) {
-        // Handle error here
+    if (launchType == @"whipnotices") {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices/webview"
+                                             withError:&error]) {
+            // Handle error here
+        }
     }
+    else {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/crs_reports/webview"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
+    
     
     //An activity indicator to indicate loading
     loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];

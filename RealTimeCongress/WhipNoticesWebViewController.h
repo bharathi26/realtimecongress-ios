@@ -13,9 +13,11 @@
     IBOutlet UIWebView *webView;
     NSURLRequest *urlRequest;
     UIActivityIndicatorView *loadingIndicator;
+    NSString *launchType;
 }
 
 @property (nonatomic, retain) NSURLRequest *urlRequest;
 @property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, retain) NSString *launchType;
 
 @end

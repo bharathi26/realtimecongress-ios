@@ -230,6 +230,7 @@
     NSURL * url = [NSURL URLWithString:[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"url"]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
     webViewController.urlRequest = urlRequest;
+    webViewController.launchType = @"crs_reports";
     [self.navigationController pushViewController:webViewController animated:YES];
     [WhipNoticesWebViewController release];
 }
