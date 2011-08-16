@@ -16,7 +16,6 @@
 
 @interface CRSReportViewController : UITableViewController {
 @private
-    NSArray *parsedCRSReportData;
     UIActivityIndicatorView *loadingIndicator;
     NSMutableDictionary *reportDaysDictionary;
     NSMutableArray *sectionDataArray;
