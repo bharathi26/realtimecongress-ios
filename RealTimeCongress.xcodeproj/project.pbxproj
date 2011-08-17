@@ -11,6 +11,8 @@
 		284C060D138BFCFE00ED309D /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284C060B138BFCFE00ED309D /* AboutViewController.m */; };
 		284C060E138BFCFE00ED309D /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284C060C138BFCFE00ED309D /* AboutViewController.xib */; };
 		284C0611138C21C600ED309D /* AboutInfo.html in Resources */ = {isa = PBXBuildFile; fileRef = 284C0610138C21C600ED309D /* AboutInfo.html */; };
+		28824A0A13FBFAD900CC478A /* GAOReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28824A0813FBFAD900CC478A /* GAOReportViewController.m */; };
+		28824A0B13FBFAD900CC478A /* GAOReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28824A0913FBFAD900CC478A /* GAOReportViewController.xib */; };
 		2884477613E9D43600377079 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2884477513E9D43600377079 /* Reachability.m */; };
 		2884477C13EB2C5400377079 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2884477B13EB2C5400377079 /* SystemConfiguration.framework */; };
 		2884478713F0B19E00377079 /* DocumentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2884478513F0B19E00377079 /* DocumentsListViewController.m */; };
@@ -156,6 +158,9 @@
 		284C060B138BFCFE00ED309D /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = RealTimeCongress/AboutViewController.m; sourceTree = "<group>"; };
 		284C060C138BFCFE00ED309D /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		284C0610138C21C600ED309D /* AboutInfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = AboutInfo.html; sourceTree = "<group>"; };
+		28824A0713FBFAD900CC478A /* GAOReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAOReportViewController.h; sourceTree = "<group>"; };
+		28824A0813FBFAD900CC478A /* GAOReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAOReportViewController.m; sourceTree = "<group>"; };
+		28824A0913FBFAD900CC478A /* GAOReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GAOReportViewController.xib; path = ../GAOReportViewController.xib; sourceTree = "<group>"; };
 		2884477413E9D43600377079 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2884477513E9D43600377079 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2884477B13EB2C5400377079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -357,6 +362,8 @@
 				28EAE7F913F34BA1001E7CB1 /* CRSReportViewController.m */,
 				28D86A6913FAFF53000433E7 /* CBOEstimateViewController.h */,
 				28D86A6A13FAFF53000433E7 /* CBOEstimateViewController.m */,
+				28824A0713FBFAD900CC478A /* GAOReportViewController.h */,
+				28824A0813FBFAD900CC478A /* GAOReportViewController.m */,
 			);
 			name = "View Controllers";
 			path = ..;
@@ -462,6 +469,7 @@
 				289F99C713B3CD550061FDE8 /* Congress Model */,
 				289F99A313B3C9680061FDE8 /* API Requests */,
 				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
+				28824A0913FBFAD900CC478A /* GAOReportViewController.xib */,
 				28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */,
 				28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */,
 				2A787EC9138310E8008EC17E /* RealTimeCongressAppDelegate.h */,
@@ -771,6 +779,7 @@
 				2884478813F0B19E00377079 /* DocumentsListViewController.xib in Resources */,
 				28EAE7FC13F34BA1001E7CB1 /* CRSReportViewController.xib in Resources */,
 				28D86A6D13FAFF53000433E7 /* CBOEstimateViewController.xib in Resources */,
+				28824A0B13FBFAD900CC478A /* GAOReportViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +835,7 @@
 				2884478713F0B19E00377079 /* DocumentsListViewController.m in Sources */,
 				28EAE7FB13F34BA1001E7CB1 /* CRSReportViewController.m in Sources */,
 				28D86A6C13FAFF53000433E7 /* CBOEstimateViewController.m in Sources */,
+				28824A0A13FBFAD900CC478A /* GAOReportViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
