@@ -940,6 +940,7 @@
 					"\"$(SRCROOT)/RealTimeCongress\"",
 				);
 				PRODUCT_NAME = Congress;
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -959,6 +960,7 @@
 					"\"$(SRCROOT)/RealTimeCongress\"",
 				);
 				PRODUCT_NAME = Congress;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

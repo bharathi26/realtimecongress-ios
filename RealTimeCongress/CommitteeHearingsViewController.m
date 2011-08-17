@@ -295,7 +295,7 @@
             }
         }
         
-        //Animate the activity indicator and network activity indicator when loading data
+        //Animate the activity indicator when loading data
         [self.loadingIndicator startAnimating];
         
         // Get the current date and format it for a url request
@@ -466,6 +466,9 @@
 {
     //Set the navigation bar title to that of the selected chamber
     self.title = [NSString stringWithFormat:@"%@ Hearings", [chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex]];
+    
+    //Animate the activity indicator when loading data
+    [self.loadingIndicator startAnimating];
     
     //Track page view based on selected chamber control button
     

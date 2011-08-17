@@ -204,7 +204,7 @@
         //Disable scrolling while data is loading
         self.tableView.scrollEnabled = NO;
         
-        //Animate the activity indicator and network activity indicator when loading data
+        //Animate the activity indicator when loading data
         [self.loadingIndicator startAnimating];
         
         NSError *error;
@@ -358,6 +358,9 @@
                                          withError:&error]) {
         // Handle error here
     }
+    
+    //Animate the activity indicator and network activity indicator when loading data
+    [self.loadingIndicator startAnimating];
     
     // Generate request URL using Sunlight Labs Request class
     NSDictionary *requestParameters = [[NSDictionary alloc] initWithObjectsAndKeys:
