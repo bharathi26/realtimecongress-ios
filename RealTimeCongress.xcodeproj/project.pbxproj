@@ -138,6 +138,7 @@
 		2A787F99138324D1008EC17E /* 96-book.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A787F48138324D1008EC17E /* 96-book.png */; };
 		2A787F9A138324D1008EC17E /* 96-book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A787F49138324D1008EC17E /* 96-book@2x.png */; };
 		2A787F9B138324D1008EC17E /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A787F4A138324D1008EC17E /* appIcon.png */; };
+		2A9AE10113FC362B009AE640 /* sunlight_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2A9AE10013FC362B009AE640 /* sunlight_logo.gif */; };
 		2AAA219C1385701000680E9B /* WhipNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA219A1385701000680E9B /* WhipNoticeViewController.m */; };
 		2AAA219D1385701000680E9B /* WhipNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */; };
 /* End PBXBuildFile section */
@@ -308,6 +309,7 @@
 		2A787F48138324D1008EC17E /* 96-book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "96-book.png"; sourceTree = "<group>"; };
 		2A787F49138324D1008EC17E /* 96-book@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "96-book@2x.png"; sourceTree = "<group>"; };
 		2A787F4A138324D1008EC17E /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
+		2A9AE10013FC362B009AE640 /* sunlight_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = sunlight_logo.gif; path = ../../../../../Desktop/sunlight_logo.gif; sourceTree = "<group>"; };
 		2AAA21991385701000680E9B /* WhipNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhipNoticeViewController.h; path = RealTimeCongress/WhipNoticeViewController.h; sourceTree = "<group>"; };
 		2AAA219A1385701000680E9B /* WhipNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhipNoticeViewController.m; path = RealTimeCongress/WhipNoticeViewController.m; sourceTree = "<group>"; };
 		2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhipNoticeViewController.xib; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				284C0610138C21C600ED309D /* AboutInfo.html */,
+				2A9AE10013FC362B009AE640 /* sunlight_logo.gif */,
 				2A787EFA138324D1008EC17E /* 08-chat.png */,
 				2A787EFB138324D1008EC17E /* 08-chat@2x.png */,
 				2A787EFC138324D1008EC17E /* 09-chat-2.png */,
@@ -780,6 +783,7 @@
 				28EAE7FC13F34BA1001E7CB1 /* CRSReportViewController.xib in Resources */,
 				28D86A6D13FAFF53000433E7 /* CBOEstimateViewController.xib in Resources */,
 				28824A0B13FBFAD900CC478A /* GAOReportViewController.xib in Resources */,
+				2A9AE10113FC362B009AE640 /* sunlight_logo.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,6 +938,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
@@ -954,6 +959,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",

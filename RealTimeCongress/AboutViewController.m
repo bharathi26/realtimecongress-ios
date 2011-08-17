@@ -48,8 +48,9 @@
     
     NSString *htmlString = [[NSString alloc] initWithData: 
                             [readHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding];
-    
-    [self.webView loadHTMLString:htmlString baseURL:nil];
+
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
+    [self.webView loadHTMLString:htmlString baseURL:baseURL];
     [htmlString release];
 }
 
