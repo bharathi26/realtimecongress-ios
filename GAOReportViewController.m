@@ -164,7 +164,7 @@
         }
         [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
         cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.textLabel.text = @"The Congressional Budget Office is required to develop a cost estimate for virtually every bill reported by Congressional committees to show how it would affect spending or revenues over the next five years or more.";
+        cell.textLabel.text = @"The U.S. Government Accountability Office is an independent, nonpartisan agency that investigates how the federal government spends taxpayer dollars and advises Congress and the heads of executive agencies on ways to make government more efficient, effective, ethical, equitable and responsive.";
         return cell;
     }
     
@@ -221,7 +221,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 90;
+        return 130;
     }
     else {
         //Calculates the appropriate row height based on the size of the three text labels
