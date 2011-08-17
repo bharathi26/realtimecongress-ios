@@ -317,12 +317,9 @@
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];
-        NSLog(@"No cached data. Use network.");
     }
     
     else{
-        NSLog(@"The internet is inaccessible.");
-        
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
                                                          message:@"Please check your connection and try again."
                                                         delegate:self
@@ -513,7 +510,6 @@
     // Check if there is an unexpired cached response
     if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
         [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];
-        NSLog(@"Cached data loaded");
     }
     else{
         // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
@@ -522,11 +518,8 @@
             connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
             [connection sendRequest];
-            NSLog(@"No cached data. Use network.");
         }
         else {
-            NSLog(@"The internet is inaccessible.");
-            
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
                                                              message:@"Please check your connection and try again."
                                                             delegate:self
@@ -543,8 +536,6 @@
 - (void) reachabilityChanged {
     NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
     if (internetStatus == NotReachable) {
-        NSLog(@"The internet is inaccessible.");
-        
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
                                                          message:@"Please check your connection and try again."
                                                         delegate:self
@@ -555,9 +546,7 @@
         [alert release];
         
     }
-    else {
-        NSLog(@"The internet is now accessible.");
-        
+    else {        
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Internet now accessible."
                                                          message:@"Internet now accessible."
                                                         delegate:self
