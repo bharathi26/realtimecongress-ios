@@ -21,10 +21,10 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
                                                  delegate:nil];
     
     //Set Dry Run flag for testing
-    [GANTracker sharedTracker].dryRun = YES;
+    [GANTracker sharedTracker].dryRun = NO;
     
     //Set Debug flag for test
-    [GANTracker sharedTracker].debug = YES;
+    [GANTracker sharedTracker].debug = NO;
     
     //Set up the shared URL Cache
     NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:10485760 diskCapacity:0 diskPath:nil]; //10MB of memory dedicated to cache
