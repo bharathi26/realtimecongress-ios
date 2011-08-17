@@ -9,6 +9,7 @@
 #import "DocumentsListViewController.h"
 #import "CRSReportViewController.h"
 #import "CBOEstimateViewController.h"
+#import "GAOReportViewController.h"
 
 @implementation DocumentsListViewController
 
@@ -107,6 +108,9 @@
             
         case 1:
             cell.textLabel.text = @"CBO Estimates";
+            break;
+        case 2:
+            cell.textLabel.text = @"GAO Reports";
     }
     
     return cell;
@@ -125,6 +129,11 @@
         CBOEstimateViewController *cboEstimateViewController = [[CBOEstimateViewController alloc] initWithNibName:@"CBOEstimateViewController" bundle:nil];
         [self.navigationController pushViewController:cboEstimateViewController animated:YES];
         [cboEstimateViewController release];
+    }
+    else if (indexPath.row == 2) {
+        GAOReportViewController *gaoReportViewController = [[GAOReportViewController alloc] initWithNibName:@"GAOReportViewController" bundle:nil];
+        [self.navigationController pushViewController:gaoReportViewController animated:YES];
+        [gaoReportViewController release];
     }
     
 }
