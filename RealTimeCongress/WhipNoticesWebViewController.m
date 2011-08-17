@@ -77,6 +77,13 @@
             // Handle error here
         }
     }
+    else if (launchType == @"gao_reports") {
+        //Register a page view to the Google Analytics tracker
+        if (![[GANTracker sharedTracker] trackPageview:@"/gao_reports/webview"
+                                             withError:&error]) {
+            // Handle error here
+        }
+    }
     
     
     //An activity indicator to indicate loading
