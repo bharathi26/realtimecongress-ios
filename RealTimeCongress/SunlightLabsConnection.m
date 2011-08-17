@@ -44,13 +44,10 @@
     NSDictionary *currentDate = [NSDictionary dictionaryWithObject:[NSDate date] forKey:@"CreationDate"];
     NSCachedURLResponse *newCachedResponse = [[[NSCachedURLResponse alloc] initWithResponse:[cachedResponse response] data:[cachedResponse data] userInfo:currentDate storagePolicy:NSURLCacheStorageAllowedInMemoryOnly] autorelease];
     
-    NSLog(@"URL Cached");
-    
     return newCachedResponse;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Sunlight Labs Connection did fail with error:%@",error);
     [[SunlightLabsConnectionTracker sharedInstance] reduceConnection];
 }
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -66,8 +63,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:SunglightLabsRequestFinishedNotification object:self userInfo:decodedData];
     }
     [[SunlightLabsConnectionTracker sharedInstance] reduceConnection];
-    NSLog(@"Current cache memory size: %u", [[NSURLCache sharedURLCache] memoryCapacity]);
-    NSLog(@"Current memory usage in bytes: %u", [[NSURLCache sharedURLCache] currentMemoryUsage]);
 }
 
 - (void)dealloc
