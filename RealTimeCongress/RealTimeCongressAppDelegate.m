@@ -15,8 +15,11 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
 {
     // Override point for customization after application launch.
     
+    // Get Account ID for Google Analytics tracking
+    NSString *AcctID = [[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"APIKeys" ofType:@"plist"]] objectForKey:@"GoogleAnalyticsAccount"];
+    
     //Start up the Google Analytics tracker object
-    [[GANTracker sharedTracker] startTrackerWithAccountID:@"UA-1265484-75"
+    [[GANTracker sharedTracker] startTrackerWithAccountID:AcctID
                                            dispatchPeriod:kGANDispatchPeriodSec
                                                  delegate:nil];
     
