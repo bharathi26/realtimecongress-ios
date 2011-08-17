@@ -34,8 +34,6 @@
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -56,6 +54,8 @@
     [super viewWillAppear:animated];
     
     NSError *error;
+    // Track page views
+    
     if (launchType == @"whipnotices") {
         //Register a page view to the Google Analytics tracker
         if (![[GANTracker sharedTracker] trackPageview:@"/whipnotices/webview"
