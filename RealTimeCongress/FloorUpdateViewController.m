@@ -100,8 +100,6 @@
         [floorUpdateText setString:@""];
     }
     
-    NSLog(@"Recieved floor updates");
-    
     id last = [[floorUpdates lastObject] retain];
     [floorUpdates removeObject:[floorUpdates lastObject]];
     [floorUpdates removeAllObjects];
@@ -117,8 +115,6 @@
 
 - (void) parseCachedData:(NSData *)data {
     NSDictionary *userInfo = [[JSONDecoder decoder] objectWithData:data];
-    
-    NSLog(@"Parsing cached data");
     
     static NSDateFormatter * dateFormatter;
     static NSDateFormatter *updateDayFormatter;
@@ -188,7 +184,6 @@
     }
     
     //Track page view based on selected chamber control button
-    NSLog(@"Data refreshed");
     NSError *error;
     if (control.selectedSegmentIndex == 0) {
         //Register a page view to the Google Analytics tracker
@@ -205,7 +200,6 @@
             // Handle error here
         }
     }
-    NSLog(@"Current cache memory size: %u", [[NSURLCache sharedURLCache] memoryCapacity]);
     page = 0;
     if (connection) {
         [connection cancel];
@@ -380,11 +374,8 @@
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
                 [connection sendRequest];
                 refreshed = NO;
-                NSLog(@"User initiated refresh. Network source used");
             }
             else {
-                NSLog(@"The internet is inaccessible.");
-                
                 UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
                                                                  message:@"Please check your connection and try again."
                                                                 delegate:self
@@ -403,7 +394,6 @@
             // Check if there is an unexpired cached response
             if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
                 [self parseCachedData:[cachedResponse data]];
-                NSLog(@"Cached data loaded");
             }
             else {
                 if (internetStatus != NotReachable) {
@@ -411,11 +401,8 @@
                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveFloorUpdate:) name:SunglightLabsRequestFinishedNotification object:connection];
                     [connection sendRequest];
                     refreshed = NO;
-                    NSLog(@"User initiated refresh. Network source used");
                 }
                 else {
-                    NSLog(@"The internet is inaccessible.");
-                    
                     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
                                                                      message:@"Please check your connection and try again."
                                                                     delegate:self
