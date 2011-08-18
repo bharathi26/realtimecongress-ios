@@ -44,6 +44,7 @@
     [webView loadRequest:urlRequest];
     
     webView.scalesPageToFit = YES;
+    webView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:webView  action:@selector(reload)];
     self.navigationItem.rightBarButtonItem = refreshButton;
