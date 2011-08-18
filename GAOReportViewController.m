@@ -157,6 +157,7 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
+    // Set informative text in the top most cell
     if (indexPath.section == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
