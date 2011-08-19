@@ -26,6 +26,7 @@
 		289F99C313B3CD330061FDE8 /* Bill.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99BE13B3CD330061FDE8 /* Bill.m */; };
 		289F99C413B3CD330061FDE8 /* CongressionalArtifact.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */; };
 		289F99C913B3CE370061FDE8 /* LoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */; };
+		28A3E4B713FEDEB200715325 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */; };
 		28BC5828139AA0BC00EBA6BE /* CommitteeHearingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */; };
 		28BC5829139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */; };
 		28BC582D139AA0D100EBA6BE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC582C139AA0D100EBA6BE /* JSONKit.m */; };
@@ -184,6 +185,7 @@
 		289F99BF13B3CD330061FDE8 /* CongressionalArtifact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongressionalArtifact.h; sourceTree = "<group>"; };
 		289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CongressionalArtifact.m; sourceTree = "<group>"; };
 		289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
+		28A3E4B613FEDEB200715325 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommitteeHearingsViewController.h; path = RealTimeCongress/CommitteeHearingsViewController.h; sourceTree = "<group>"; };
 		28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommitteeHearingsViewController.m; path = RealTimeCongress/CommitteeHearingsViewController.m; sourceTree = "<group>"; };
 		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
@@ -408,6 +410,14 @@
 			name = "Congress Model";
 			sourceTree = "<group>";
 		};
+		28A3E4B413FEDEAD00715325 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		28BCE2CA13A7B2DC00BC5A31 /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +475,7 @@
 		2A787EC0138310E8008EC17E /* RealTimeCongress */ = {
 			isa = PBXGroup;
 			children = (
+				28A3E4B413FEDEAD00715325 /* iPad */,
 				2884477313E9D41500377079 /* Networking */,
 				2884477113E9D3D900377079 /* View Controllers */,
 				28E0D73F13CE57FC00E21A5B /* Google Analytics */,
@@ -784,6 +795,7 @@
 				28D86A6D13FAFF53000433E7 /* CBOEstimateViewController.xib in Resources */,
 				28824A0B13FBFAD900CC478A /* GAOReportViewController.xib in Resources */,
 				2A9AE10813FC6363009AE640 /* sunlight_logo.gif in Resources */,
+				28A3E4B713FEDEB200715325 /* MainWindow-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,6 +874,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28A3E4B613FEDEB200715325 /* en */,
+			);
+			name = "MainWindow-iPad.xib";
+			sourceTree = "<group>";
+		};
 		2A787EC3138310E8008EC17E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -921,16 +941,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Sunlight Foundation";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sunlight Foundation";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tom Tsai (78XAXQV7J8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tom Tsai (78XAXQV7J8)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "A453FDA9-B03F-43EE-889F-2E437EF0B7A1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A453FDA9-B03F-43EE-889F-2E437EF0B7A1";
+				PROVISIONING_PROFILE = "F050C6C3-1C35-4EFF-BB16-124900C9C091";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F050C6C3-1C35-4EFF-BB16-124900C9C091";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -944,7 +964,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
@@ -952,7 +972,7 @@
 				);
 				PRODUCT_NAME = Congress;
 				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -965,7 +985,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
@@ -973,7 +993,7 @@
 				);
 				PRODUCT_NAME = Congress;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
