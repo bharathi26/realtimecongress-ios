@@ -188,7 +188,9 @@
 {
     // Navigation logic may go here. Create and push another view controller.
      WhipNoticesWebViewController *webViewController = [[WhipNoticesWebViewController alloc] initWithNibName:@"WhipNoticesWebViewController" bundle:nil];
-    webViewController.urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[[parsedWhipNoticeData objectAtIndex:indexPath.row] objectForKey:@"url"]]];
+    NSArray *sectionArray = [sectionDataArray objectAtIndex:(indexPath.section)];
+    NSURL * url = [NSURL URLWithString:[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"url"]];
+    webViewController.urlRequest = [NSURLRequest requestWithURL:url];
     webViewController.launchType = @"whipnotices";
      [self.navigationController pushViewController:webViewController animated:YES];
      [WhipNoticesWebViewController release];
