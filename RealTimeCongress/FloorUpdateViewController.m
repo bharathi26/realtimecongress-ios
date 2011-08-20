@@ -13,6 +13,22 @@
 #import "JSONKit.h"
 #import "Reachability.h"
 
+@interface UILabel (sizingExtensions)
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth;
+@end
+
+@implementation UILabel (sizingExtensions)
+
+
+- (void)sizeToFitFixedWidth:(NSInteger)fixedWidth
+{
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, fixedWidth, 0);
+    self.lineBreakMode = UILineBreakModeWordWrap;
+    self.numberOfLines = 0;
+    [self sizeToFit];
+}
+@end
+
 @interface NSString (CancelRequest)
 
 - (void)cancelRequest;
@@ -439,8 +455,8 @@
         }
         UILabel * eventText = (UILabel *)[cell viewWithTag:2];
         [(UILabel *)[cell viewWithTag:1] setText:[[sectionArray objectAtIndex:indexPath.row] displayDate]];
-        [eventText setFrame:CGRectMake([cell viewWithTag:2].frame.origin.x, [cell viewWithTag:2].frame.origin.y, [cell viewWithTag:2].frame.size.width,[[sectionArray objectAtIndex:indexPath.row] textViewHeightRequired])];
-        eventText.text = [[sectionArray objectAtIndex:indexPath.row] displayText];
+        [eventText setText:[[sectionArray objectAtIndex:indexPath.row] displayText]];
+        [eventText sizeToFitFixedWidth:FLOOR_UPDATE_CELL_WIDTH];
         return cell;
     }  
     

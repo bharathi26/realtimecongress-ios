@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SunlightLabsConnection.h"
 #import "Reachability.h"
+
+#define FLOOR_UPDATE_CELL_WIDTH 230
 @class FloorUpdate;
 
 @interface FloorUpdateViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>  {
