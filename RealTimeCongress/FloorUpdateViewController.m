@@ -437,9 +437,10 @@
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"FloorUpdateTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
+        UILabel * eventText = (UILabel *)[cell viewWithTag:2];
         [(UILabel *)[cell viewWithTag:1] setText:[[sectionArray objectAtIndex:indexPath.row] displayDate]];
-        [(UITextView *)[cell viewWithTag:2] setFrame:CGRectMake([cell viewWithTag:2].frame.origin.x, [cell viewWithTag:2].frame.origin.y, [cell viewWithTag:2].frame.size.width,[[sectionArray objectAtIndex:indexPath.row] textViewHeightRequired])];
-        [(UITextView *)[cell viewWithTag:2] setText:[[sectionArray objectAtIndex:indexPath.row] displayText]];
+        [eventText setFrame:CGRectMake([cell viewWithTag:2].frame.origin.x, [cell viewWithTag:2].frame.origin.y, [cell viewWithTag:2].frame.size.width,[[sectionArray objectAtIndex:indexPath.row] textViewHeightRequired])];
+        eventText.text = [[sectionArray objectAtIndex:indexPath.row] displayText];
         return cell;
     }  
     

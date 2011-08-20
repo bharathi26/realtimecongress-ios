@@ -55,7 +55,7 @@
 
 - (CGFloat)textHeight {
     if (_textHeight == -1) {
-        _textHeight = [_displayText sizeWithFont:[UIFont systemFontOfSize:kTextViewFontSize] constrainedToSize:CGSizeMake(230, 10000.0) lineBreakMode:UILineBreakModeWordWrap].height;
+        _textHeight = [_displayText sizeWithFont:[UIFont systemFontOfSize:kTextViewFontSize] constrainedToSize:CGSizeMake(230, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap].height;
     }
     return _textHeight;
 }
