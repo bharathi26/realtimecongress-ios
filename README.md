@@ -50,3 +50,11 @@ GSoC students applying for this project should expect to work on Phases 2 and 3.
 ## Questions
 
 Email luigi (at) sunlightfoundation.com or find LuigiMontanez on Freenode in the #sunlightlabs channel.
+
+## To-Do for iPad Interface
+1. Implement popovers for portrait view
+2. Fix centering of loading indicators in Whip Notices and Committee Hearings
+3. Fix centering of Segmented control for Floor Updates
+4. Adjust cell text margins for Floor Updates
+5. Fix centering of Segmented control for Committee Hearings
+6. Adjust cell text margins for Committee Hearings
