@@ -1,4 +1,5 @@
 #import "RealTimeCongressAppDelegate.h"
+#import "AboutViewController.h"
 #import "GANTracker.h"
 
 // Dispatch period in seconds
@@ -10,6 +11,9 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
 @synthesize window=_window;
 
 @synthesize navigationController=_navigationController;
+@synthesize splitViewController;
+@synthesize rootViewController;
+@synthesize aboutViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -36,9 +40,21 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
     //Set status bar color to black
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     
-    // Add the navigation controller's view to the window and display
-    self.window.rootViewController = self.navigationController;
-    [self.window makeKeyAndVisible];
+    // Conditional Code for iPad Split View functionality
+    if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        NSLog(@"iPad detected");
+        self.window.rootViewController = self.splitViewController;
+        [self.window makeKeyAndVisible];
+        
+    }
+    else {
+        NSLog(@"iPhone detected");
+        // Add the navigation controller's view to the window and display
+        self.window.rootViewController = self.navigationController;
+        [self.window makeKeyAndVisible];
+    }
+    
     return YES;
 }
 

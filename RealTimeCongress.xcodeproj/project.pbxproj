@@ -27,6 +27,8 @@
 		289F99C413B3CD330061FDE8 /* CongressionalArtifact.m in Sources */ = {isa = PBXBuildFile; fileRef = 289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */; };
 		289F99C913B3CE370061FDE8 /* LoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */; };
 		28A3E4B713FEDEB200715325 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */; };
+		28A3E4BA140219BC00715325 /* AboutViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */; };
+		28A3E4BC14021EB900715325 /* RootViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */; };
 		28BC5828139AA0BC00EBA6BE /* CommitteeHearingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */; };
 		28BC5829139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */; };
 		28BC582D139AA0D100EBA6BE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC582C139AA0D100EBA6BE /* JSONKit.m */; };
@@ -155,48 +157,50 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommitteeHearingsCell.xib; sourceTree = "<group>"; };
+		284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommitteeHearingsCell.xib; path = RealTimeCongress/CommitteeHearingsCell.xib; sourceTree = "<group>"; };
 		284C060A138BFCFE00ED309D /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = RealTimeCongress/AboutViewController.h; sourceTree = "<group>"; };
 		284C060B138BFCFE00ED309D /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = RealTimeCongress/AboutViewController.m; sourceTree = "<group>"; };
-		284C060C138BFCFE00ED309D /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		284C060C138BFCFE00ED309D /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutViewController.xib; path = RealTimeCongress/AboutViewController.xib; sourceTree = "<group>"; };
 		284C0610138C21C600ED309D /* AboutInfo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = AboutInfo.html; sourceTree = "<group>"; };
 		28824A0713FBFAD900CC478A /* GAOReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAOReportViewController.h; sourceTree = "<group>"; };
 		28824A0813FBFAD900CC478A /* GAOReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAOReportViewController.m; sourceTree = "<group>"; };
-		28824A0913FBFAD900CC478A /* GAOReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GAOReportViewController.xib; path = ../GAOReportViewController.xib; sourceTree = "<group>"; };
+		28824A0913FBFAD900CC478A /* GAOReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GAOReportViewController.xib; sourceTree = "<group>"; };
 		2884477413E9D43600377079 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2884477513E9D43600377079 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2884477B13EB2C5400377079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2884477D13EB2C8600377079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2884478413F0B19E00377079 /* DocumentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentsListViewController.h; sourceTree = "<group>"; };
 		2884478513F0B19E00377079 /* DocumentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentsListViewController.m; sourceTree = "<group>"; };
-		2884478613F0B19E00377079 /* DocumentsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DocumentsListViewController.xib; path = ../DocumentsListViewController.xib; sourceTree = "<group>"; };
+		2884478613F0B19E00377079 /* DocumentsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentsListViewController.xib; sourceTree = "<group>"; };
 		289F99AD13B3C9D50061FDE8 /* SunlightLabsConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsConnection.h; sourceTree = "<group>"; };
 		289F99AE13B3C9D50061FDE8 /* SunlightLabsConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsConnection.m; sourceTree = "<group>"; };
 		289F99AF13B3C9D50061FDE8 /* SunlightLabsConnectionTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsConnectionTracker.h; sourceTree = "<group>"; };
 		289F99B013B3C9D50061FDE8 /* SunlightLabsConnectionTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsConnectionTracker.m; sourceTree = "<group>"; };
-		289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FloorUpdateTableViewCell.xib; sourceTree = "<group>"; };
+		289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FloorUpdateTableViewCell.xib; path = RealTimeCongress/FloorUpdateTableViewCell.xib; sourceTree = "<group>"; };
 		289F99B413B3CA8A0061FDE8 /* FloorUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloorUpdateViewController.h; path = RealTimeCongress/FloorUpdateViewController.h; sourceTree = "<group>"; };
 		289F99B513B3CA8A0061FDE8 /* FloorUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloorUpdateViewController.m; path = RealTimeCongress/FloorUpdateViewController.m; sourceTree = "<group>"; };
-		289F99B613B3CA8A0061FDE8 /* FloorUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FloorUpdateViewController.xib; sourceTree = "<group>"; };
+		289F99B613B3CA8A0061FDE8 /* FloorUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FloorUpdateViewController.xib; path = RealTimeCongress/FloorUpdateViewController.xib; sourceTree = "<group>"; };
 		289F99BA13B3CB4F0061FDE8 /* FloorUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorUpdate.h; sourceTree = "<group>"; };
 		289F99BB13B3CB4F0061FDE8 /* FloorUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorUpdate.m; sourceTree = "<group>"; };
 		289F99BD13B3CD320061FDE8 /* Bill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bill.h; sourceTree = "<group>"; };
 		289F99BE13B3CD330061FDE8 /* Bill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bill.m; sourceTree = "<group>"; };
 		289F99BF13B3CD330061FDE8 /* CongressionalArtifact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongressionalArtifact.h; sourceTree = "<group>"; };
 		289F99C013B3CD330061FDE8 /* CongressionalArtifact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CongressionalArtifact.m; sourceTree = "<group>"; };
-		289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingTableViewCell.xib; sourceTree = "<group>"; };
+		289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoadingTableViewCell.xib; path = RealTimeCongress/LoadingTableViewCell.xib; sourceTree = "<group>"; };
 		28A3E4B613FEDEB200715325 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController-iPad.xib"; sourceTree = "<group>"; };
+		28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RootViewController-iPad.xib"; sourceTree = "<group>"; };
 		28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommitteeHearingsViewController.h; path = RealTimeCongress/CommitteeHearingsViewController.h; sourceTree = "<group>"; };
 		28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommitteeHearingsViewController.m; path = RealTimeCongress/CommitteeHearingsViewController.m; sourceTree = "<group>"; };
-		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
+		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommitteeHearingsViewController.xib; path = RealTimeCongress/CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
 		28BC582B139AA0D100EBA6BE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../Resources/JSONKit.h; sourceTree = "<group>"; };
 		28BC582C139AA0D100EBA6BE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../Resources/JSONKit.m; sourceTree = "<group>"; };
 		28BCE2CC13A7C53900BC5A31 /* WhipNoticesWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhipNoticesWebViewController.h; path = RealTimeCongress/WhipNoticesWebViewController.h; sourceTree = "<group>"; };
 		28BCE2CD13A7C53A00BC5A31 /* WhipNoticesWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhipNoticesWebViewController.m; path = RealTimeCongress/WhipNoticesWebViewController.m; sourceTree = "<group>"; };
-		28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhipNoticesWebViewController.xib; sourceTree = "<group>"; };
+		28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WhipNoticesWebViewController.xib; path = RealTimeCongress/WhipNoticesWebViewController.xib; sourceTree = "<group>"; };
 		28D86A6913FAFF53000433E7 /* CBOEstimateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBOEstimateViewController.h; sourceTree = "<group>"; };
 		28D86A6A13FAFF53000433E7 /* CBOEstimateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBOEstimateViewController.m; sourceTree = "<group>"; };
-		28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CBOEstimateViewController.xib; path = ../CBOEstimateViewController.xib; sourceTree = "<group>"; };
+		28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CBOEstimateViewController.xib; sourceTree = "<group>"; };
 		28DBFF1613A7095200979270 /* SunlightLabsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunlightLabsRequest.h; sourceTree = "<group>"; };
 		28DBFF1713A7095200979270 /* SunlightLabsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunlightLabsRequest.m; sourceTree = "<group>"; };
 		28E0D73D13CE573B00E21A5B /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
@@ -208,7 +212,7 @@
 		28E0D75F13CF698700E21A5B /* Legislator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Legislator.m; sourceTree = "<group>"; };
 		28EAE7F813F34BA1001E7CB1 /* CRSReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRSReportViewController.h; sourceTree = "<group>"; };
 		28EAE7F913F34BA1001E7CB1 /* CRSReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRSReportViewController.m; sourceTree = "<group>"; };
-		28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CRSReportViewController.xib; path = ../CRSReportViewController.xib; sourceTree = "<group>"; };
+		28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CRSReportViewController.xib; sourceTree = "<group>"; };
 		2A787EB6138310E8008EC17E /* Congress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Congress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A787EBA138310E8008EC17E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2A787EBC138310E8008EC17E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -314,7 +318,7 @@
 		2A9AE10713FC6363009AE640 /* sunlight_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sunlight_logo.gif; sourceTree = "<group>"; };
 		2AAA21991385701000680E9B /* WhipNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhipNoticeViewController.h; path = RealTimeCongress/WhipNoticeViewController.h; sourceTree = "<group>"; };
 		2AAA219A1385701000680E9B /* WhipNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhipNoticeViewController.m; path = RealTimeCongress/WhipNoticeViewController.m; sourceTree = "<group>"; };
-		2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhipNoticeViewController.xib; sourceTree = "<group>"; };
+		2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WhipNoticeViewController.xib; path = RealTimeCongress/WhipNoticeViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,8 +418,32 @@
 			isa = PBXGroup;
 			children = (
 				28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */,
+				28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */,
+				28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */,
 			);
 			name = iPad;
+			sourceTree = "<group>";
+		};
+		28A3E4B81400B5A300715325 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
+				28824A0913FBFAD900CC478A /* GAOReportViewController.xib */,
+				28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */,
+				28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */,
+				28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */,
+				2884478613F0B19E00377079 /* DocumentsListViewController.xib */,
+				289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */,
+				289F99B613B3CA8A0061FDE8 /* FloorUpdateViewController.xib */,
+				289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */,
+				2A787ECC138310E8008EC17E /* MainWindow.xib */,
+				2A787ED2138310E8008EC17E /* RootViewController.xib */,
+				2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */,
+				28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */,
+				284C060C138BFCFE00ED309D /* AboutViewController.xib */,
+			);
+			name = iPhone;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		28BCE2CA13A7B2DC00BC5A31 /* JSONKit */ = {
@@ -476,27 +504,14 @@
 			isa = PBXGroup;
 			children = (
 				28A3E4B413FEDEAD00715325 /* iPad */,
+				28A3E4B81400B5A300715325 /* iPhone */,
 				2884477313E9D41500377079 /* Networking */,
 				2884477113E9D3D900377079 /* View Controllers */,
 				28E0D73F13CE57FC00E21A5B /* Google Analytics */,
 				289F99C713B3CD550061FDE8 /* Congress Model */,
 				289F99A313B3C9680061FDE8 /* API Requests */,
-				284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */,
-				28824A0913FBFAD900CC478A /* GAOReportViewController.xib */,
-				28D86A6B13FAFF53000433E7 /* CBOEstimateViewController.xib */,
-				28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */,
 				2A787EC9138310E8008EC17E /* RealTimeCongressAppDelegate.h */,
 				2A787ECA138310E8008EC17E /* RealTimeCongressAppDelegate.m */,
-				28EAE7FA13F34BA1001E7CB1 /* CRSReportViewController.xib */,
-				2884478613F0B19E00377079 /* DocumentsListViewController.xib */,
-				289F99B313B3CA8A0061FDE8 /* FloorUpdateTableViewCell.xib */,
-				289F99B613B3CA8A0061FDE8 /* FloorUpdateViewController.xib */,
-				289F99C813B3CE370061FDE8 /* LoadingTableViewCell.xib */,
-				2A787ECC138310E8008EC17E /* MainWindow.xib */,
-				2A787ED2138310E8008EC17E /* RootViewController.xib */,
-				2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */,
-				28BCE2CE13A7C53A00BC5A31 /* WhipNoticesWebViewController.xib */,
-				284C060C138BFCFE00ED309D /* AboutViewController.xib */,
 				2A787EC1138310E8008EC17E /* Supporting Files */,
 				28BCE2CA13A7B2DC00BC5A31 /* JSONKit */,
 			);
@@ -796,6 +811,8 @@
 				28824A0B13FBFAD900CC478A /* GAOReportViewController.xib in Resources */,
 				2A9AE10813FC6363009AE640 /* sunlight_logo.gif in Resources */,
 				28A3E4B713FEDEB200715325 /* MainWindow-iPad.xib in Resources */,
+				28A3E4BA140219BC00715325 /* AboutViewController-iPad.xib in Resources */,
+				28A3E4BC14021EB900715325 /* RootViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,6 +913,7 @@
 				2A787ECD138310E8008EC17E /* en */,
 			);
 			name = MainWindow.xib;
+			path = RealTimeCongress;
 			sourceTree = "<group>";
 		};
 		2A787ED2138310E8008EC17E /* RootViewController.xib */ = {
@@ -904,6 +922,7 @@
 				2A787ED3138310E8008EC17E /* en */,
 			);
 			name = RootViewController.xib;
+			path = RealTimeCongress;
 			sourceTree = "<group>";
 		};
 		2A787EE3138310E8008EC17E /* InfoPlist.strings */ = {
