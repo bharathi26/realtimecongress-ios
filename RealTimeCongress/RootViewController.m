@@ -124,7 +124,8 @@
     else if (indexPath.row == 1) {
         if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
-            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, whipController, nil];
+            UINavigationController *noticeNavController = [[UINavigationController alloc] initWithRootViewController:whipController];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, noticeNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
         }
