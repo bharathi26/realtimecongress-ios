@@ -63,7 +63,6 @@
  // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	// Return YES for supported orientations.
-	// Return YES for supported orientations
     if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         return YES;
@@ -105,40 +104,82 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // ...
-    // Pass the selected object to the new view controller.
-    
+    // Conditionally push view controllers
+    // If the device is an iPad, push the appropriate view controller into the detail view
+    // If the device is an iPhone/iPod Touch, push the appropriate view controller onto the nav stack
     if (indexPath.row == 0) {
-        FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController" bundle:nil];
-        [self.navigationController pushViewController:floorUpdateController animated:YES];
-        [floorUpdateController release];
+        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController" bundle:nil];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, floorUpdateController, nil];
+            self.splitViewController.viewControllers = viewControllers;
+            [viewControllers release];
+        }
+        else {
+            FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController" bundle:nil];
+            [self.navigationController pushViewController:floorUpdateController animated:YES];
+            [floorUpdateController release];
+        }
     }
     
     else if (indexPath.row == 1) {
-        WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
-        [self.navigationController pushViewController:whipController animated:YES];
-        [whipController release];
+        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, whipController, nil];
+            self.splitViewController.viewControllers = viewControllers;
+            [viewControllers release];
+        }
+        else {
+            WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
+            [self.navigationController pushViewController:whipController animated:YES];
+            [whipController release];   
+        }
     }
     
     else if (indexPath.row == 2) {
-        // Pushes the Committee Hearings view controller
-        CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController" bundle:nil];
-        [self.navigationController pushViewController:hearingsController animated:YES];
-        [hearingsController release];
+        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            // Pushes the Committee Hearings view controller
+            CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController" bundle:nil];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, hearingsController, nil];
+            self.splitViewController.viewControllers = viewControllers;
+            [viewControllers release];
+        }
+        else {
+            CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController" bundle:nil];
+            [self.navigationController pushViewController:hearingsController animated:YES];
+            [hearingsController release];
+        }
     }
     
     else if (indexPath.row == 3) {
-        // Pushes the Documents List view controller
-        DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
-        [self.navigationController pushViewController:documentsController animated:YES];
-        [documentsController release];
+        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
+            UINavigationController *docListNavController = [[UINavigationController alloc] initWithRootViewController:documentsController];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, docListNavController, nil];
+            self.splitViewController.viewControllers = viewControllers;
+            [viewControllers release];
+        }
+        else {
+            // Pushes the Documents List view controller
+            DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
+            [self.navigationController pushViewController:documentsController animated:YES];
+            [documentsController release];
+        }
     }
     
     else if (indexPath.row == 4) {
-        // Pushes the About Screen view controller
-        AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil]; 
-        [self.navigationController pushViewController:aboutController animated:YES];
-        [aboutController release];
+        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            // Pushes the About Screen view controller
+            AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, aboutController, nil];
+            self.splitViewController.viewControllers = viewControllers;
+            [viewControllers release];
+        }
+        else {
+            // Pushes the About Screen view controller
+            AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
+            [self.navigationController pushViewController:aboutController animated:YES];
+            [aboutController release];
+        }
     }
     
 }
