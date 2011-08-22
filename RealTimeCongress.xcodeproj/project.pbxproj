@@ -29,6 +29,8 @@
 		28A3E4B713FEDEB200715325 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */; };
 		28A3E4BA140219BC00715325 /* AboutViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */; };
 		28A3E4BC14021EB900715325 /* RootViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */; };
+		28A3E4F01402349D00715325 /* CommitteeHearingsViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4EF1402349D00715325 /* CommitteeHearingsViewController-iPad.xib */; };
+		28A3E4F2140235E400715325 /* DocumentWebViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4F1140235E400715325 /* DocumentWebViewController-iPad.xib */; };
 		28BC5828139AA0BC00EBA6BE /* CommitteeHearingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */; };
 		28BC5829139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */; };
 		28BC582D139AA0D100EBA6BE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 28BC582C139AA0D100EBA6BE /* JSONKit.m */; };
@@ -190,6 +192,8 @@
 		28A3E4B613FEDEB200715325 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutViewController-iPad.xib"; sourceTree = "<group>"; };
 		28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RootViewController-iPad.xib"; sourceTree = "<group>"; };
+		28A3E4EF1402349D00715325 /* CommitteeHearingsViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "CommitteeHearingsViewController-iPad.xib"; sourceTree = "<group>"; };
+		28A3E4F1140235E400715325 /* DocumentWebViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DocumentWebViewController-iPad.xib"; sourceTree = "<group>"; };
 		28BC5823139AA0BB00EBA6BE /* CommitteeHearingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommitteeHearingsViewController.h; path = RealTimeCongress/CommitteeHearingsViewController.h; sourceTree = "<group>"; };
 		28BC5824139AA0BB00EBA6BE /* CommitteeHearingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommitteeHearingsViewController.m; path = RealTimeCongress/CommitteeHearingsViewController.m; sourceTree = "<group>"; };
 		28BC5825139AA0BC00EBA6BE /* CommitteeHearingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommitteeHearingsViewController.xib; path = RealTimeCongress/CommitteeHearingsViewController.xib; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 				28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */,
 				28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */,
 				28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */,
+				28A3E4EF1402349D00715325 /* CommitteeHearingsViewController-iPad.xib */,
+				28A3E4F1140235E400715325 /* DocumentWebViewController-iPad.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -813,6 +819,8 @@
 				28A3E4B713FEDEB200715325 /* MainWindow-iPad.xib in Resources */,
 				28A3E4BA140219BC00715325 /* AboutViewController-iPad.xib in Resources */,
 				28A3E4BC14021EB900715325 /* RootViewController-iPad.xib in Resources */,
+				28A3E4F01402349D00715325 /* CommitteeHearingsViewController-iPad.xib in Resources */,
+				28A3E4F2140235E400715325 /* DocumentWebViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
