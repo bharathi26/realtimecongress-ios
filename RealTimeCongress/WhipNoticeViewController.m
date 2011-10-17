@@ -255,11 +255,10 @@
     NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
     parsedWhipNoticeData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
-    
     // A mutable array containing the unique notice days
     noticeDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
     for (NSDictionary *notice in parsedWhipNoticeData) {
-        if (!([noticeDaysArray containsObject:[notice objectForKey:@"for_date"]])) {
+        if (!([noticeDaysArray containsObject:[notice objectForKey:@"for_date"]]) && [notice objectForKey:@"for_date"]) {
             [noticeDaysArray addObject:[notice objectForKey:@"for_date"]];
         }
     }
@@ -309,7 +308,7 @@
     // A mutable array containing the unique notice days
     noticeDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
     for (NSDictionary *notice in parsedWhipNoticeData) {
-        if (!([noticeDaysArray containsObject:[notice objectForKey:@"for_date"]])) {
+        if (!([noticeDaysArray containsObject:[notice objectForKey:@"for_date"]]) && [notice objectForKey:@"for_date"]) {
             [noticeDaysArray addObject:[notice objectForKey:@"for_date"]];
         }
     }

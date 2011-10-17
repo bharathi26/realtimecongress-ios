@@ -388,7 +388,7 @@
     
     if (indexPath.section == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
         page += 1;
-        NSString * chamber = [control selectedSegmentIndex] == 0 ? [NSString stringWithString:@"house"] : [NSString stringWithString:@"senate"];
+        NSString *chamber = [control selectedSegmentIndex] == 0 ? [NSString stringWithString:@"house"] : [NSString stringWithString:@"senate"];
         
         NSDictionary *requestParameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil];
         SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:FloorUpdates APIMethod:nil];
