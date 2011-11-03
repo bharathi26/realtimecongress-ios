@@ -90,10 +90,6 @@
             str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             [floorUpdateText appendFormat:@"%@",str];
         }
-        if (control.selectedSegmentIndex == 1) {
-            NSString *prependString = [NSString stringWithFormat: @"Spoke: Senator %@", floorUpdateText];
-            [floorUpdateText setString:prependString];
-        }
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
@@ -152,10 +148,6 @@
         for (id str in [update objectForKey:@"events"]) {
             str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             [floorUpdateText appendFormat:@"%@",str];
-        }
-        if (control.selectedSegmentIndex == 1) {
-            NSString *prependString = [NSString stringWithFormat: @"Spoke: Senator %@", floorUpdateText];
-            [floorUpdateText setString:prependString];
         }
         FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
         
@@ -243,6 +235,8 @@
 
 - (void)switchChambers {
     [self refresh];
+    [updateDayDictionary removeAllObjects];
+
     refreshed = NO;
 }
 
@@ -385,14 +379,12 @@
     }
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == [floorUpdates indexOfObject:[floorUpdates lastObject]]) {
         page += 1;
         NSString *chamber = [control selectedSegmentIndex] == 0 ? [NSString stringWithString:@"house"] : [NSString stringWithString:@"senate"];
-        
         NSDictionary *requestParameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ul",page],@"page",chamber,@"chamber", nil];
         SunlightLabsRequest *dataRequest = [[SunlightLabsRequest alloc] initRequestWithParameterDictionary:requestParameters APICollection:FloorUpdates APIMethod:nil];
-        
+
         // Check network reachability. If unreachable, display alert view. Otherwise, retrieve data
         NetworkStatus internetStatus = [reachabilityInfo currentReachabilityStatus];
         
@@ -415,7 +407,7 @@
                 [alert release];
             }
         }
-        else{
+        else {
             NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
             NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
             NSDate *currentDate = [NSDate date];
