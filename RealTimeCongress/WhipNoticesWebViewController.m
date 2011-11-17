@@ -115,7 +115,15 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return YES;
+    
+    //iPad supports all orientations
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        return YES;
+    }
+    else {
+        //iPhone supports only portrait orientation
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
 }
 
 #pragma mark - Web View delegate methods

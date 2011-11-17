@@ -77,11 +77,13 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
+    
+    //iPad supports all orientations
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         return YES;
     }
     else {
+        //iPhone supports only portrait orientation
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }
 }

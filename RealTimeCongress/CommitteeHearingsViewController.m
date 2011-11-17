@@ -134,6 +134,20 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    // Return YES for supported orientations
+    
+    //iPad supports all orientations
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        return YES;
+    }
+    else {
+        //iPhone supports only portrait orientation
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+}
+
+/*- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
     // Return YES for supported orientations.
     if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -142,7 +156,7 @@
     else {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }
-}
+}*/
 
 #pragma mark - Table view data source
 
@@ -240,7 +254,8 @@
 }
 
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    
+    //Recenters segmented control and loading indicator on rotation
+    [loadingIndicator setCenter:self.view.center];
 }
 
 #pragma mark - Table view delegate
