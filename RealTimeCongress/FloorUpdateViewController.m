@@ -271,7 +271,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    //Set title
     self.navigationItem.title = [NSString stringWithFormat:@"%@ Updates", [control titleForSegmentAtIndex:control.selectedSegmentIndex]];
+    
+    //Set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     [control addTarget:self action:@selector(switchChambers) forControlEvents:UIControlEventValueChanged];
     page = 0;
