@@ -687,7 +687,7 @@
 		2A787EAD138310E7008EC17E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Sunlight Labs";
 			};
 			buildConfigurationList = 2A787EB0138310E7008EC17E /* Build configuration list for PBXProject "RealTimeCongress" */;
@@ -943,38 +943,46 @@
 		2A787EEB138310E8008EC17E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Sunlight Foundation";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sunlight Foundation";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				PROVISIONING_PROFILE = "A453FDA9-B03F-43EE-889F-2E437EF0B7A1";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A453FDA9-B03F-43EE-889F-2E437EF0B7A1";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		2A787EEC138310E8008EC17E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tom Tsai (78XAXQV7J8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tom Tsai (78XAXQV7J8)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "F050C6C3-1C35-4EFF-BB16-124900C9C091";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F050C6C3-1C35-4EFF-BB16-124900C9C091";
+				PROVISIONING_PROFILE = "BB4D4023-7C29-49D0-853E-D2921EEB378E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BB4D4023-7C29-49D0-853E-D2921EEB378E";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -986,6 +994,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = (
@@ -1007,6 +1016,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				LIBRARY_SEARCH_PATHS = (
@@ -1033,6 +1043,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongressTests/RealTimeCongressTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RealTimeCongressTests/RealTimeCongressTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1055,6 +1066,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RealTimeCongressTests/RealTimeCongressTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RealTimeCongressTests/RealTimeCongressTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
