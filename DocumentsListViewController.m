@@ -34,6 +34,8 @@
 {
     [super viewDidLoad];
     self.title = @"Documents";
+    //Set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
 
 - (void)viewDidUnload

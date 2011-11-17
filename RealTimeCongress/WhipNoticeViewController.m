@@ -50,6 +50,9 @@
     //Set Title
     self.title = @"Whip Notices";
     
+    //Set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
     //Set up refresh button
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
