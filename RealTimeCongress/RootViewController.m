@@ -144,7 +144,8 @@
         if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             // Pushes the Committee Hearings view controller
             CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController-iPad" bundle:nil];
-            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, hearingsController, nil];
+            UINavigationController *hearingsNavController = [[UINavigationController alloc] initWithRootViewController:hearingsController];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, hearingsNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
         }
