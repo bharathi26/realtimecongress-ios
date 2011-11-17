@@ -172,6 +172,7 @@
         [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.textLabel.text = @"The Congressional Budget Office is required to develop a cost estimate for virtually every bill reported by Congressional committees to show how it would affect spending or revenues over the next five years or more.";
+        cell.userInteractionEnabled = NO;
         return cell;
     }
     

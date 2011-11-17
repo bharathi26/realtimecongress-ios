@@ -181,6 +181,7 @@
         [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.textLabel.text = @"Reports issued by the Congressional Research Service, an arm of the Library of Congress that provides Congress with research and analysis on legislative issues.";
+        cell.userInteractionEnabled = NO;
         return cell;
     }
     

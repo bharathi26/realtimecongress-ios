@@ -170,6 +170,7 @@
         [cell.textLabel sizeToFitFixedWidth:CELL_WIDTH];
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.textLabel.text = @"The U.S. Government Accountability Office is an independent, nonpartisan agency that investigates how the federal government spends taxpayer dollars and advises Congress and the heads of executive agencies on ways to make government more efficient, effective, ethical, equitable and responsive.";
+        cell.userInteractionEnabled = NO;
         return cell;
     }
     
