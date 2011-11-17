@@ -16,7 +16,6 @@
 
 @interface CBOEstimateViewController : UITableViewController {
 @private
-    UIActivityIndicatorView *loadingIndicator;
     NSMutableDictionary *reportDaysDictionary;
     NSMutableArray *sectionDataArray;
     NSMutableArray *reportDaysArray;

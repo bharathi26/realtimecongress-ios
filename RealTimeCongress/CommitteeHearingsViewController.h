@@ -18,7 +18,6 @@
     @private
     NSArray *parsedHearingData;
     IBOutlet UISegmentedControl *chamberControl;
-    UIActivityIndicatorView *loadingIndicator;
     UITableViewCell *committeeHearingsCell;
     NSMutableArray *hearingDays;
     NSArray *sectionDataArray;
@@ -32,7 +31,6 @@
 @property(nonatomic,retain) NSArray *sectionDataArray;
 @property(nonatomic,retain) NSMutableDictionary *hearingDayDictionary;
 @property(nonatomic,retain) IBOutlet UISegmentedControl *chamberControl;
-@property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;
 @property(nonatomic,retain) NSMutableArray *hearingDays;
 @property(nonatomic,retain) IBOutlet UITableView *hearingsTableView;
 @property (nonatomic, assign) UITableViewCell *committeeHearingsCell;

@@ -33,7 +33,6 @@
 
 @synthesize parsedHearingData;
 @synthesize chamberControl;
-@synthesize loadingIndicator;
 @synthesize hearingDays;
 @synthesize committeeHearingsCell;
 @synthesize hearingsTableView;
@@ -43,7 +42,6 @@
 - (void)dealloc
 {
     [super dealloc];
-    [loadingIndicator release];
     [chamberControl release];
     [parsedHearingData release];
     [hearingDays release];
@@ -81,11 +79,6 @@
     
     // Refreshes table view data on segmented control press;
     [chamberControl addTarget:self action:@selector(retrieveData) forControlEvents:UIControlEventValueChanged];
-    
-    //An activity indicator to indicate loading
-    loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [loadingIndicator setCenter:self.view.center];
-    [self.view addSubview:loadingIndicator];
     
     //Register for reachability changed notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -255,7 +248,6 @@
 
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     //Recenters segmented control and loading indicator on rotation
-    [loadingIndicator setCenter:self.view.center];
 }
 
 #pragma mark - Table view delegate
@@ -317,9 +309,6 @@
                 // Handle error here
             }
         }
-        
-        //Animate the activity indicator when loading data
-        [self.loadingIndicator startAnimating];
         
         // Get the current date and format it for a url request
         static NSDateFormatter *dateFormatter;
@@ -412,9 +401,6 @@
     //Reload the table once data retrieval is complete
     [self.hearingsTableView reloadData];
     
-    //Hide the activity indicator and network activity indicator once loading is complete
-    [loadingIndicator stopAnimating];
-    
     //Re-enable scrolling once loading is complete and the loading indicator disappears
     self.hearingsTableView.scrollEnabled = YES;
     
@@ -474,9 +460,6 @@
     //Reload the table once data retrieval is complete
     [self.hearingsTableView reloadData];
     
-    //Hide the activity indicator and network activity indicator once loading is complete
-    [loadingIndicator stopAnimating];
-    
     //Re-enable scrolling once loading is complete and the loading indicator disappears
     self.hearingsTableView.scrollEnabled = YES;
     
@@ -489,9 +472,6 @@
 {
     //Set the navigation bar title to that of the selected chamber
     self.title = [NSString stringWithFormat:@"%@ Hearings", [chamberControl titleForSegmentAtIndex:chamberControl.selectedSegmentIndex]];
-    
-    //Animate the activity indicator when loading data
-    [self.loadingIndicator startAnimating];
     
     //Track page view based on selected chamber control button
     

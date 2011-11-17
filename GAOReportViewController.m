@@ -61,11 +61,6 @@
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
-    //An activity indicator to indicate loading
-    loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [loadingIndicator setCenter:self.view.center];
-    [self.view addSubview:loadingIndicator];
-    
     //Register for reachability changed notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged)
@@ -253,9 +248,6 @@
         //Disable scrolling while data is loading
         self.tableView.scrollEnabled = NO;
         
-        //Animate the activity indicator and network activity indicator when loading data
-        [loadingIndicator startAnimating];
-        
         NSError *error;
         //Register a page view to the Google Analytics tracker
         if (![[GANTracker sharedTracker] trackPageview:@"/gao_reports"
@@ -343,9 +335,6 @@
     //Reload the table once data retrieval is complete
     [self.tableView reloadData];
     
-    //Hide the activity indicator and network activity indicator once loading is complete
-    [loadingIndicator stopAnimating];
-    
     //Re-enable scrolling once loading is complete and the loading indicator disappears
     self.tableView.scrollEnabled = YES;
 }
@@ -396,10 +385,7 @@
     
     //Reload the table once data retrieval is complete
     [self.tableView reloadData];
-    
-    //Hide the activity indicator and network activity indicator once loading is complete
-    [loadingIndicator stopAnimating];
-    
+  
     //Re-enable scrolling once loading is complete and the loading indicator disappears
     self.tableView.scrollEnabled = YES;
 }
@@ -423,10 +409,7 @@
     NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]];
     NSDate *responseAge = [[cachedResponse userInfo] objectForKey:@"CreationDate"];
     NSDate *currentDate = [NSDate date];
-    
-    //Animate the activity indicator and network activity indicator when loading data
-    [loadingIndicator startAnimating];
-    
+
     // Check if there is an unexpired cached response
     if ((cachedResponse != nil) && ([currentDate timeIntervalSinceDate:responseAge] < 300)) {
         [self parseCachedData:[[[NSURLCache sharedURLCache] cachedResponseForRequest:[dataRequest request]] data]];

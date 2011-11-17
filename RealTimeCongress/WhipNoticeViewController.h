@@ -8,7 +8,6 @@
 @interface WhipNoticeViewController : UITableViewController {
     @private
     NSArray *parsedWhipNoticeData;
-    UIActivityIndicatorView *loadingIndicator;
     NSMutableDictionary *noticeDaysDictionary;
     NSArray *sectionDataArray;
     NSMutableArray *noticeDaysArray;
@@ -17,7 +16,6 @@
 }
 
 @property(nonatomic,retain) NSArray *parsedWhipNoticeData;
-@property(nonatomic,retain) UIActivityIndicatorView *loadingIndicator;;
 @property(nonatomic,retain) NSMutableDictionary *noticeDaysDictionary;
 @property(nonatomic,retain) NSArray *sectionDataArray;
 @property(nonatomic,retain) NSMutableArray *noticeDaysArray;
