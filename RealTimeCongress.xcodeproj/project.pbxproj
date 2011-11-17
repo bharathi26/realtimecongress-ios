@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		281973361474A4B500F00F42 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B513FEDEB200715325 /* MainWindow-iPad.xib */; };
+		281973371474A4B500F00F42 /* AboutViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */; };
+		281973381474A4B500F00F42 /* RootViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */; };
+		281973391474A4B500F00F42 /* CommitteeHearingsViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4EF1402349D00715325 /* CommitteeHearingsViewController-iPad.xib */; };
 		284044D813A1857D00A609CB /* CommitteeHearingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */; };
 		284C060D138BFCFE00ED309D /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284C060B138BFCFE00ED309D /* AboutViewController.m */; };
 		284C060E138BFCFE00ED309D /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284C060C138BFCFE00ED309D /* AboutViewController.xib */; };
@@ -817,6 +821,10 @@
 				28A3E4BA140219BC00715325 /* AboutViewController-iPad.xib in Resources */,
 				28A3E4BC14021EB900715325 /* RootViewController-iPad.xib in Resources */,
 				28A3E4F01402349D00715325 /* CommitteeHearingsViewController-iPad.xib in Resources */,
+				281973361474A4B500F00F42 /* MainWindow-iPad.xib in Resources */,
+				281973371474A4B500F00F42 /* AboutViewController-iPad.xib in Resources */,
+				281973381474A4B500F00F42 /* RootViewController-iPad.xib in Resources */,
+				281973391474A4B500F00F42 /* CommitteeHearingsViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -996,7 +1004,7 @@
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
@@ -1004,7 +1012,7 @@
 				);
 				PRODUCT_NAME = Congress;
 				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1018,7 +1026,7 @@
 				GCC_PREFIX_HEADER = "RealTimeCongress/RealTimeCongress-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "RealTimeCongress/RealTimeCongress-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/Google Analytics SDK/Library\"",
@@ -1026,7 +1034,7 @@
 				);
 				PRODUCT_NAME = Congress;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
