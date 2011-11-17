@@ -283,8 +283,11 @@
     [connection release];
     connection = nil;
     
-    // Clear array when new data received
+    // Clear array of days when new data received
     [reportDaysArray removeAllObjects];
+    
+    // Clear dictionary of updates when new data received
+    [reportDaysDictionary removeAllObjects];
     
     //Assign received data
     NSDictionary *items = [notification userInfo];
