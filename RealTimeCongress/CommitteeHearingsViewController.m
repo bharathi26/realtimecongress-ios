@@ -71,6 +71,9 @@
     hearingsTableView.delegate = self;
     hearingsTableView.dataSource = self;
     
+    //Set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
