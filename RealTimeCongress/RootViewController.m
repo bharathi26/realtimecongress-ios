@@ -112,7 +112,7 @@
     // If the device is an iPhone/iPod Touch, push the appropriate view controller onto the nav stack
     if (indexPath.row == 0) {
         if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController" bundle:nil];
+            FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController-iPad" bundle:nil];
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, floorUpdateController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
