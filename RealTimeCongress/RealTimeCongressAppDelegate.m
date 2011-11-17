@@ -41,7 +41,7 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     
     // Conditional Code for iPad Split View functionality
-    if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
     {
         NSLog(@"iPad detected");
         self.window.rootViewController = self.splitViewController;

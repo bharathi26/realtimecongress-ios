@@ -111,7 +111,7 @@
     // If the device is an iPad, push the appropriate view controller into the detail view
     // If the device is an iPhone/iPod Touch, push the appropriate view controller onto the nav stack
     if (indexPath.row == 0) {
-        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController-iPad" bundle:nil];
             UINavigationController *floorUpdateNavController = [[UINavigationController alloc] initWithRootViewController:floorUpdateController];
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, floorUpdateNavController, nil];
@@ -126,7 +126,7 @@
     }
     
     else if (indexPath.row == 1) {
-        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
             UINavigationController *noticeNavController = [[UINavigationController alloc] initWithRootViewController:whipController];
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, noticeNavController, nil];
@@ -141,7 +141,7 @@
     }
     
     else if (indexPath.row == 2) {
-        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             // Pushes the Committee Hearings view controller
             CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController-iPad" bundle:nil];
             UINavigationController *hearingsNavController = [[UINavigationController alloc] initWithRootViewController:hearingsController];
@@ -157,7 +157,7 @@
     }
     
     else if (indexPath.row == 3) {
-        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
             UINavigationController *docListNavController = [[UINavigationController alloc] initWithRootViewController:documentsController];
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, docListNavController, nil];
@@ -173,7 +173,7 @@
     }
     
     else if (indexPath.row == 4) {
-        if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             // Pushes the About Screen view controller
             AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, aboutController, nil];
