@@ -11,6 +11,7 @@
 		281973371474A4B500F00F42 /* AboutViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */; };
 		281973381474A4B500F00F42 /* RootViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */; };
 		281973391474A4B500F00F42 /* CommitteeHearingsViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A3E4EF1402349D00715325 /* CommitteeHearingsViewController-iPad.xib */; };
+		282E1B6C1474E85400FEB9D8 /* FloorUpdateViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 282E1B6B1474E85400FEB9D8 /* FloorUpdateViewController-iPad.xib */; };
 		284044D813A1857D00A609CB /* CommitteeHearingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */; };
 		284C060D138BFCFE00ED309D /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 284C060B138BFCFE00ED309D /* AboutViewController.m */; };
 		284C060E138BFCFE00ED309D /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 284C060C138BFCFE00ED309D /* AboutViewController.xib */; };
@@ -162,6 +163,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		282E1B6B1474E85400FEB9D8 /* FloorUpdateViewController-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "FloorUpdateViewController-iPad.xib"; sourceTree = "<group>"; };
 		284044D713A1857D00A609CB /* CommitteeHearingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommitteeHearingsCell.xib; path = RealTimeCongress/CommitteeHearingsCell.xib; sourceTree = "<group>"; };
 		284C060A138BFCFE00ED309D /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = RealTimeCongress/AboutViewController.h; sourceTree = "<group>"; };
 		284C060B138BFCFE00ED309D /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = RealTimeCongress/AboutViewController.m; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				28A3E4B9140219BC00715325 /* AboutViewController-iPad.xib */,
 				28A3E4BB14021EB900715325 /* RootViewController-iPad.xib */,
 				28A3E4EF1402349D00715325 /* CommitteeHearingsViewController-iPad.xib */,
+				282E1B6B1474E85400FEB9D8 /* FloorUpdateViewController-iPad.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -825,6 +828,7 @@
 				281973371474A4B500F00F42 /* AboutViewController-iPad.xib in Resources */,
 				281973381474A4B500F00F42 /* RootViewController-iPad.xib in Resources */,
 				281973391474A4B500F00F42 /* CommitteeHearingsViewController-iPad.xib in Resources */,
+				282E1B6C1474E85400FEB9D8 /* FloorUpdateViewController-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
