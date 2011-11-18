@@ -103,6 +103,22 @@
 {
     [super viewWillAppear:animated];
     
+    //Determine which cell width to use based on UI idiom of current device and current orientation
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        //If the device is in a landscape orientation, use a cell width for a split view detail pane
+        if ((self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || 
+            (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)) {
+            cellWidth = DETAIL_CELL_WIDTH;
+        }
+        //Otherwise the device is in portrait orientation. Use an appropriate cell width.
+        else {
+            cellWidth = PORTRAIT_CELL_WIDTH;
+        }
+    }
+    else {
+        cellWidth= IPHONE_CELL_WIDTH;
+    }
+    
     //Create a reachability object to monitor internet reachability
     reachabilityInfo = [[Reachability reachabilityForInternetConnection] retain];
     [reachabilityInfo startNotifier];
@@ -142,17 +158,20 @@
     }
 }
 
-/*- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    // Return YES for supported orientations.
-    if (NSClassFromString(@"UISplitViewController") != nil && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return YES;
+    if ((fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) || 
+        (fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight)) {
+        cellWidth = PORTRAIT_CELL_WIDTH;
     }
-    else {
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    else{
+        cellWidth = DETAIL_CELL_WIDTH;
     }
-}*/
+    
+    //Redraw table view cells
+    //[self.hearingsTableView reloadData];
+    [self.hearingsTableView reloadRowsAtIndexPaths:[self.hearingsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
+}
 
 #pragma mark - Table view data source
 
@@ -200,7 +219,7 @@
         committeeNameLabel = (UILabel *)[cell viewWithTag:1];
         committeeNameLabel.text = [[[sectionArray objectAtIndex:indexPath.row] 
                                     objectForKey:@"committee"] objectForKey:@"name"];
-        [committeeNameLabel sizeToFitFixedWidth:CELL_WIDTH];
+        [committeeNameLabel sizeToFitFixedWidth:cellWidth];
     
         //Position Time and Place text
         timeAndPlaceLabel = (UILabel *)[cell viewWithTag:2];
@@ -214,8 +233,8 @@
                                       [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"time_of_day"], [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"room"]];
         }
         timeAndPlaceLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
-                                             (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),CELL_WIDTH, 0);
-        [timeAndPlaceLabel sizeToFitFixedWidth:CELL_WIDTH];
+                                             (committeeNameLabel.frame.origin.y + committeeNameLabel.frame.size.height),cellWidth, 0);
+        [timeAndPlaceLabel sizeToFitFixedWidth:cellWidth];
         
         
         //Position Description text
@@ -223,8 +242,8 @@
         descriptionLabel.text = [[sectionArray objectAtIndex:indexPath.row] objectForKey:@"description"];
         descriptionLabel.frame = CGRectMake(committeeNameLabel.frame.origin.x, 
                                             (timeAndPlaceLabel.frame.origin.y + timeAndPlaceLabel.frame.size.height), 
-                                            CELL_WIDTH, 0);
-        [descriptionLabel sizeToFitFixedWidth:CELL_WIDTH];
+                                            cellWidth, 0);
+        [descriptionLabel sizeToFitFixedWidth:cellWidth];
     }
     
     return cell;
@@ -249,10 +268,6 @@
     }
 }
 
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    //Recenters segmented control and loading indicator on rotation
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -262,7 +277,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //Calculates the appropriate row height based on the size of the three text labels
-    CGSize maxSize = CGSizeMake(CELL_WIDTH, CGFLOAT_MAX);
+    
+    CGSize maxSize = CGSizeMake(cellWidth, CGFLOAT_MAX);;
+    
     NSArray *sectionArray = [sectionDataArray objectAtIndex:indexPath.section];
     
     CGSize committeeNameTextSize = [[[[sectionArray objectAtIndex:indexPath.row] objectForKey:@"committee"] objectForKey:@"name"] sizeWithFont:[UIFont boldSystemFontOfSize:17] constrainedToSize:maxSize];

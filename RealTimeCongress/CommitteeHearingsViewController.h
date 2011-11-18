@@ -12,7 +12,9 @@
 #import "Reachability.h"
 
 #define REQUEST_PAGE_SIZE @"100"
-#define CELL_WIDTH 260
+#define IPHONE_CELL_WIDTH 260
+#define DETAIL_CELL_WIDTH 660
+#define PORTRAIT_CELL_WIDTH 720
 
 @interface CommitteeHearingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     @private
@@ -25,6 +27,7 @@
     UITableView *hearingsTableView;
     SunlightLabsConnection *connection;
     Reachability *reachabilityInfo;
+    int cellWidth;
 }
 
 @property(nonatomic,retain) NSArray *parsedHearingData;
