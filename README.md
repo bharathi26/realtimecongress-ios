@@ -53,5 +53,3 @@ Email luigi (at) sunlightfoundation.com or find LuigiMontanez on Freenode in the
 
 ## To-Do for iPad Interface
 1. Implement popovers for portrait view
-2. Adjust cell text margins for Floor Updates
-3. Adjust cell text margins for Committee Hearings
