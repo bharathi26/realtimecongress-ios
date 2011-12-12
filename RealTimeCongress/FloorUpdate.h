@@ -17,6 +17,7 @@
     NSDate * _date;
     NSString * _displayDate;
     CGFloat _textHeight;
+    int cellWidthConstraint;
     
     NSMutableSet * _bills;
 }
@@ -30,6 +31,6 @@
 @property (readonly) NSSet * bills;
 @property (readonly) BOOL hasAbbreviations;
 
-- (id)initWithDisplayText:(NSString *)text atDate:(NSDate *)date;
+- (id)initWithDisplayText:(NSString *)text atDate:(NSDate *)date withCellWidth: (int) cellWidth;
 
 @end

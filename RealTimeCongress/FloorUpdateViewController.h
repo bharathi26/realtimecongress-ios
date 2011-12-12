@@ -10,7 +10,10 @@
 #import "SunlightLabsConnection.h"
 #import "Reachability.h"
 
-#define FLOOR_UPDATE_CELL_WIDTH 230
+#define IPHONE_CELL_WIDTH 260
+#define DETAIL_CELL_WIDTH 660
+#define PORTRAIT_CELL_WIDTH 720
+
 @class FloorUpdate;
 
 @interface FloorUpdateViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>  {
@@ -24,6 +27,7 @@
     NSMutableDictionary *updateDayDictionary;
     BOOL refreshed;
     Reachability *reachabilityInfo;
+    int cellWidth;
 }
 
 @property(nonatomic, retain) IBOutlet UISegmentedControl *control;

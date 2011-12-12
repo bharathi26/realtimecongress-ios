@@ -22,13 +22,14 @@
 @synthesize bills = _bills;
 @synthesize hasAbbreviations;
 
-- (id)initWithDisplayText:(NSString *)text atDate:(NSDate *)date {
+- (id)initWithDisplayText:(NSString *)text atDate:(NSDate *)date withCellWidth: (int)cellWidth{
     self = [super init];
     if (self) {
         _displayText = [text copy];
         _date = [date copy];
         _textHeight = -1;
         _bills = [[NSMutableSet alloc] initWithCapacity:5];
+        cellWidthConstraint = cellWidth;
     }
     return self;
 }
@@ -55,7 +56,7 @@
 
 - (CGFloat)textHeight {
     if (_textHeight == -1) {
-        _textHeight = [_displayText sizeWithFont:[UIFont systemFontOfSize:kTextViewFontSize] constrainedToSize:CGSizeMake(230, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap].height;
+        _textHeight = [_displayText sizeWithFont:[UIFont systemFontOfSize:kTextViewFontSize] constrainedToSize:CGSizeMake(cellWidthConstraint, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap].height;
     }
     return _textHeight;
 }

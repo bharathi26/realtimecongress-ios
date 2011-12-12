@@ -169,7 +169,6 @@
     }
     
     //Redraw table view cells
-    //[self.hearingsTableView reloadData];
     [self.hearingsTableView reloadRowsAtIndexPaths:[self.hearingsTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
 }
 

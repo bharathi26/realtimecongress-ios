@@ -90,7 +90,7 @@
             str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             [floorUpdateText appendFormat:@"%@",str];
         }
-        FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
+        FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date withCellWidth:cellWidth] autorelease];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
         NSString *updateDay = [updateDayFormatter stringFromDate:[floorUpdate date]];
@@ -149,7 +149,7 @@
             str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             [floorUpdateText appendFormat:@"%@",str];
         }
-        FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date] autorelease];
+        FloorUpdate * floorUpdate = [[[FloorUpdate alloc] initWithDisplayText:floorUpdateText atDate:date withCellWidth:cellWidth] autorelease];
         
         // Check if the date has been added to update days array. Add it if it hasn't.
         NSString *updateDay = [updateDayFormatter stringFromDate:[floorUpdate date]];
@@ -265,6 +265,22 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    //Determine which cell width to use based on UI idiom of current device and current orientation
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        //If the device is in a landscape orientation, use a cell width for a split view detail pane
+        if ((self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || 
+            (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight)) {
+            cellWidth = DETAIL_CELL_WIDTH;
+        }
+        //Otherwise the device is in portrait orientation. Use an appropriate cell width.
+        else {
+            cellWidth = PORTRAIT_CELL_WIDTH;
+        }
+    }
+    else {
+        cellWidth= IPHONE_CELL_WIDTH;
+    }
+    
     //Set title
     self.navigationItem.title = [NSString stringWithFormat:@"%@ Updates", [control titleForSegmentAtIndex:control.selectedSegmentIndex]];
     
@@ -341,6 +357,20 @@
         //iPhone supports only portrait orientation
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if ((fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) || 
+        (fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight)) {
+        cellWidth = PORTRAIT_CELL_WIDTH;
+    }
+    else{
+        cellWidth = DETAIL_CELL_WIDTH;
+    }
+    
+    //Redraw table view cells
+    [self.floorUpdatesTableView reloadRowsAtIndexPaths:[self.floorUpdatesTableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Table view data source
@@ -461,7 +491,7 @@
         UILabel * eventText = (UILabel *)[cell viewWithTag:2];
         [(UILabel *)[cell viewWithTag:1] setText:[[sectionArray objectAtIndex:indexPath.row] displayDate]];
         [eventText setText:[[sectionArray objectAtIndex:indexPath.row] displayText]];
-        [eventText sizeToFitFixedWidth:FLOOR_UPDATE_CELL_WIDTH];
+        [eventText sizeToFitFixedWidth:cellWidth];
         return cell;
     }  
     
