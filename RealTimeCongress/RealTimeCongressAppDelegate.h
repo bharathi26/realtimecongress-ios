@@ -13,6 +13,7 @@
 @property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
 @property (nonatomic, retain) IBOutlet RootViewController *rootViewController;
 @property (nonatomic, retain) IBOutlet AboutViewController *aboutViewController;
+@property (nonatomic, retain) IBOutlet UINavigationController *detailNavigationController;
 
 
 @end

@@ -14,6 +14,7 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
 @synthesize splitViewController;
 @synthesize rootViewController;
 @synthesize aboutViewController;
+@synthesize detailNavigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
