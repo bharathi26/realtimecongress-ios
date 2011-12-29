@@ -8,6 +8,8 @@
 @implementation RootViewController
 @synthesize sectionNames;
 @synthesize sectionIcons;
+@synthesize popoverController;
+@synthesize rootPopoverButtonItem;
 
 -(NSArray *)sectionNames {
     if (!sectionNames) {
@@ -57,6 +59,28 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
+}
+
+#pragma mark - Split View Controller Delegate methods
+
+- (void)splitViewController:(UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController:(UIPopoverController*)pc {
+    
+    // Keep references to the popover controller and the popover button, and tell the detail view controller to show the button.
+    barButtonItem.title = @"Root View Controller";
+    self.popoverController = pc;
+    self.rootPopoverButtonItem = barButtonItem;
+    UIViewController <PopoverSupportingViewController> *detailViewController = [self.splitViewController.viewControllers objectAtIndex:1];
+    [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
+}
+
+
+- (void)splitViewController:(UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
+    
+    // Nil out references to the popover controller and the popover button, and tell the detail view controller to hide the button.
+    UIViewController <PopoverSupportingViewController> *detailViewController = [self.splitViewController.viewControllers objectAtIndex:1];
+    [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
+    self.popoverController = nil;
+    self.rootPopoverButtonItem = nil;
 }
 
 
