@@ -125,14 +125,12 @@
 - (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
     // Add the popover button to the left navigation item.
     [self.navigationController.navigationBar.topItem setLeftBarButtonItem:barButtonItem animated:NO];
-    NSLog(@"Whip Notice: Show Main Menu Button");
 }
 
 
 - (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
     // Remove the popover button.
     [self.navigationController.navigationBar.topItem setLeftBarButtonItem:nil animated:NO];
-    NSLog(@"Whip Notice: Hide Main Menu Button");
 }
 
 #pragma mark - Table view data source

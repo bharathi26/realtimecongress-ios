@@ -111,7 +111,6 @@
         if ([viewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
             if (viewController.navigationController.navigationBar.topItem.leftBarButtonItem != nil) {
                 [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
-                NSLog(@"Hide called for conforming VC");
             }
         }
     }
