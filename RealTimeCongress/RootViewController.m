@@ -66,19 +66,38 @@
 - (void)splitViewController:(UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController:(UIPopoverController*)pc {
     
     // Keep references to the popover controller and the popover button, and tell the detail view controller to show the button.
-    barButtonItem.title = @"Root View Controller";
+    barButtonItem.title = @"Main Menu";
     self.popoverController = pc;
     self.rootPopoverButtonItem = barButtonItem;
-    UIViewController <PopoverSupportingViewController> *detailViewController = [self.splitViewController.viewControllers objectAtIndex:1];
-    [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
+    //If the detail view is a navigation controller, check to see if the underlying view controller supports popovers
+    if ([[self.splitViewController.viewControllers objectAtIndex:1] isMemberOfClass:[UINavigationController class]]) {
+        UINavigationController *navController = [self.splitViewController.viewControllers objectAtIndex:1];
+        UIViewController <PopoverSupportingViewController> *detailViewController = [navController.viewControllers objectAtIndex:0];
+        if ([detailViewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
+            [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
+        }
+    }
+    else {
+        UIViewController <PopoverSupportingViewController> *detailViewController = [self.splitViewController.viewControllers objectAtIndex:1];
+        [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
+    }
 }
 
 
 - (void)splitViewController:(UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
     
     // Nil out references to the popover controller and the popover button, and tell the detail view controller to hide the button.
-    UIViewController <PopoverSupportingViewController> *detailViewController = [self.splitViewController.viewControllers objectAtIndex:1];
-    [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
+    if ([[self.splitViewController.viewControllers objectAtIndex:1] isMemberOfClass:[UINavigationController class]]) {
+        UINavigationController *navController = [self.splitViewController.viewControllers objectAtIndex:1];
+        UIViewController <PopoverSupportingViewController> *detailViewController = [navController.viewControllers objectAtIndex:0];
+        if ([detailViewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
+            [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
+        }
+    }
+    else {
+        UIViewController <PopoverSupportingViewController> *detailViewController = [self.splitViewController.viewControllers objectAtIndex:1];
+        [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
+    }
     self.popoverController = nil;
     self.rootPopoverButtonItem = nil;
 }
@@ -134,6 +153,7 @@
     // Conditionally push view controllers
     // If the device is an iPad, push the appropriate view controller into the detail view
     // If the device is an iPhone/iPod Touch, push the appropriate view controller onto the nav stack
+    UIViewController <PopoverSupportingViewController> *detailViewController = nil;
     if (indexPath.row == 0) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController-iPad" bundle:nil];
@@ -153,9 +173,19 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
             UINavigationController *noticeNavController = [[UINavigationController alloc] initWithRootViewController:whipController];
+            detailViewController = whipController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, noticeNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
+            // Dismiss the popover if it's present.
+            if (popoverController != nil) {
+                [popoverController dismissPopoverAnimated:YES];
+            }
+            
+            // Configure the new view controller's popover button (after the view has been displayed and its navigation bar has been created).
+            if (rootPopoverButtonItem != nil) {
+                [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
+            }
         }
         else {
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
@@ -200,9 +230,19 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             // Pushes the About Screen view controller
             AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
-            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, aboutController, nil];
+            UINavigationController *aboutNavController = [[UINavigationController alloc] initWithRootViewController:aboutController];
+            NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, aboutNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
+            // Dismiss the popover if it's present.
+            if (popoverController != nil) {
+                [popoverController dismissPopoverAnimated:YES];
+            }
+            
+            // Configure the new view controller's popover button (after the view has been displayed and its toolbar/navigation bar has been created).
+            if (rootPopoverButtonItem != nil) {
+                [aboutController showRootPopoverButtonItem:rootPopoverButtonItem];
+            }
         }
         else {
             // Pushes the About Screen view controller
@@ -211,6 +251,8 @@
             [aboutController release];
         }
     }
+    
+    [detailViewController release];
     
 }
 
@@ -233,6 +275,8 @@
 - (void)dealloc
 {
     [super dealloc];
+    [popoverController release];
+    [rootPopoverButtonItem release];
 }
 
 @end
