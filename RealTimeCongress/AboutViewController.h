@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RootViewController.h"
 
-
-@interface AboutViewController : UIViewController {
+@interface AboutViewController : UIViewController <PopoverSupportingViewController>{
     UIWebView *webView;
 }
 

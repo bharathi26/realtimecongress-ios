@@ -35,12 +35,31 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark -
+#pragma mark Managing the popover
+
+- (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
+    // Add the popover button to the left navigation item.
+    [self.navigationController.navigationBar.topItem setLeftBarButtonItem:barButtonItem animated:NO];
+    NSLog(@"About: Show Main Menu Button");
+}
+
+
+- (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
+    // Remove the popover button.
+    [self.navigationController.navigationBar.topItem setLeftBarButtonItem:nil animated:NO];
+    NSLog(@"About: Hide Main Menu Button");
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"About";
+    
+    //Set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
     // Loads the HTML file from the application bundle
     NSString *path = [[NSBundle mainBundle] pathForResource:@"AboutInfo" ofType:@"html"];
