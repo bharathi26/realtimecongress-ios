@@ -2,10 +2,11 @@
 #import "JSONKit.h"
 #import "SunlightLabsConnection.h"
 #import "Reachability.h"
+#import "RootViewController.h"
 
 #define REQUEST_PAGE_SIZE @"100"
 
-@interface WhipNoticeViewController : UITableViewController {
+@interface WhipNoticeViewController : UITableViewController <PopoverSupportingViewController>{
     @private
     NSArray *parsedWhipNoticeData;
     NSMutableDictionary *noticeDaysDictionary;
