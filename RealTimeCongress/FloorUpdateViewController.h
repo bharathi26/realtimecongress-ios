@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SunlightLabsConnection.h"
 #import "Reachability.h"
+#import "RootViewController.h"
 
 #define IPHONE_CELL_WIDTH 260
 #define DETAIL_CELL_WIDTH 660
@@ -16,7 +17,7 @@
 
 @class FloorUpdate;
 
-@interface FloorUpdateViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>  {
+@interface FloorUpdateViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PopoverSupportingViewController>  {
     @private
     SunlightLabsConnection * connection;
     NSMutableArray * floorUpdates;
