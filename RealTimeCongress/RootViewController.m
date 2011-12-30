@@ -39,6 +39,8 @@
     [super viewDidLoad];
     self.title = @"Main Menu";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    // Set the content size for the popover
+    self.contentSizeForViewInPopover = CGSizeMake(310.0, self.tableView.rowHeight*5.0);
 }
 
 - (void)viewWillAppear:(BOOL)animated
