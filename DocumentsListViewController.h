@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RootViewController.h"
 
-@interface DocumentsListViewController : UITableViewController
+@interface DocumentsListViewController : UITableViewController <PopoverSupportingViewController>
 
 @end
