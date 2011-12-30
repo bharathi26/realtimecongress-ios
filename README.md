@@ -52,4 +52,4 @@ GSoC students applying for this project should expect to work on Phases 2 and 3.
 Email luigi (at) sunlightfoundation.com or find LuigiMontanez on Freenode in the #sunlightlabs channel.
 
 ## To-Do for iPad Interface
-1. Implement popovers for portrait view
+1. Implement opening screen for iPad interface
