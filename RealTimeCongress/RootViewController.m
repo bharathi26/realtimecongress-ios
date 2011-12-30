@@ -195,6 +195,7 @@
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
             UINavigationController *noticeNavController = [[UINavigationController alloc] initWithRootViewController:whipController];
             detailViewController = whipController;
+            //Designate Root View Controller as the UINavigationController delegate
             noticeNavController.delegate = self;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, noticeNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
@@ -229,6 +230,8 @@
             DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
             UINavigationController *docListNavController = [[UINavigationController alloc] initWithRootViewController:documentsController];
             detailViewController = documentsController;
+            //Designate Root View Controller as the UINavigationController delegate
+            docListNavController.delegate = self;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, docListNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
