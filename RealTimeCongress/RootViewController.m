@@ -158,6 +158,7 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             FloorUpdateViewController *floorUpdateController = [[FloorUpdateViewController alloc] initWithNibName:@"FloorUpdateViewController-iPad" bundle:nil];
             UINavigationController *floorUpdateNavController = [[UINavigationController alloc] initWithRootViewController:floorUpdateController];
+            detailViewController = floorUpdateController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, floorUpdateNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
@@ -190,6 +191,7 @@
             // Pushes the Committee Hearings view controller
             CommitteeHearingsViewController *hearingsController = [[CommitteeHearingsViewController alloc] initWithNibName:@"CommitteeHearingsViewController-iPad" bundle:nil];
             UINavigationController *hearingsNavController = [[UINavigationController alloc] initWithRootViewController:hearingsController];
+            detailViewController = hearingsController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, hearingsNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
@@ -205,6 +207,7 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             DocumentsListViewController *documentsController = [[DocumentsListViewController alloc] initWithNibName:@"DocumentsListViewController" bundle:nil];
             UINavigationController *docListNavController = [[UINavigationController alloc] initWithRootViewController:documentsController];
+            detailViewController = documentsController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, docListNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
