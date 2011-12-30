@@ -583,5 +583,21 @@
     }
 }
 
+#pragma mark -
+#pragma mark Managing the popover
+
+- (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
+    // Add the popover button to the left navigation item.
+    [self.navigationController.navigationBar.topItem setLeftBarButtonItem:barButtonItem animated:NO];
+    NSLog(@"Committee Hearings: Show Main Menu Button");
+}
+
+
+- (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
+    // Remove the popover button.
+    [self.navigationController.navigationBar.topItem setLeftBarButtonItem:nil animated:NO];
+    NSLog(@"Committee Hearings: Hide Main Menu Button");
+}
+
 
 @end

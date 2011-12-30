@@ -10,13 +10,14 @@
 #import "JSONKit.h"
 #import "SunlightLabsConnection.h"
 #import "Reachability.h"
+#import "RootViewController.h"
 
 #define REQUEST_PAGE_SIZE @"100"
 #define IPHONE_CELL_WIDTH 260
 #define DETAIL_CELL_WIDTH 660
 #define PORTRAIT_CELL_WIDTH 720
 
-@interface CommitteeHearingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface CommitteeHearingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PopoverSupportingViewController> {
     @private
     NSArray *parsedHearingData;
     IBOutlet UISegmentedControl *chamberControl;
