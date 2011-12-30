@@ -5,7 +5,7 @@
 - (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem;
 @end
 
-@interface RootViewController : UITableViewController <UISplitViewControllerDelegate>{
+@interface RootViewController : UITableViewController <UISplitViewControllerDelegate, UINavigationControllerDelegate>{
     UIPopoverController *popoverController;    
     UIBarButtonItem *rootPopoverButtonItem;
 

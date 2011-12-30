@@ -72,7 +72,7 @@
     //If the detail view is a navigation controller, check to see if the underlying view controller supports popovers
     if ([[self.splitViewController.viewControllers objectAtIndex:1] isMemberOfClass:[UINavigationController class]]) {
         UINavigationController *navController = [self.splitViewController.viewControllers objectAtIndex:1];
-        UIViewController <PopoverSupportingViewController> *detailViewController = [navController.viewControllers objectAtIndex:0];
+        id detailViewController = [navController visibleViewController];
         if ([detailViewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
             [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
         }
@@ -89,7 +89,7 @@
     // Nil out references to the popover controller and the popover button, and tell the detail view controller to hide the button.
     if ([[self.splitViewController.viewControllers objectAtIndex:1] isMemberOfClass:[UINavigationController class]]) {
         UINavigationController *navController = [self.splitViewController.viewControllers objectAtIndex:1];
-        UIViewController <PopoverSupportingViewController> *detailViewController = [navController.viewControllers objectAtIndex:0];
+        id detailViewController = [navController visibleViewController];
         if ([detailViewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
             [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
         }
@@ -100,6 +100,27 @@
     }
     self.popoverController = nil;
     self.rootPopoverButtonItem = nil;
+}
+
+#pragma mark - UI Navigation Controller delegate methods
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    id detailViewController = viewController;
+    
+    //When popping off the navigation stack, ensure that the popover button disappears in landscape orientation
+    if ((viewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (viewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)) {
+        if ([viewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
+            if (viewController.navigationController.navigationBar.topItem.leftBarButtonItem != nil) {
+                [detailViewController invalidateRootPopoverButtonItem:rootPopoverButtonItem];
+                NSLog(@"Hide called for conforming VC");
+            }
+        }
+    }
+    else {
+        //Otherwise, ensure that the popover button appears in portrait orientation
+        if ([viewController conformsToProtocol:@protocol(PopoverSupportingViewController)]) {
+            [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
+        }
+    }
 }
 
 
@@ -175,6 +196,7 @@
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
             UINavigationController *noticeNavController = [[UINavigationController alloc] initWithRootViewController:whipController];
             detailViewController = whipController;
+            noticeNavController.delegate = self;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, noticeNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
