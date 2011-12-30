@@ -177,15 +177,6 @@
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, noticeNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
-            // Dismiss the popover if it's present.
-            if (popoverController != nil) {
-                [popoverController dismissPopoverAnimated:YES];
-            }
-            
-            // Configure the new view controller's popover button (after the view has been displayed and its navigation bar has been created).
-            if (rootPopoverButtonItem != nil) {
-                [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
-            }
         }
         else {
             WhipNoticeViewController *whipController = [[WhipNoticeViewController alloc] initWithNibName:@"WhipNoticeViewController" bundle:nil];
@@ -231,18 +222,10 @@
             // Pushes the About Screen view controller
             AboutViewController *aboutController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
             UINavigationController *aboutNavController = [[UINavigationController alloc] initWithRootViewController:aboutController];
+            detailViewController = aboutController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, aboutNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
             [viewControllers release];
-            // Dismiss the popover if it's present.
-            if (popoverController != nil) {
-                [popoverController dismissPopoverAnimated:YES];
-            }
-            
-            // Configure the new view controller's popover button (after the view has been displayed and its toolbar/navigation bar has been created).
-            if (rootPopoverButtonItem != nil) {
-                [aboutController showRootPopoverButtonItem:rootPopoverButtonItem];
-            }
         }
         else {
             // Pushes the About Screen view controller
@@ -250,6 +233,16 @@
             [self.navigationController pushViewController:aboutController animated:YES];
             [aboutController release];
         }
+    }
+    
+    // Dismiss the popover if it's present.
+    if (popoverController != nil) {
+        [popoverController dismissPopoverAnimated:YES];
+    }
+    
+    // Configure the new view controller's popover button (after the view has been displayed and its navigation bar has been created).
+    if (rootPopoverButtonItem != nil) {
+        [detailViewController showRootPopoverButtonItem:rootPopoverButtonItem];
     }
     
     [detailViewController release];
