@@ -531,14 +531,12 @@
 - (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
     // Add the popover button to the left navigation item.
     [self.navigationController.navigationBar.topItem setLeftBarButtonItem:barButtonItem animated:NO];
-    NSLog(@"Floor Updates: Show Main Menu Button");
 }
 
 
 - (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
     // Remove the popover button.
     [self.navigationController.navigationBar.topItem setLeftBarButtonItem:nil animated:NO];
-    NSLog(@"Floor Updates: Hide Main Menu Button");
 }
 
 @end
