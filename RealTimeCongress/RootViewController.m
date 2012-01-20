@@ -39,8 +39,8 @@
     [super viewDidLoad];
     self.title = @"Main Menu";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    // Set the content size for the popover
-    self.contentSizeForViewInPopover = CGSizeMake(310.0, self.tableView.rowHeight*[sectionNames count]);
+    // Set the content size for the popover to the number of rows in the root view controller
+    self.contentSizeForViewInPopover = CGSizeMake(310.0, self.tableView.rowHeight*5);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,6 +71,7 @@
     barButtonItem.title = @"Main Menu";
     self.popoverController = pc;
     self.rootPopoverButtonItem = barButtonItem;
+    
     //If the detail view is a navigation controller, check to see if the underlying view controller supports popovers
     if ([[self.splitViewController.viewControllers objectAtIndex:1] isMemberOfClass:[UINavigationController class]]) {
         UINavigationController *navController = [self.splitViewController.viewControllers objectAtIndex:1];
