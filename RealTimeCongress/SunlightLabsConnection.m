@@ -56,7 +56,7 @@
         decodedData = [NSDictionary dictionaryWithObject:[UIImage imageWithData:_receivedData] forKey:@"photo"];
     } else {
         if (!_cancelled) {
-            decodedData = [[[JSONDecoder decoder] objectWithData:_receivedData] retain];
+            decodedData = [[JSONDecoder decoder] objectWithData:_receivedData];
         }
     }
     if (!_cancelled) {

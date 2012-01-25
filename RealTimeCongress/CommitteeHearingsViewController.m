@@ -348,6 +348,8 @@
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];
+        [dataRequest release];
+        [requestParameters release];
     }
     
     else{
@@ -379,7 +381,7 @@
         NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"occurs_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
         NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime,nil];
         parsedHearingData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
-        
+        [descriptors release];
         
         // A mutable array containing the unique hearing days
         hearingDays = [[NSMutableArray alloc] initWithCapacity:1];

@@ -88,6 +88,7 @@
         return;
     }
     [super requestInformationWithRequest:request];
+    [request release];
 }
 
 - (void)receiveInformation:(NSNotification *)notification {

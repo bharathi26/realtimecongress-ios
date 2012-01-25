@@ -36,6 +36,7 @@ static const NSInteger kGANDispatchPeriodSec = -1; //Manual dispatch
     //Set up the shared URL Cache
     NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:10485760 diskCapacity:0 diskPath:nil]; //10MB of memory dedicated to cache
     [NSURLCache setSharedURLCache:URLCache];
+    [URLCache release];
     
     //Set status bar color to black
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];

@@ -211,7 +211,7 @@
     webViewController.urlRequest = [NSURLRequest requestWithURL:url];
     webViewController.launchType = @"whipnotices";
      [self.navigationController pushViewController:webViewController animated:YES];
-     [WhipNoticesWebViewController release];
+     [webViewController release];
 }
 
 #pragma mark - UI Actions

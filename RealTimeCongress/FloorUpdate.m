@@ -40,6 +40,7 @@
         [dateFormatPrinter setDateFormat:@"MMMM dd, yyyy h:mm aa"];
         [dateFormatPrinter setTimeZone:[NSTimeZone systemTimeZone]];
         _displayTextWithDate = [[NSString alloc] initWithFormat:@"%@\n%@",[dateFormatPrinter stringFromDate:_date],_displayText];
+        [dateFormatPrinter release];
     }
     return _displayTextWithDate;
 }

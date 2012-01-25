@@ -75,6 +75,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.navigationItem.rightBarButtonItem = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [reachabilityInfo stopNotifier];
 }
@@ -223,7 +224,7 @@
     webViewController.urlRequest = urlRequest;
     webViewController.launchType = @"cbo_estimates";
     [self.navigationController pushViewController:webViewController animated:YES];
-    [WhipNoticesWebViewController release];
+    [webViewController release];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -268,6 +269,8 @@
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];
+        [dataRequest release];
+        [requestParameters release];
     }
     else {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."

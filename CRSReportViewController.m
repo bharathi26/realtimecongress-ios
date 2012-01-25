@@ -231,7 +231,7 @@
     webViewController.urlRequest = urlRequest;
     webViewController.launchType = @"crs_reports";
     [self.navigationController pushViewController:webViewController animated:YES];
-    [WhipNoticesWebViewController release];
+    [webViewController release];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
