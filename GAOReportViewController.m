@@ -60,6 +60,7 @@
     //Set up refresh button
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+    [refreshButton release];
     
     //Register for reachability changed notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -266,6 +267,9 @@
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];
+        
+        [dataRequest release];
+        [requestParameters release];
     }
     else {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
@@ -438,6 +442,9 @@
             [alert release];
         }
     }
+    
+    [dataRequest release];
+    [requestParameters release];
 }
 
 - (void) reachabilityChanged {

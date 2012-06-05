@@ -76,6 +76,7 @@
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+    [refreshButton release];
     
     //Make cells unselectable
     self.hearingsTableView.allowsSelection = NO;
@@ -412,6 +413,7 @@
         }
         
         sectionDataArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
+        [hearingDayMutableArray release];
     }
     
     else {
@@ -440,6 +442,7 @@
         NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"occurs_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
         NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime,nil];
         parsedHearingData = [[NSArray alloc] initWithArray:[dataArray sortedArrayUsingDescriptors:descriptors]];
+        [descriptors release];
         
         
         // A mutable array containing the unique hearing days
@@ -471,6 +474,7 @@
         }
         
         sectionDataArray = [[NSArray alloc] initWithArray:hearingDayMutableArray];
+        [hearingDayMutableArray release];
     }
     
     else {
@@ -558,6 +562,9 @@
         }
 
     }
+    
+    [dataRequest release];
+    [requestParameters release];
 }
 
 - (void) reachabilityChanged {

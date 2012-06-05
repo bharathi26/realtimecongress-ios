@@ -15,6 +15,7 @@
 @synthesize urlRequest;
 @synthesize loadingIndicator;
 @synthesize launchType;
+@synthesize refreshButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +29,7 @@
 - (void)dealloc
 {
     [super dealloc];
+    [refreshButton release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,7 +56,7 @@
         webView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     
-    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:webView  action:@selector(reload)];
+    refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:webView  action:@selector(reload)];
     self.navigationItem.rightBarButtonItem = refreshButton;
 }
 
@@ -109,6 +111,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.navigationItem.rightBarButtonItem = nil;
     webView.delegate = nil;
 }
 

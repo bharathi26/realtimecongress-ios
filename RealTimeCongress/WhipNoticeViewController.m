@@ -54,6 +54,7 @@
     //Set up refresh button
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+    [refreshButton release];
     
     //Register for reachability changed notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -241,6 +242,9 @@
         connection = [[SunlightLabsConnection alloc] initWithSunlightLabsRequest:dataRequest];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseData:) name:SunglightLabsRequestFinishedNotification object:connection];
         [connection sendRequest];
+        
+        [dataRequest release];
+        [requestParameters release];
     }
     else {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"The internet is currently inaccessible."
@@ -269,6 +273,8 @@
     NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
     parsedWhipNoticeData = [[NSArray alloc] initWithArray:[data sortedArrayUsingDescriptors:descriptors]];
+    [descriptors release];
+    
     // A mutable array containing the unique notice days
     noticeDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
     for (NSDictionary *notice in parsedWhipNoticeData) {
@@ -298,6 +304,7 @@
     }
     
     sectionDataArray = [[NSArray alloc] initWithArray:noticeDayMutableArray];
+    [noticeDayMutableArray release];
     
     //Reload the table once data retrieval is complete
     [self.tableView reloadData];
@@ -318,6 +325,7 @@
     NSSortDescriptor *sortByTime = [NSSortDescriptor sortDescriptorWithKey:@"posted_at" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     NSArray *descriptors = [[NSArray alloc] initWithObjects: sortByDate, sortByTime, nil];
     parsedWhipNoticeData = [[NSArray alloc] initWithArray:[dataArray sortedArrayUsingDescriptors:descriptors]];
+    [descriptors release];
     
     // A mutable array containing the unique notice days
     noticeDaysArray = [[NSMutableArray alloc] initWithCapacity:1];
@@ -348,6 +356,7 @@
     }
     
     sectionDataArray = [[NSArray alloc] initWithArray:noticeDayMutableArray];
+    [noticeDayMutableArray release];
     
     //Reload the table once data retrieval is complete
     [self.tableView reloadData];
@@ -404,6 +413,9 @@
             [alert release];
         }
     }
+    
+    [dataRequest release];
+    [requestParameters release];
 }
 
 - (void) reachabilityChanged {

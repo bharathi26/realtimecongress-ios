@@ -184,6 +184,7 @@
             detailViewController = floorUpdateController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, floorUpdateNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
+            [floorUpdateNavController release];
             [viewControllers release];
         }
         else {
@@ -219,6 +220,7 @@
             detailViewController = hearingsController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, hearingsNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
+            [hearingsNavController release];
             [viewControllers release];
         }
         else {
@@ -255,6 +257,7 @@
             detailViewController = aboutController;
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:self.navigationController, aboutNavController, nil];
             self.splitViewController.viewControllers = viewControllers;
+            [aboutNavController release];
             [viewControllers release];
         }
         else {

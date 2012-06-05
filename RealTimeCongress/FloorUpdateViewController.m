@@ -287,7 +287,10 @@
     //Set navigation bar style
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+    //Allocate refresh button
+    
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = refreshButton;
     [control addTarget:self action:@selector(switchChambers) forControlEvents:UIControlEventValueChanged];
     page = 0;
     self.floorUpdatesTableView.allowsSelection = NO;
@@ -327,6 +330,8 @@
             // Handle error here
         }
     }
+    
+    [refreshButton release];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -472,19 +477,19 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell* cell;
+    
     if ([[floorUpdates objectAtIndex:indexPath.section] isEqual:@"LoadingRow"]) {
         static NSString *CellIdentifier = @"LoadingCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"LoadingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
-        return cell;
     }
-    
     else if ([[[floorUpdates objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] isMemberOfClass:[FloorUpdate class]]) {
         NSArray *sectionArray = [floorUpdates objectAtIndex:indexPath.section];
         static NSString *CellIdentifier = @"FloorUpdateCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"FloorUpdateTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
@@ -492,17 +497,16 @@
         [(UILabel *)[cell viewWithTag:1] setText:[[sectionArray objectAtIndex:indexPath.row] displayDate]];
         [eventText setText:[[sectionArray objectAtIndex:indexPath.row] displayText]];
         [eventText sizeToFitFixedWidth:cellWidth];
-        return cell;
     }  
     
     else {
         static NSString * cellIdentifier = @"Cell";
-        UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
         }
-        return cell;
     }
+    return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

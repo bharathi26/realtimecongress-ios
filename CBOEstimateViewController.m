@@ -62,6 +62,7 @@
     //Set up refresh button
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self  action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+    [refreshButton release];
     
     //Register for reachability changed notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -443,6 +444,9 @@
             [alert release];
         }
     }
+    
+    [dataRequest release];
+    [requestParameters release];
 }
 
 - (void) reachabilityChanged {
