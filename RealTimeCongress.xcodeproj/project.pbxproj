@@ -150,6 +150,8 @@
 		2A9AE10813FC6363009AE640 /* sunlight_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2A9AE10713FC6363009AE640 /* sunlight_logo.gif */; };
 		2AAA219C1385701000680E9B /* WhipNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AAA219A1385701000680E9B /* WhipNoticeViewController.m */; };
 		2AAA219D1385701000680E9B /* WhipNoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */; };
+		2AFA07B414D0624400C06214 /* appicon_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AFA07B314D0624400C06214 /* appicon_114.png */; };
+		2AFA07B614D0625700C06214 /* appIcon_72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AFA07B514D0625700C06214 /* appIcon_72.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -327,6 +329,8 @@
 		2AAA21991385701000680E9B /* WhipNoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhipNoticeViewController.h; path = RealTimeCongress/WhipNoticeViewController.h; sourceTree = "<group>"; };
 		2AAA219A1385701000680E9B /* WhipNoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhipNoticeViewController.m; path = RealTimeCongress/WhipNoticeViewController.m; sourceTree = "<group>"; };
 		2AAA219B1385701000680E9B /* WhipNoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WhipNoticeViewController.xib; path = RealTimeCongress/WhipNoticeViewController.xib; sourceTree = "<group>"; };
+		2AFA07B314D0624400C06214 /* appicon_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appicon_114.png; path = ../appicon_114.png; sourceTree = "<group>"; };
+		2AFA07B514D0625700C06214 /* appIcon_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appIcon_72.png; path = ../appIcon_72.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -562,6 +566,8 @@
 		2A787EF9138324D1008EC17E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2AFA07B514D0625700C06214 /* appIcon_72.png */,
+				2AFA07B314D0624400C06214 /* appicon_114.png */,
 				284C0610138C21C600ED309D /* AboutInfo.html */,
 				2A9AE10713FC6363009AE640 /* sunlight_logo.gif */,
 				2A787EFA138324D1008EC17E /* 08-chat.png */,
@@ -829,6 +835,8 @@
 				281973381474A4B500F00F42 /* RootViewController-iPad.xib in Resources */,
 				281973391474A4B500F00F42 /* CommitteeHearingsViewController-iPad.xib in Resources */,
 				282E1B6C1474E85400FEB9D8 /* FloorUpdateViewController-iPad.xib in Resources */,
+				2AFA07B414D0624400C06214 /* appicon_114.png in Resources */,
+				2AFA07B614D0625700C06214 /* appIcon_72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,8 +967,8 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tom Tsai (78XAXQV7J8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tom Tsai (78XAXQV7J8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -969,8 +977,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
-				PROVISIONING_PROFILE = "BB4D4023-7C29-49D0-853E-D2921EEB378E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BB4D4023-7C29-49D0-853E-D2921EEB378E";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -983,8 +991,8 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
